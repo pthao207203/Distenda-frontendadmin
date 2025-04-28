@@ -72,14 +72,14 @@ function CourseDetails() {
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
       uploadedImageUrl = await uploadImage(selectedFileName);
-      console.log("Uploaded Image URL:", uploadedImageUrl);
+      // console.log("Uploaded Image URL:", uploadedImageUrl);
     }
     const updatedData = {
       ...data,
       CoursePicture: uploadedImageUrl,
     };
 
-    console.log("Data sent to ActionButton:", updatedData);
+    // console.log("Data sent to ActionButton:", updatedData);
     setData(updatedData);
     return updatedData;
   };
@@ -88,25 +88,23 @@ function CourseDetails() {
     return <Loading />;
   }
   console.log("coursedetail => ", data);
-  console.log("categories => ", category);
-  console.log("intructors => ", intructor);
+  // console.log("categories => ", category);
+  // console.log("intructors => ", intructor);
 
-  // Hàm cập nhật dữ liệu khi người dùng nhập vào
-  const handleChange = (e) => {
-    // Kiểm tra nếu e.target tồn tại (dành cho input và select)
-    if (e?.target) {
-      const { id, value } = e.target;
-      setData((prevData) => ({
-        ...prevData,
-        [id]: value, // Cập nhật theo id của input
-      }));
-    } else if (e) {
-      // Nếu không có e.target (TinyMCE)
-      setData((prevData) => ({
-        ...prevData,
-        [e.id]: e.getContent(), // Lấy nội dung từ TinyMCE và cập nhật theo id
-      }));
-    }
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleEditorChange = (content, editor) => {
+    const id = editor.id;
+    setData((prevData) => ({
+      ...prevData,
+      [id]: content,
+    }));
   };
 
   const handleToggle = () => {
@@ -151,7 +149,8 @@ function CourseDetails() {
           data={data}
           category={category}
           intructor={intructor}
-          handleChange={handleChange}
+          handleInputChange={handleInputChange}
+          handleEditorChange={handleEditorChange}
           handleToggle={handleToggle}
           editorRef={editorRef}
         />

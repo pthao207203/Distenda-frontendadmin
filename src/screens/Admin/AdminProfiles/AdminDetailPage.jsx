@@ -63,7 +63,7 @@ function AdminDetailPage() {
   }
 
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
     console.log("selectedFileName", selectedFileName);
     if (selectedFileName) {
