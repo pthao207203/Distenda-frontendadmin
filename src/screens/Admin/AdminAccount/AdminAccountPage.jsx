@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { AdminInfoField } from "./components/AdminInfo";
 import { AccountHeader } from "./components/AccountHeader";
-import { myAccountPostController, myAccountController } from "../../../controllers/myAccount.controller";
-import moment from 'moment';
-import uploadImage from "../../../components/UploadImage"
+import {
+  myAccountPostController,
+  myAccountController,
+} from "../../../controllers/myAccount.controller";
+import moment from "moment";
+import uploadImage from "../../../components/UploadImage";
 import Loading from "../../../components/Loading";
 
 function ProfileCard() {
@@ -26,9 +29,9 @@ function ProfileCard() {
     setIsPopupVisible(false); // Ẩn popup xác nhận
     let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
-    console.log("selectedFileName", selectedFileName)
+    console.log("selectedFileName", selectedFileName);
     if (selectedFileName) {
-      uploadedImageUrl = await uploadImage(selectedFileName);;
+      uploadedImageUrl = await uploadImage(selectedFileName);
       console.log("Uploaded Image URL:", uploadedImageUrl);
     }
     const updatedData = {
@@ -37,8 +40,8 @@ function ProfileCard() {
     };
 
     console.log("Data sent to ActionButton:", updatedData);
-    setData(updatedData)
-    await updateUserInfo(updatedData);   // Gọi hàm cập nhật
+    setData(updatedData);
+    await updateUserInfo(updatedData); // Gọi hàm cập nhật
     setSuccessPopupVisible(true);
     console.log("Cập nhật thông tin thành công!");
   };
@@ -63,7 +66,13 @@ function ProfileCard() {
           { label: "Họ và tên", value: result.AdminFullName, editable: true },
           { label: "Gmail", value: result.AdminEmail, editable: true },
           { label: "Số điện thoại", value: result.AdminPhone, editable: true },
-          { label: "Ngày tham gia", value: moment(result.createdBy?.createdAt).format("DD/MM/YYYY hh:mm:ss"), editable: false },
+          {
+            label: "Ngày tham gia",
+            value: moment(result.createdBy?.createdAt).format(
+              "DD/MM/YYYY hh:mm:ss"
+            ),
+            editable: false,
+          },
           { label: "Chức vụ", value: result.role, editable: false },
         ];
         setUserFields(fields);
@@ -109,15 +118,36 @@ function ProfileCard() {
         field.label === label ? { ...field, value: newValue } : field
       )
     );
+
+    setData((prevData) => {
+      if (!prevData) return prevData; // Nếu chưa có data thì bỏ qua
+
+      const updatedData = { ...prevData };
+
+      switch (label) {
+        case "Họ và tên":
+          updatedData.AdminFullName = newValue;
+          break;
+        case "Gmail":
+          updatedData.AdminEmail = newValue;
+          break;
+        case "Số điện thoại":
+          updatedData.AdminPhone = newValue;
+          break;
+        // Các field không editable (Ngày tham gia, Chức vụ) thì không cần đổi
+        default:
+          break;
+      }
+
+      return updatedData;
+    });
   };
 
-
   if (loading) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
-  console.log("My account => ", data)
+  console.log("My account => ", data);
+  console.log("My account field => ", userFields);
 
   return (
     <>
