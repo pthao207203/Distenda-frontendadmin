@@ -35,7 +35,7 @@ function OTP({ email, result }) {
     <div className="flex z-0 flex-col w-full max-md:max-w-full">
       <div className="flex flex-col w-full leading-none max-md:max-w-full">
         <div className="flex flex-col self-center max-w-full">
-          <h2 className="flex gap-3 items-end self-center px-3 max-w-full text-3xl max-md:text-2xl font-semibold text-center text-[#14375F] font-['Montserrat'] leading-loose">
+          <h2 className="flex gap-3 items-end self-center px-3 max-w-full text-[1.875rem] max-md:text-[1.5rem] font-semibold text-center text-[#14375F] font-['Montserrat'] leading-loose">
             ĐĂNG NHẬP
           </h2>
         </div>
@@ -45,7 +45,7 @@ function OTP({ email, result }) {
         onSubmit={handleSubmit}
         className="flex flex-col mt-4 w-full max-md:max-w-full"
       >
-        <div className="flex flex-col w-full text-lg max-md:text-[16px] text-[#131313]">
+        <div className="flex flex-col w-full text-[1.125rem] max-md:text-[1rem] text-[#131313]">
           <div className="flex flex-col w-full  whitespace-nowrap">
             <label htmlFor="email" className="self-start text-[#6C8299]">
               Email
@@ -60,8 +60,8 @@ function OTP({ email, result }) {
               disabled
             />
           </div>
-          <div className="flex gap-1 items-center mt-4 w-full max-md:text-[16px]">
-            <p className="flex gap-3 items-center font-medium text-xl text-[#14375F] self-stretch py-1 my-auto">
+          <div className="flex gap-1 items-center mt-4 w-full max-md:text-[1rem]">
+            <p className="flex gap-3 items-center font-medium text-[1.25rem] text-[#14375F] self-stretch py-1 my-auto">
               {result}
             </p>
           </div>
@@ -107,7 +107,7 @@ function OTP({ email, result }) {
 
         <button
           type="submit"
-          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-xl max-md:text-lg font-normal bg-[#6C8299] min-h-[58px] text-white max-md:max-w-full ${
+          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[58px] text-white max-md:max-w-full ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

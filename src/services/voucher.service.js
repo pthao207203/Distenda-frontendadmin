@@ -11,38 +11,38 @@ export const vouchersService = async () => {
     } catch (error) {
         console.error(error);
     }
-  };
+};
 
-  export const voucherDetailService = async (VoucherID) => {
+export const voucherDetailService = async (VoucherID) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/detail/${VoucherID}`, {
-        method: 'GET',
-        credentials: 'include',
-      });
-  
-      // Kiểm tra mã trạng thái của response
-      if (!response.ok) {
-        throw new Error(`Lỗi ${response.status}: Không thể lấy dữ liệu voucher.`);
-      }
-  
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Phản hồi không phải dạng JSON");
-      }
-  
-      const responseData = await response.json();
-      return responseData;
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/detail/${VoucherID}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        // Kiểm tra mã trạng thái của response
+        if (!response.ok) {
+            throw new Error(`Lỗi ${response.status}: Không thể lấy dữ liệu voucher.`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Phản hồi không phải dạng JSON");
+        }
+
+        const responseData = await response.json();
+        return responseData;
     } catch (error) {
-      console.error("Lỗi khi gọi API voucherDetailService:", error);
-      return null;
+        console.error("Lỗi khi gọi API voucherDetailService:", error);
+        return null;
     }
-  };
-  
+};
+
 // Tạo mới voucher (sử dụng POST)
 export const voucherCreateService = async () => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/create`, {
-            method: 'GET',  
+            method: 'GET',
             credentials: 'include',
         });
 
@@ -63,7 +63,7 @@ export const voucherCreateService = async () => {
 export const voucherCreatePostService = async (data) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/create`, {
-            method: 'POST',  // POST để gửi dữ liệu
+            method: 'POST', // POST để gửi dữ liệu
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
@@ -84,11 +84,11 @@ export const voucherCreatePostService = async (data) => {
     }
 };
 
-// Cập nhật voucher (sử dụng POST hoặc PUT)
+// Cập nhật voucher (sử dụng POST)
 export const voucherUpdateService = async (id) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/edit/${id}`, {
-            method: 'GET',  // GET để lấy thông tin voucher cần cập nhật
+            method: 'GET', // GET để lấy thông tin voucher cần cập nhật
             credentials: 'include',
         });
 
@@ -105,11 +105,11 @@ export const voucherUpdateService = async (id) => {
     }
 };
 
-// Cập nhật voucher qua POST
+// Cập nhật voucher qua POST khi chỉnh sửa thông tin voucher
 export const voucherUpdatePostService = async (id, data) => {
     try {
         const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/edit/${id}`, {
-            method: 'POST',  // POST để gửi dữ liệu cập nhật
+            method: 'POST', // POST để gửi dữ liệu cập nhật
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
@@ -133,20 +133,26 @@ export const voucherUpdatePostService = async (id, data) => {
 // Xóa voucher (sử dụng DELETE)
 export const voucherDeleteService = async (id) => {
     try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/delete/${id}`, {
-            method: 'DELETE',  // DELETE để xóa voucher
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/voucher/edit/${id}`, {
+            method: 'POST', 
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: 0
+            }) 
         });
 
         if (!response.ok) {
-            throw new Error('Lỗi khi xóa voucher!');
+            throw new Error('Lỗi khi cập nhật trạng thái voucher!');
         }
 
         const responseData = await response.json();
-        console.log("responseData => ", responseData);
+        console.log("Cập nhật trạng thái voucher => ", responseData);
         return responseData;
     } catch (error) {
         console.error(error);
-        throw new Error('Có lỗi khi gửi yêu cầu xóa voucher!');
+        throw new Error('Có lỗi khi gửi yêu cầu cập nhật trạng thái voucher!');
     }
 };

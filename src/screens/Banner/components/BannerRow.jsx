@@ -16,7 +16,7 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
   };
 
   return (
-    <div className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[70px] max-md:max-w-full">
+    <div className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[3.75rem] max-md:min-h-[2.75rem]  max-md:max-w-full">
       {/* Cột ID */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center bg-[#EBF1F9]">
         <div className="text-[#131313] text-center text-xl font-medium truncate">
@@ -39,18 +39,18 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
       </div>
 
       {/* Cột Hành động */}
-      <div className="flex basis-1/4 min-w-0 shrink gap-3 justify-center items-center px-3 min-h-[70px] max-md:max-w-full">
+      <div className="flex basis-1/4 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem] min-h-[3.75rem] max-md:min-h-[2.75rem]  max-md:max-w-full">
         {/* Nút Sửa */}
         <button
           disabled={!role?.role?.RolePermissions?.includes("banner_edit")}
-          className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3  rounded-[99px] ${
+          className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem] rounded-[99px] ${
             role?.role?.RolePermissions?.includes("banner_edit")
               ? "bg-[#D1F669] hover:bg-[#a3e635]"
               : "bg-[#f0ffc7] cursor-not-allowed"
           }`}
           onClick={handleEdit}
         >
-          <div className="self-center shrink w-[90%] max-w-full px-4 py-2 rounded-[99px] justify-center items-center inline-flex text-[#131313] text-center text-xl font-medium">
+          <div className="self-center shrink w-[90%] max-w-full p-[0.75rem] rounded-[99px] justify-center items-center inline-flex text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium">
             Sửa
           </div>
         </button>
@@ -58,7 +58,7 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
         {/* Nút Ẩn/Bỏ Ẩn */}
         <button
           disabled={!role?.role?.RolePermissions?.includes("banner_edit")}
-          className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3  ${
+          className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem]  ${
             isHidden ? "bg-gray-300" : "bg-[#FFD75B]"
           } basis-0 rounded-[99px] ${
             role?.role?.RolePermissions?.includes("banner_edit")
@@ -71,7 +71,7 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
           }`}
           onClick={toggleVisibility}
         >
-          <div className="self-center shrink w-[90%] max-w-full px-4 py-2 rounded-[99px] justify-center items-center inline-flex text-[#131313] text-center text-xl font-medium">
+          <div className="self-center shrink w-[90%] max-w-full p-[0.75rem] rounded-[99px] justify-center items-center inline-flex text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium">
             {isHidden ? "Bỏ Ẩn" : "Ẩn"}
           </div>
         </button>
