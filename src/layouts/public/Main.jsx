@@ -32,7 +32,7 @@ const Main = () => {
   return (
     <div className="flex overflow-hidden flex-col justify-start leading-none bg-white w-screen h-screen">
       <Header />
-      <div className="flex flex-wrap grow justify-center items-center gap-1.5 ">
+      <div className="flex flex-wrap grow justify-center items-center ">
       <Outlet />
       </div>
     </div>
