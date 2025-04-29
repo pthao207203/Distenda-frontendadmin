@@ -21,7 +21,10 @@ function TaskBar({ handleTaskBarToggle }) {
     try {
       // Gọi API xử lý
       await logoutController(navigate);
-      Cookies.remove("user_token");
+      Cookies.remove("token", {
+        path: "/",
+        sameSite: "Lax",
+      });
       alert("Đã đăng xuất thành công!");
     } catch (err) {
       console.log(err);
