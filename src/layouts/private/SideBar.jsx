@@ -43,48 +43,48 @@ export default function SideBar({ headerHeight }) {
   }, [isDesktop]);
 
   const menuItems = [
-    role?.role?.RolePermissions?.includes("dashboard_view") && {
+    role?.RolePermissions?.includes("dashboard_view") && {
       link: "/",
       icon: "/icons/home.svg",
       label: "Trang chủ",
     },
-    role?.role?.RolePermissions?.includes("message_view") && {
+    role?.RolePermissions?.includes("message_view") && {
       link: "/message",
       icon: "/icons/category.svg",
       label: "Tin nhắn",
     },
-    (role?.role?.RolePermissions?.includes("course_view") ||
+    (role?.RolePermissions?.includes("course_view") ||
       role?.role?.RolePermissions?.includes("course_only")) && {
       link: "/courses",
       icon: "/icons/document.svg",
       label: "Khóa học",
     },
-    role?.role?.RolePermissions?.includes("user_view") && {
+    role?.RolePermissions?.includes("user_view") && {
       link: "/user",
       icon: "/icons/2user.svg",
       label: "Người dùng",
     },
-    role?.role?.RolePermissions?.includes("admin_view") && {
+    role?.RolePermissions?.includes("admin_view") && {
       link: "/admin",
       icon: "/icons/work.svg",
       label: "Quản trị viên",
     },
-    role?.role?.RolePermissions?.includes("payment_view") && {
+    role?.RolePermissions?.includes("payment_view") && {
       link: "/payment",
       icon: "/icons/paper.svg",
       label: "Hóa đơn",
     },
-    role?.role?.RolePermissions?.includes("voucher_view") && {
+    role?.RolePermissions?.includes("voucher_view") && {
       link: "/voucher",
       icon: "/icons/discount.svg",
       label: "Voucher",
     },
-    role?.role?.RolePermissions?.includes("banner_view") && {
+    role?.RolePermissions?.includes("banner_view") && {
       link: "/banner",
       icon: "/icons/banner.svg",
       label: "Banner",
     },
-    role?.role?.RolePermissions?.includes("role_view") && {
+    role?.RolePermissions?.includes("role_view") && {
       link: "/authorities",
       icon: "/icons/setting.svg",
       label: "Phân quyền",
@@ -94,7 +94,7 @@ export default function SideBar({ headerHeight }) {
     //   icon: "/icons/notification.svg",
     //   label: "Thông báo",
     // },
-    role?.role?.RolePermissions?.includes("setting_view") && {
+    role?.RolePermissions?.includes("setting_view") && {
       link: "/setting",
       icon: "/icons/category.svg",
       label: "Thông tin web",
