@@ -16,7 +16,7 @@ export const PopupConfirmCancel = ({ isVisible, content, confirm, onConfirm, onC
             <button
               className="w-[150px] h-[60px] bg-[#DF322B] text-white rounded-lg flex justify-center items-center hover:bg-red-700"
               onClick={onConfirm}
-            >
+            >Có
               {confirm}
             </button>
             <button
