@@ -39,7 +39,7 @@ function CourseTable() {
     return <Loading />;
   } else
     return (
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
         <SearchBar />
         <CourseHeader />
         <div className="flex flex-col pb-16 mt-6 w-full max-md:max-w-full">
@@ -48,19 +48,19 @@ function CourseTable() {
           </div> */}
 
           {/* Header Bảng */}
-          <div className="flex shrink overflow-hidden w-full rounded-t-3xl mt-3 bg-[#6C8299] min-h-[70px] max-md:max-w-full">
-            <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3 bg-[#EBF1F9]">
+          <div className="flex shrink overflow-hidden w-full rounded-t-3xl mt-3 bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:max-w-full">
+            <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] gap-3 justify-center items-center px-3 bg-[#EBF1F9]">
               <span className="text-center">STT</span>
             </div>
-            <div className="flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 text-white">
+            <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center items-center px-3 text-white">
               <span className="text-center">Tên</span>
             </div>
-            <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3 bg-[#EBF1F9] ">
+            <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] gap-3 justify-center items-center px-3 bg-[#EBF1F9] ">
               <span className="text-center">Số khóa học</span>
             </div>
             <button
               disabled={!role?.role?.RolePermissions?.includes("course_create")}
-              className={`flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 text-white ${
+              className={`flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center items-center px-3 text-white ${
                 role?.role?.RolePermissions?.includes("course_edit")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"
@@ -74,7 +74,7 @@ function CourseTable() {
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/e8c4b8a9ea3e04a3f28765b51e5832394bc0fb959c8132d5d62ff26652eebc19?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
                   alt="Icon"
-                  className="w-[30px] aspect-square"
+                  className="w-[1.875rem] self-stretch shrink-0 aspect-square"
                 />
                 <span className="text-center max-md:hidden">Danh mục mới</span>
               </div>

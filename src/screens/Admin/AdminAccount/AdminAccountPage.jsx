@@ -181,13 +181,13 @@ function ProfileCard() {
                 </p>
                 <div className="mt-4 flex gap-3 justify-center items-center rounded-lg text-[1.5rem] max-md:text-[1.125rem]">
                   <button
-                    className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem]  bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
+                    className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
                     onClick={handleConfirmUpdate}
                   >
                     Có
                   </button>
                   <button
-                    className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem]  bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
+                    className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
                     onClick={closePopup}
                   >
                     Không
