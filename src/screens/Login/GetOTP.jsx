@@ -31,7 +31,7 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
         console.log(result);
         setResult(result.message);
         if (result.code === 200) {
-          Cookies.set("user_token", result.token, {
+          Cookies.set("token", result.token, {
             expires: 7, // số ngày hết hạn (ở đây là 7 ngày)
             path: "/", // cookie có hiệu lực toàn site
             sameSite: "Lax", // tăng bảo mật, tránh CSRF
