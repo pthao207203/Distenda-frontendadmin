@@ -11,7 +11,7 @@ import HistoryButton from "../../components/HistoryButton";
 import CourseHistory from "./components/CourseHistory";
 
 function CourseList() {
-  const [allCourses, setAllCourses] = useState([]);         // Dữ liệu gốc từ API
+  const [allCourses, setAllCourses] = useState([]); // Dữ liệu gốc từ API
   const [filteredCourses, setFilteredCourses] = useState([]); // Dữ liệu sau khi lọc
   const [loading, setLoading] = useState(false);
   const { role } = useRole();
@@ -24,7 +24,7 @@ function CourseList() {
       const result = await coursesController(setLoading);
       if (result) {
         setAllCourses(result);
-        setFilteredCourses(result);   // Ban đầu hiển thị toàn bộ
+        setFilteredCourses(result); // Ban đầu hiển thị toàn bộ
       }
     }
 
@@ -34,16 +34,19 @@ function CourseList() {
   // Hàm xử lý tìm kiếm realtime
   const handleSearch = (value) => {
     const keyword = value.toLowerCase();
-  
-    const filtered = allCourses.filter(course => {
+
+    const filtered = allCourses.filter((course) => {
       const courseName = course.CourseName?.toLowerCase() || "";
       const instructor = course.intructorFullName?.toLowerCase() || "";
-      const price = (course.CoursePrice * ((100 - course.CourseDiscount) / 100)).toString();
+      const price = (
+        course.CoursePrice *
+        ((100 - course.CourseDiscount) / 100)
+      ).toString();
       const profit = (course.CourseProfit * course.CourseBought).toString();
       const bought = course.CourseBought?.toString() || "";
-  
+
       const statusText = course.CourseStatus === 1 ? "hoạt động" : "tạm dừng";
-  
+
       return (
         courseName.includes(keyword) ||
         instructor.includes(keyword) ||
@@ -53,10 +56,9 @@ function CourseList() {
         statusText.includes(keyword)
       );
     });
-  
+
     setFilteredCourses(filtered);
   };
-  
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
@@ -77,14 +79,12 @@ function CourseList() {
       </Helmet>
       <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         <SearchBar onSearch={handleSearch} />
-        
-        {role?.role?.RolePermissions?.includes("course_view") && (
-          <section className="flex flex-wrap gap-3 items-start self-end mt-3 text-2xl text-white max-md:max-w-full">
-            <ActionButton text="Danh mục" />
-            <ActionButton text="Thêm khóa học" />
-            <HistoryButton onClick={handleHistoryRequest} />
-          </section>
-        )}
+
+        <section className="flex flex-wrap gap-3 items-start self-end mt-3 text-2xl text-white max-md:max-w-full">
+          <ActionButton text="Danh mục" role={role} />
+          <ActionButton text="Thêm khóa học" role={role} />
+          <HistoryButton onClick={handleHistoryRequest} />
+        </section>
 
         <section className="flex flex-col pb-16 mt-3 w-full text-neutral-900 max-md:max-w-full">
           <div className="self-stretch text-right text-[#131313] text-xl font-medium leading-tight">

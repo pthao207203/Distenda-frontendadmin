@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import PersonalInfo from "./components/PersonalInfo";
@@ -15,6 +15,7 @@ import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import AdminDetailHistory from "./components/AdminDetailHistory";
+import { useRole } from "../../../layouts/AppContext";
 
 function AdminDetailPage() {
   const navigate = useNavigate();
@@ -30,19 +31,18 @@ function AdminDetailPage() {
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-
   const [selectedFileName, setSelectedFileName] = useState("");
+  const { role } = useRole();
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const result = await adminDetailController(AdminID, setLoading);
+      const result = await adminDetailController(AdminID);
 
       if (result) {
         setData(result);
 
         setSelectedFileName(result.AdminAvatar);
-        setImageUrl(result.AdminAvatar);
         setRoles((prevRoles) => [
           { _id: "", RoleName: "Chọn chức vụ", disabled: true },
           ...result.roles,
@@ -59,7 +59,7 @@ function AdminDetailPage() {
   }
 
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
     console.log("selectedFileName", selectedFileName);
     if (selectedFileName) {
@@ -121,26 +121,23 @@ function AdminDetailPage() {
     if (action === "update") {
       setLoading(true);
       const newData = await handleSubmit();
-      setLoading(false);
       console.log("newData", newData);
-      const result = await adminUpdatePostController(
-        setLoading,
-        data._id,
-        newData
-      );
+      const result = await adminUpdatePostController(data._id, newData);
+      setLoading(false);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
     } else {
-      console.log("xoas");
-      const result = await adminDeleteController(setLoading, data._id);
+      setLoading(true);
+      const result = await adminDeleteController(data._id);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
+      setLoading(false);
     }
   };
 
@@ -203,7 +200,12 @@ function AdminDetailPage() {
           {/* Nút hành động */}
           <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[15rem]">
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem]"
+              disabled={!role?.RolePermissions?.includes("admin_edit")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] min-h-[3.75rem] max-md:min-h-[2.75rem] ${
+                role?.RolePermissions?.includes("admin_edit")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("update")}
             >
               <img
@@ -215,7 +217,12 @@ function AdminDetailPage() {
               <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap bg-red-600 rounded-lg  min-h-[3.75rem] max-md:min-h-[2.75rem]"
+              disabled={!role?.RolePermissions?.includes("admin_delete")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap bg-red-600 rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
+                role?.RolePermissions?.includes("admin_delete")
+                  ? "bg-[#DF322B] hover:bg-[#902723]"
+                  : "bg-[#ffd1d1] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("delete")}
             >
               <img

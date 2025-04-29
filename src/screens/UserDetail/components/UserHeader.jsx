@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import BlockUserModal from './BlockUserModal';
-import Loading from '../../../components/Loading'
-import { userUnblockController, userBlockController } from "../../../controllers/user.controller"
+import React, { useState } from "react";
+import BlockUserModal from "./BlockUserModal";
+import Loading from "../../../components/Loading";
+import {
+  userUnblockController,
+  userBlockController,
+} from "../../../controllers/user.controller";
 
-function UserHeader({ data }) {
+function UserHeader({ data, role }) {
   // State để kiểm soát hiển thị popup và trạng thái chặn người dùng
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(!data?.UserStatus); // Trạng thái chặn người dùng
 
@@ -21,7 +24,7 @@ function UserHeader({ data }) {
 
   // Hàm xử lý khi xác nhận chặn người dùng
   const handleBlockUser = async () => {
-    const result = await userBlockController(setLoading, data._id)
+    const result = await userBlockController(setLoading, data._id);
     if (result.code === 200) {
       setIsBlocked(true); // Chuyển trạng thái thành "đã chặn"
       setIsPopupVisible(false); // Đóng popup
@@ -31,7 +34,7 @@ function UserHeader({ data }) {
   // Hàm xử lý khi xác nhận bỏ chặn người dùng
   const handleUnblockUser = async () => {
     // Gọi API đổi trạng thái
-    const result = await userUnblockController(setLoading, data._id)
+    const result = await userUnblockController(setLoading, data._id);
     if (result.code === 200) {
       setIsBlocked(false); // Chuyển trạng thái thành "không bị chặn"
       setIsPopupVisible(false); // Đóng popup
@@ -39,16 +42,18 @@ function UserHeader({ data }) {
   };
 
   if (loading) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
 
   return (
     <div className="flex flex-wrap gap-3 items-center w-full font-medium max-md:max-w-full">
       <img
         loading="lazy"
-        src={data?.UserAvatar ? data.UserAvatar : "https://cdn.builder.io/api/v1/image/assets/TEMP/bbae0514e8058efa2ff3c88f32951fbd7beba3099187677c6ba1c2f96547ea3f?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"}
+        src={
+          data?.UserAvatar
+            ? data.UserAvatar
+            : "https://cdn.builder.io/api/v1/image/assets/TEMP/bbae0514e8058efa2ff3c88f32951fbd7beba3099187677c6ba1c2f96547ea3f?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
+        }
         alt="User profile avatar"
         className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[9rem]"
       />
@@ -74,7 +79,12 @@ function UserHeader({ data }) {
       {/* Nút chặn hoặc bỏ chặn */}
       {isBlocked ? (
         <button
-          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#6C8299] rounded-lg min-h-[2rem] hover:bg-slate-700"
+          disabled={!role?.RolePermissions?.includes("user_edit")}
+          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap rounded-lg min-h-[2rem] ${
+            role?.RolePermissions?.includes("user_edit")
+              ? "bg-[#6C8299] hover:bg-[#55657a]"
+              : "bg-[#CDD5DF] cursor-not-allowed"
+          }`}
           aria-label="Block user"
           onClick={showPopup} // Mở popup để xác nhận bỏ chặn
         >
@@ -87,7 +97,12 @@ function UserHeader({ data }) {
         </button>
       ) : (
         <button
-          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#DF322B] rounded-lg min-h-[2rem] hover:bg-red-700"
+          disabled={!role?.RolePermissions?.includes("user_edit")}
+          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap rounded-lg min-h-[46px] ${
+            role?.RolePermissions?.includes("user_edit")
+              ? "bg-[#DF322B] hover:bg-[#902723]"
+              : "bg-[#ffd1d1] cursor-not-allowed"
+          }`}
           aria-label="Block user"
           onClick={showPopup} // Mở popup để xác nhận chặn
         >
@@ -103,9 +118,9 @@ function UserHeader({ data }) {
       {/* Sử dụng BlockUserModal */}
       {isPopupVisible && (
         <BlockUserModal
-          isBlocked={isBlocked}         // Truyền trạng thái isBlocked để biết modal dùng cho chặn hay bỏ chặn
+          isBlocked={isBlocked} // Truyền trạng thái isBlocked để biết modal dùng cho chặn hay bỏ chặn
           onConfirm={isBlocked ? handleUnblockUser : handleBlockUser} // Xác nhận chặn hoặc bỏ chặn
-          onCancel={closePopup}         // Đóng popup khi hủy
+          onCancel={closePopup} // Đóng popup khi hủy
         />
       )}
     </div>

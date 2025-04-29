@@ -1,7 +1,21 @@
-export default function EditButton({ onClick }) {
+export default function EditButton({ onClick, role }) {
   return (
     <div className="flex gap-2.5 items-center self-stretch my-auto font-medium leading-none text-white">
-      <button onClick={onClick} className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-slate-500 min-h-[46px]">
+      <button
+        disabled={
+          !(
+            role?.RolePermissions?.includes("course_edit") ||
+            role?.RolePermissions?.includes("course_only")
+          )
+        }
+        onClick={onClick}
+        className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] ${
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
+            ? "bg-[#6C8299] hover:bg-[#55657a]"
+            : "bg-[#CDD5DF] cursor-not-allowed"
+        }`}
+      >
         <img
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/633de2d3639375a6ff1a98039c27b613549cb8289fb7e40b9d60eb0e5e6224cc?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"

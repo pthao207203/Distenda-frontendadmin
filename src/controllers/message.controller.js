@@ -1,12 +1,11 @@
 import {
-    fetchUsers,
-    getMessages,
-    createMessage,
-    markMessageAsRead,
-    markAllMessagesFromUserAsRead
-  } from '../services/message.service';
-  
-  // [GET] Lấy danh sách học viên đã nhắn tin với admin
+  fetchUsers,
+  getMessages,
+  createMessage,
+  markAllMessagesFromUserAsRead
+} from '../services/message.service';
+
+// [GET] Lấy danh sách học viên đã nhắn tin với admin
 export const loadUsersMessagedAdmin = async (userToken, setUsers) => {
   try {
     const res = await fetchUsers(userToken);
@@ -47,4 +46,3 @@ export const updateMessageStatus = async (userId) => {
 };
 
 
-  

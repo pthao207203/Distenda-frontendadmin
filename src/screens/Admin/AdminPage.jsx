@@ -10,12 +10,14 @@ import HistoryButton from "../../components/HistoryButton";
 import AdminHistory from "./components/AdminHistory";
 
 import moment from "moment";
+import { useRole } from "../../layouts/AppContext";
 
 function AdminPage() {
   const [allAdmins, setAllAdmins] = useState([]);
   const [filteredAdmins, setFilteredAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const { role } = useRole();
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
@@ -74,7 +76,7 @@ function AdminPage() {
       </Helmet>
       <main className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <section className="flex gap-3">
-          <AddAccountButton />
+          <AddAccountButton role={role} />
           <HistoryButton onClick={handleHistoryRequest} />
         </section>
         <section className="flex flex-wrap gap-3 mt-[1.5rem] max-md:max-w-full">

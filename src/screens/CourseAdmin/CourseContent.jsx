@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CourseHeader } from "./CourseHeader";
-import { NavigationBreadcrumb } from "./NavigationBreadcrumb";
 import { VideoSection } from "./VideoSection";
 import {
   videoDetailController,
@@ -15,6 +13,7 @@ import { PopupConfirm } from "../../components/PopupConfirm";
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import { PopupLoading } from "../../components/PopupLoading";
+import { useRole } from "../../layouts/AppContext";
 
 export default function CourseContent() {
   const [data, setData] = useState();
@@ -22,6 +21,7 @@ export default function CourseContent() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const editorRef = useRef();
+  const { role } = useRole();
 
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -31,22 +31,27 @@ export default function CourseContent() {
 
   const { VideoID } = useParams();
 
-  const onClick = () => {
-    navigate(`/courses/lesson/video/edit/${VideoID}`);
-  };
+  useEffect(() => {
+    if (
+      role &&
+      !role?.RolePermissions?.includes("course_edit") &&
+      !role?.RolePermissions?.includes("course_only")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/courses");
+    }
+  }, [navigate, role]);
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("vaof")
       const result = await videoDetailController(setLoading, VideoID);
-      // console.log(result)
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
     }
 
     fetchData();
-  }, []);
+  }, [VideoID]);
 
   const handleChange = (e) => {
     // Kiểm tra nếu e.target tồn tại (dành cho input và select)
@@ -70,10 +75,8 @@ export default function CourseContent() {
       setPopupLoading(true);
       // Upload video nếu người dùng đã chọn
       let uploadedVideoUrl = "";
-      console.log("Uploaded Image URL:", selectedFileName);
       if (selectedFileName) {
         uploadedVideoUrl = await uploadVideo(selectedFileName);
-        console.log("Uploaded Image URL:", uploadedVideoUrl);
         setData((prev) => ({
           ...prev,
           VideoUrl: uploadedVideoUrl,

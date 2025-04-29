@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"
-import FormSection from './FormSection';
-import ImageUpload from './ImageUpload';
-import uploadImage from "../../components/UploadImage"
-import { courseCreateController, courseCreatePostController } from "../../controllers/course.controller";
+import { useNavigate } from "react-router-dom";
+import FormSection from "./FormSection";
+import ImageUpload from "./ImageUpload";
+import uploadImage from "../../components/UploadImage";
+import {
+  courseCreateController,
+  courseCreatePostController,
+} from "../../controllers/course.controller";
 
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
@@ -17,10 +20,9 @@ function CourseForm() {
   const [category, setCategory] = useState();
   const [intructor, setIntructor] = useState();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const editorRef = useRef(null);
-
 
   const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -31,12 +33,12 @@ function CourseForm() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageURL = URL.createObjectURL(file);
+      setImageUrl(URL.createObjectURL(file));
       // setImageSrc(imageURL);
       setSelectedFileName(file); // Lưu tên tệp đã chọn
 
       if (uploadImagePreviewRef.current) {
-        uploadImagePreviewRef.current.src = imageURL;
+        uploadImagePreviewRef.current.src = imageUrl;
       }
     }
   };
@@ -44,9 +46,9 @@ function CourseForm() {
   useEffect(() => {
     async function fetchData() {
       // console.log("vaof")
-      setLoading(true)
+      setLoading(true);
       const result = await courseCreateController(setLoading);
-      setLoading(false)
+      setLoading(false);
       // console.log(result)
       if (result) {
         setCategory((prevRoles) => [
@@ -65,11 +67,11 @@ function CourseForm() {
   }, []);
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     let uploadedImageUrl = data.BannerPicture;
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
-      uploadedImageUrl = await uploadImage(selectedFileName);;
+      uploadedImageUrl = await uploadImage(selectedFileName);
       console.log("Uploaded Image URL:", uploadedImageUrl);
     }
     const updatedData = {
@@ -78,8 +80,8 @@ function CourseForm() {
     };
 
     console.log("Data sent to ActionButton:", updatedData);
-    setData(updatedData)
-    const result = await courseCreatePostController(setLoading, updatedData)
+    setData(updatedData);
+    const result = await courseCreatePostController(setLoading, updatedData);
     if (result.code === 200) {
       setSuccessPopupVisible(true);
     } else {
@@ -89,7 +91,7 @@ function CourseForm() {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false);
-    navigate('/courses')
+    navigate("/courses");
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
@@ -112,7 +114,7 @@ function CourseForm() {
         [e.id]: e.getContent(), // Lấy nội dung từ TinyMCE và cập nhật theo id
       }));
     }
-  }
+  };
 
   // console.log(data)
 
@@ -125,7 +127,10 @@ function CourseForm() {
           <div className="flex flex-wrap gap-5 justify-between items-start w-full text-xl font-medium leading-none max-w-screen max-md:max-w-full">
             <div className="flex flex-col mt-2.5 text-neutral-900 max-md:max-w-full">
               <label htmlFor="CourseName" className="w-[860px]">
-                Tên khóa học <span className="text-red-600" aria-hidden="true">*</span>
+                Tên khóa học{" "}
+                <span className="text-red-600" aria-hidden="true">
+                  *
+                </span>
               </label>
               <input
                 id="CourseName"
@@ -147,7 +152,9 @@ function CourseForm() {
                 alt=""
                 className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
               />
-              <span className="gap-3 self-stretch my-auto text-2xl">Tạo khóa học</span>
+              <span className="gap-3 self-stretch my-auto text-2xl">
+                Tạo khóa học
+              </span>
             </button>
           </div>
 
@@ -155,7 +162,10 @@ function CourseForm() {
             <div className="flex flex-col space-y-7">
               <div className="flex flex-col w-full text-xl font-medium leading-none text-neutral-900">
                 <label htmlFor="CourseCategory" className="max-md:max-w-full">
-                  Phân loại <span className="text-red-600" aria-hidden="true">*</span>
+                  Phân loại{" "}
+                  <span className="text-red-600" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <div className="flex gap-2.5 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 h-[63px]">
                   <select
@@ -164,11 +174,18 @@ function CourseForm() {
                     onChange={(e) => handleChange(e)} // Kích hoạt hàm onChange khi chọn
                     className="z-0 flex-1 shrink my-auto basis-0 px-3 max-md:max-w-full bg-transparent border-none outline-none"
                   >
-                    {category && category.length > 0 && category.map((option, index) => (
-                      <option key={index} value={option._id} disabled={option.disabled} selected={option._id === ""}>
-                        {option.CategoryName}
-                      </option>
-                    ))}
+                    {category &&
+                      category.length > 0 &&
+                      category.map((option, index) => (
+                        <option
+                          key={index}
+                          value={option._id}
+                          disabled={option.disabled}
+                          selected={option._id === ""}
+                        >
+                          {option.CategoryName}
+                        </option>
+                      ))}
                   </select>
                 </div>
               </div>
@@ -182,7 +199,10 @@ function CourseForm() {
           /> */}
               <div className="flex flex-col w-full text-xl font-medium leading-none text-neutral-900">
                 <label htmlFor="CourseIntructor" className="max-md:max-w-full">
-                  Giảng viên <span className="text-red-600" aria-hidden="true">*</span>
+                  Giảng viên{" "}
+                  <span className="text-red-600" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <div className="flex gap-2.5 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 h-[63px]">
                   <select
@@ -191,11 +211,18 @@ function CourseForm() {
                     onChange={(e) => handleChange(e)} // Kích hoạt hàm onChange khi chọn
                     className="z-0 flex-1 shrink my-auto basis-0 px-3 max-md:max-w-full bg-transparent border-none outline-none"
                   >
-                    {intructor && intructor.length > 0 && intructor.map((option, index) => (
-                      <option key={index} value={option._id} disabled={option.disabled} selected={option._id === ""}>
-                        {option.AdminFullName}
-                      </option>
-                    ))}
+                    {intructor &&
+                      intructor.length > 0 &&
+                      intructor.map((option, index) => (
+                        <option
+                          key={index}
+                          value={option._id}
+                          disabled={option.disabled}
+                          selected={option._id === ""}
+                        >
+                          {option.AdminFullName}
+                        </option>
+                      ))}
                   </select>
                 </div>
               </div>

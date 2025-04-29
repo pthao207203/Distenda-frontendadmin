@@ -15,7 +15,7 @@ function AdminTable(admin) {
       {/* Avatar */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center">
         <img
-          src={admin.AdminAvatar}
+          src={admin.AdminAvatar ? admin.AdminAvatar : "/profile.svg"}
           alt="Admin Avatar"
           className="object-cover rounded-full w-[3.5rem] h-[3.5rem]"
         />

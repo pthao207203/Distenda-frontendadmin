@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Loading from "../../../components/Loading";
 import { lessonHistoryController } from "../../../controllers/history.controller";
 import { useParams } from "react-router-dom";
 
@@ -75,6 +74,9 @@ export default function CourseDetailHistory({ onClose }) {
     );
   });
 
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
     <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">
       {/* Nút đóng popup */}

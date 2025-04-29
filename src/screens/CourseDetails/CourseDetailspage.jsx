@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CourseHeader } from "./components/CourseHeader";
 import { CourseImage } from "./components/CourseImage";
 import { CourseInfo } from "./components/CourseInfo";
@@ -10,6 +9,7 @@ import { courseDetailController } from "../../controllers/course.controller";
 import CourseDetailHistory from "./components/CourseDetailHistory";
 
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
 
 function CourseDetails() {
   const [data, setData] = useState({});
@@ -19,6 +19,7 @@ function CourseDetails() {
   const [loading, setLoading] = useState(false);
 
   const editorRef = useRef(null);
+  const { role } = useRole();
 
   const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -40,6 +41,7 @@ function CourseDetails() {
   };
 
   const { CourseID } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -49,37 +51,44 @@ function CourseDetails() {
       setLoading(false);
       // console.log(result)
       if (result) {
+        if (
+          !role?.RolePermissions?.includes("course_view") &&
+          result.course.CourseIntructor.toString() !== result.user
+        ) {
+          console.log("Không có quyền, chuyển về trang chủ");
+          navigate("/courses");
+        }
         setCategory((prevRoles) => [
           { _id: "", CategoryName: "Chọn danh mục", disabled: true },
-          ...result.categories,
+          ...result.course.categories,
         ]);
         setIntructor((prevRoles) => [
           { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
-          ...result.intructors,
+          ...result.course.intructors,
         ]);
-        setSelectedFileName(result.CoursePicture);
-        setImageUrl(result.CoursePicture);
-        setData(result);
+        setSelectedFileName(result.course.CoursePicture);
+        setImageUrl(result.course.CoursePicture);
+        setData(result.course);
       }
     }
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [role]);
+  console.log(data);
   const handleSubmit = async () => {
     let uploadedImageUrl = data.BannerPicture;
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
       uploadedImageUrl = await uploadImage(selectedFileName);
-      console.log("Uploaded Image URL:", uploadedImageUrl);
+      // console.log("Uploaded Image URL:", uploadedImageUrl);
     }
     const updatedData = {
       ...data,
       CoursePicture: uploadedImageUrl,
     };
 
-    console.log("Data sent to ActionButton:", updatedData);
+    // console.log("Data sent to ActionButton:", updatedData);
     setData(updatedData);
     return updatedData;
   };
@@ -88,25 +97,23 @@ function CourseDetails() {
     return <Loading />;
   }
   console.log("coursedetail => ", data);
-  console.log("categories => ", category);
-  console.log("intructors => ", intructor);
+  // console.log("categories => ", category);
+  // console.log("intructors => ", intructor);
 
-  // Hàm cập nhật dữ liệu khi người dùng nhập vào
-  const handleChange = (e) => {
-    // Kiểm tra nếu e.target tồn tại (dành cho input và select)
-    if (e?.target) {
-      const { id, value } = e.target;
-      setData((prevData) => ({
-        ...prevData,
-        [id]: value, // Cập nhật theo id của input
-      }));
-    } else if (e) {
-      // Nếu không có e.target (TinyMCE)
-      setData((prevData) => ({
-        ...prevData,
-        [e.id]: e.getContent(), // Lấy nội dung từ TinyMCE và cập nhật theo id
-      }));
-    }
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleEditorChange = (content, editor) => {
+    const id = editor.id;
+    setData((prevData) => ({
+      ...prevData,
+      [id]: content,
+    }));
   };
 
   const handleToggle = () => {
@@ -138,7 +145,7 @@ function CourseDetails() {
   return (
     <>
       <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
-        <CourseHeader data={data} handleSubmit={handleSubmit} />
+        <CourseHeader data={data} handleSubmit={handleSubmit} role={role} />
         <CourseImage
           data={data}
           uploadImageInputRef={uploadImageInputRef}
@@ -146,16 +153,19 @@ function CourseDetails() {
           handleImageChange={handleImageChange}
           imageUrl={imageUrl}
           handleHistoryRequest={handleHistoryRequest}
+          role={role}
         />
         <CourseInfo
           data={data}
           category={category}
           intructor={intructor}
-          handleChange={handleChange}
+          handleInputChange={handleInputChange}
+          handleEditorChange={handleEditorChange}
           handleToggle={handleToggle}
           editorRef={editorRef}
+          role={role}
         />
-        <ChapterList data={data} lessonChange={lessonChange} />
+        <ChapterList data={data} lessonChange={lessonChange} role={role} />
       </div>
       {isHistoryVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-10 overflow-hidden">
