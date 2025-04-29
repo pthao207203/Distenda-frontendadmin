@@ -7,10 +7,21 @@ import SearchBar from "../../layouts/private/SearchBar";
 import { payController } from "../../controllers/pay.controller";
 import Loading from "../../components/Loading";
 import moment from 'moment';
+import PaginationControl from "./components/PaginationControl";
+
 
 function PaymentTable() {
   const [allPayments, setAllPayments] = useState([]);
   const [filteredPayments, setFilteredPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalPage = Math.ceil(filteredPayments.length / itemsPerPage);
+  const paginatedPayments = filteredPayments.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Sử dụng hook điều hướng
@@ -50,6 +61,7 @@ function PaymentTable() {
     });
 
     setFilteredPayments(filtered);
+    setCurrentPage(1); // Reset về trang đầu tiên khi tìm kiếm
   };
 
 
@@ -77,8 +89,8 @@ function PaymentTable() {
         </div>
         <div className="flex flex-col pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
           <TableHeader />
-          {filteredPayments.length > 0 ? (
-            filteredPayments.map((pay, index) => (
+          {paginatedPayments.length > 0 ? (
+            paginatedPayments.map((pay, index) => (
               <PaymentRow key={index} pay={pay} onRowClick={handleRowClick} />
             ))
           ) : (
@@ -86,7 +98,16 @@ function PaymentTable() {
           )}
 
         </div>
+        {totalPage > 1 && (
+  <PaginationControl
+    currentPage={currentPage}
+    onPageChange={(page) => setCurrentPage(page)}
+  />
+)}
+
+
       </div>
+      
     </>
   );
 }
