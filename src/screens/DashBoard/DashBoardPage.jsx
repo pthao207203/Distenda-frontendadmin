@@ -16,9 +16,7 @@ function DashboardPage() {
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("vaof")
       const result = await dashboardController(setLoading);
-      // console.log(result)
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
@@ -84,7 +82,6 @@ function DashboardPage() {
 
     // Biểu đồ Tỉ lệ chuyển đổi (Polar Area Chart) - Dữ liệu tĩnh
     if (chartRefDoughnut.current) {
-      console.log("dooo");
       const ctx = chartRefDoughnut.current.getContext("2d");
       const config = {
         type: "polarArea",
@@ -118,7 +115,6 @@ function DashboardPage() {
   if (loading) {
     return <Loading />;
   }
-  console.log("dashboard => ", data);
 
   const stats = [
     {
@@ -173,11 +169,6 @@ function DashboardPage() {
       iconSrc: "./icons/star.svg",
     },
   ];
-  // console.log("totalIncome", (data.totalIncome - data.totalIncomeAgo) / data.totalIncome * 100)
-  // console.log("totalProfit", stats[1].percentage)
-  // console.log("data?.totalIncome", data?.totalIncome)
-  // console.log("data?.totalIncomeAgo", data?.totalIncomeAgo)
-  console.log(chartRefDoughnut.current); // Kiểm tra xem chartRefDoughnut có giá trị hợp lệ không
 
   return (
     <>
