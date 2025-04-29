@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { loginController } from "../../controllers/auth.controller.js";
-import Cookies from "js-cookie";
 
 function GetOTP({ onNext, onSetEmail, setResult }) {
   const [formData, setFormData] = useState({
@@ -31,11 +30,6 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
         console.log(result);
         setResult(result.message);
         if (result.code === 200) {
-          Cookies.set("token", result.token, {
-            expires: 7, // số ngày hết hạn (ở đây là 7 ngày)
-            path: "/", // cookie có hiệu lực toàn site
-            sameSite: "Lax", // tăng bảo mật, tránh CSRF
-          });
           onNext(); // Chỉ gọi hàm onNext nếu OTP hợp lệ và xử lý thành công
         }
       }
