@@ -50,22 +50,22 @@ function UserHeader({ data }) {
         loading="lazy"
         src={data?.UserAvatar ? data.UserAvatar : "https://cdn.builder.io/api/v1/image/assets/TEMP/bbae0514e8058efa2ff3c88f32951fbd7beba3099187677c6ba1c2f96547ea3f?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"}
         alt="User profile avatar"
-        className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[119px]"
+        className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[9rem]"
       />
-      <div className="flex flex-col flex-1 shrink items-start self-stretch my-auto text-lg basis-6 min-w-[240px] max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink items-start self-stretch my-auto text-lg basis-[1.5rem] min-w-[15rem] max-md:max-w-full">
         <div className="flex flex-col">
-          <div className="text-2xl font-semibold text-neutral-900">
+          <div className="text-2xl font-semibold text-[#171717]">
             {data.UserFullName}
           </div>
           <div className="flex gap-1 items-center self-start mt-3">
-            <div className="self-stretch my-auto text-neutral-900 text-opacity-50">
+            <div className="self-stretch my-auto text-[#171717] text-opacity-50">
               Tổng hóa đơn:
             </div>
-            <div className="self-stretch my-auto text-neutral-900">
+            <div className="self-stretch my-auto text-[#171717]">
               {data.UserMoney ? data.UserMoney : 0}
             </div>
           </div>
-          <div className="mt-3 text-neutral-900 text-opacity-50">
+          <div className="mt-3 text-[#171717] text-opacity-50">
             {data.UserEmail}
           </div>
         </div>
@@ -74,7 +74,7 @@ function UserHeader({ data }) {
       {/* Nút chặn hoặc bỏ chặn */}
       {isBlocked ? (
         <button
-          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#6C8299] rounded-lg min-h-[46px] hover:bg-slate-00"
+          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#6C8299] rounded-lg min-h-[2rem] hover:bg-slate-700"
           aria-label="Block user"
           onClick={showPopup} // Mở popup để xác nhận bỏ chặn
         >
@@ -87,7 +87,7 @@ function UserHeader({ data }) {
         </button>
       ) : (
         <button
-          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#DF322B] rounded-lg min-h-[46px] hover:bg-red-700"
+          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#DF322B] rounded-lg min-h-[2rem] hover:bg-red-700"
           aria-label="Block user"
           onClick={showPopup} // Mở popup để xác nhận chặn
         >

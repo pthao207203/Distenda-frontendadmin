@@ -56,31 +56,30 @@ function UserTable() {
     )
   }
   console.log("users => ", filteredUsers);
-  const totalUser = filteredUsers.length;  
+  const totalUser = filteredUsers.length;
 
   return (
     <>
       <Helmet>
         <title>Người dùng</title>
       </Helmet>
-      <div className="flex flex-col flex-1 justify-center items-center shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 justify-center items-center shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <SearchBar onSearch={handleSearch} />
-        <div className="flex flex-col mt-6 w-full text-neutral-900 max-md:max-w-full">
+        <div className="flex flex-col mt-6 w-full text-[#171717] max-md:max-w-full">
           <div className="text-right max-md:max-w-full">
             Tổng số người dùng: {totalUser}
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
+        <div className="flex flex-col justify-center items-center pb-[4rem] mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
           <TableHeader />
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user, index) => (
               <TableRow key={index} {...user} />
             ))
           ) : (
-            <p className="mt-4 text-center">Không tìm thấy người dùng nào.</p>
+            <p className="mt-[1rem] text-center">Không tìm thấy người dùng nào.</p>
           )}
         </div>
-
       </div>
     </>
   );
