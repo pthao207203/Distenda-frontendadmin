@@ -27,7 +27,9 @@ function BannerList() {
 
   useEffect(() => {
     async function fetchData() {
+
       const result = await bannersController(setLoading);
+
       if (result) {
         setAllBanners(result);
         setFilteredBanners(result);
@@ -58,7 +60,7 @@ function BannerList() {
         <Helmet>
           <title>Quản lý banner</title>
         </Helmet>
-        <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
+        <div className="flex flex-col flex-1 shrink p-16 md:text-[1.25rem] text-[1rem] font-medium bg-white basis-0 min-h-screen max-md:px-5 max-md:max-w-full">
           <SearchBar onSearch={handleSearch} />
           <div className="flex flex-col pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
             <div className="flex justify-between items-center mb-3">

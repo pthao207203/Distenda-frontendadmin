@@ -46,7 +46,7 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
     <div className="flex z-0 flex-col w-full max-md:max-w-full">
       <div className="flex flex-col w-full leading-none  max-md:max-w-full">
         <div className="flex flex-col self-center max-w-full">
-          <h2 className="flex gap-3 items-end self-center px-3 max-w-full text-3xl max-md:text-2xl font-semibold text-center text-[#14375F] font-['Montserrat'] leading-loose">
+          <h2 className="flex gap-3 items-center self-center px-3 max-w-full text-[1.875rem] max-md:text-[1.5rem] font-semibold text-center text-[#14375F] font-['Montserrat'] leading-loose">
             ĐĂNG NHẬP
           </h2>
         </div>
@@ -54,9 +54,9 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col mt-4 w-full max-md:max-w-full"
+        className="lex flex-col mt-4 w-full max-md:max-w-full"
       >
-        <div className="flex flex-col w-full text-lg max-md:text-[16px] text-[#131313]">
+        <div className="flex flex-col w-full text-[1.125rem] max-md:text-[1rem] text-[#131313]">
           <div className="flex flex-col w-full  whitespace-nowrap">
             <label htmlFor="email" className="self-start text-[#6C8299]">
               Email
@@ -76,7 +76,7 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
 
         <button
           type="submit"
-          className={`flex flex-wrap gap-5 justify-center items-center mt-4 rounded-lg w-full text-xl max-md:text-lg font-normal bg-[#6C8299] min-h-[58px] text-white max-md:max-w-full ${
+          className={`flex flex-wrap gap-5 justify-center items-center mt-4 rounded-lg w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

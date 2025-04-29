@@ -10,8 +10,8 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
   };
 
   return (
-    <div className="flex flex-wrap gap-10 items-start w-full max-md:max-w-full ">
-      <div className="flex flex-wrap flex-1 shrink gap-3 items-center basis-4 min-w-[240px] max-md:max-w-full">
+    <div className="flex flex-wrap gap-[1.5rem] items-start w-full max-md:max-w-full ">
+      <div className="flex flex-wrap flex-1 shrink gap-3 items-center basis-4 min-w-[15rem] max-md:max-w-full">
         <div className="flex flex-col">
           {/* Ảnh đại diện */}
           <img
@@ -19,7 +19,7 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
             loading="lazy"
             src={avatarSrc}
             alt={`Profile picture of ${name}`}
-            className="object-cover shrink-0 self-stretch my-auto aspect-square rounded-full w-[119px] h-[119px] cursor-pointer"
+            className="object-cover shrink-0 self-stretch my-auto aspect-square rounded-full w-[7.5rem] max-md:w-[4rem]   cursor-pointer"
             onClick={handleImageClick} // Gọi hàm khi nhấp vào ảnh
           />
           {/* Input file ẩn */}
@@ -33,8 +33,8 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
         </div>
         <div className="flex flex-col self-stretch my-auto">
           <div className="flex flex-col">
-            <div className="text-2xl font-semibold text-neutral-900">{name}</div>
-            <div className="mt-3 text-lg font-medium text-neutral-900 text-opacity-50">
+            <div className="text-[1.5rem] max-md:text-[1.25rem] font-semibold text-neutral-900">{name}</div>
+            <div className="mt-3 text-[1.125rem] max-md:text-[1rem] font-medium text-neutral-900 text-opacity-50">
               {email}
             </div>
           </div>
@@ -42,7 +42,7 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
       </div>
       {/* Nút Cập nhật */}
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium leading-none text-white rounded-lg bg-[#6C8299] min-h-[46px]"
+        className="flex gap-3 justify-center items-center px-[0.75rem] py-[0.75rem] max-md:px-[0.5rem] max-md:py-[0.5rem] text-[1.25rem] max-md:text-[1rem] font-medium text-white rounded-lg bg-[#6C8299] w-fit"
         onClick={openPopup} // Gọi hàm mở popup
         tabIndex="0"
       >
@@ -50,9 +50,9 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
           loading="lazy"
           src={updateIconSrc}
           alt=""
-          className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+          className="object-contain shrink-0 self-center my-auto w-[1.5rem] aspect-square"
         />
-        <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
+        <span className="gap-2.5 self-center text-center my-auto">Cập nhật</span>
       </button>
     </div>
   );

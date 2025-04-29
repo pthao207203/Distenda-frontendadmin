@@ -34,13 +34,22 @@ export async function vouchersController(setLoading) {
     setLoading(true);
     const result = await vouchersService();  // Gọi API để lấy dữ liệu
     console.log("API response:", result);
+
+    // Lọc bỏ voucher bị xóa
+    const activeVouchers = result.filter(voucher => {
+      return voucher.status === 1 && !voucher.isDeleted;
+    });
+
+    console.log("Danh sách voucher hợp lệ:", activeVouchers);
     setLoading(false);
-    return result;
+    return activeVouchers;
   } catch (err) {
     console.error("Lỗi khi gọi API:", err);
     setLoading(false);
+    return [];  // Trả về mảng rỗng nếu lỗi
   }
 }
+
 
 // Tạo voucher
 export async function voucherCreateController(setLoading) {

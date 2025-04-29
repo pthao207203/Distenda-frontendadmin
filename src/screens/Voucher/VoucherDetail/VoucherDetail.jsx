@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Lấy VoucherID từ URL
-import VoucherInfo from "./components/VoucherInfo"; // Hiển thị thông tin voucher
+import VoucherInfoUpdate from "./components/VoucherInfoUpdate"; // Component cập nhật voucher
 import LinkedCourses from "./components/LinkedCourse"; // Các khóa học liên kết
 import { voucherDetailService } from "./../../../services/voucher.service.js"; // Dịch vụ lấy dữ liệu voucher chi tiết
 
@@ -25,7 +25,7 @@ function VoucherDetail() {
 
   return (
     <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
-      <VoucherInfo voucher={voucherData} /> {/* Truyền dữ liệu voucher */}
+      <VoucherInfoUpdate voucher={voucherData} />
       <LinkedCourses />
     </main>
   );

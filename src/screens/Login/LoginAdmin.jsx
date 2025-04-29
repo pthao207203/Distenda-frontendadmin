@@ -15,7 +15,7 @@ function LoginAdmin() {
         <Col
           md={10}
           lg={4}
-          className="relative flex items-center justify-center max-md:mt-10"
+          className="relative flex items-center justify-center"
         >
           {currentForm === "GetOTP" && (
             <GetOTP
