@@ -27,9 +27,9 @@ export const loginConfirmController = async (data, setSuccess, setError, navigat
       setError(result.message);
     } else {
       setSuccess(result.message || 'Đăng nhập thành công!');
-      // setTimeout(() => {
-      //   navigate('/'); // Điều hướng tới trang chủ
-      // }, 3000);
+      setTimeout(() => {
+        navigate('/'); // Điều hướng tới trang chủ
+      }, 3000);
     }
     return result;
   } catch (err) {
@@ -41,7 +41,7 @@ export const loginConfirmController = async (data, setSuccess, setError, navigat
 export const logoutController = async (navigate) => {
   try {
     await logoutService(); // Gọi service để xử lý API
-    // navigate('/login');  // Điều hướng tới trang đăng nhập
+    navigate('/login');  // Điều hướng tới trang đăng nhập
   } catch (err) {
     // setError(err); // Cập nhật lỗi nếu xảy ra
   }
