@@ -4,14 +4,16 @@ import { FileUpload } from "./components/FIleUpload";
 import { ContactInput } from "./components/Contact";
 import { SocialLink } from "./components/SocialLink";
 import { TextArea } from "./components/TextArea";
-import uploadImage from "../../components/UploadImage"
-import { settingController, settingPostController } from "../../controllers/setting.controller";
+import uploadImage from "../../components/UploadImage";
+import {
+  settingController,
+  settingPostController,
+} from "../../controllers/setting.controller";
 
 import { PopupConfirm } from "../../components/PopupConfirm";
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import Loading from "../../components/Loading";
-
 
 export default function Settingpage() {
   const [data, setData] = useState(null);
@@ -23,7 +25,6 @@ export default function Settingpage() {
   const [imageUrls, setImageUrls] = useState({}); // Lưu URLs của ảnh, key là id
   const [selectedFiles, setSelectedFiles] = useState({}); // Lưu tệp ảnh theo id
 
-
   const uploadImageInputRef = useRef({});
   const uploadImagePreviewRef = useRef({}); // Lưu trữ refs theo id
 
@@ -32,7 +33,7 @@ export default function Settingpage() {
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
 
-  // Thay đổi hình ảnh 
+  // Thay đổi hình ảnh
   const handleImageChange = (e) => {
     const { id } = e.target; // Lấy id từ input
     const file = e.target.files[0];
@@ -45,7 +46,7 @@ export default function Settingpage() {
         ...prev,
         [id]: imageURL,
       }));
-      console.log("imageURL", imageURL)
+      console.log("imageURL", imageURL);
       setSelectedFiles((prev) => ({
         ...prev,
         [id]: file,
@@ -61,7 +62,7 @@ export default function Settingpage() {
   // Lấy data từ database
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
+      setLoading(true);
       const result = await settingController(setLoading);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
@@ -76,7 +77,7 @@ export default function Settingpage() {
           WebsiteIcon: result.WebsiteIcon || "",
         });
       }
-      setLoading(false)
+      setLoading(false);
     }
 
     fetchData();
@@ -86,7 +87,7 @@ export default function Settingpage() {
   const handleSubmit = async () => {
     const updatedUrls = { ...data };
 
-    setLoading(true)
+    setLoading(true);
     for (const [id, file] of Object.entries(selectedFiles)) {
       const uploadedUrl = await uploadImage(file);
       console.log(`Uploaded Image for ${id}:`, uploadedUrl);
@@ -94,7 +95,7 @@ export default function Settingpage() {
     }
     const response = await settingPostController(updatedUrls);
 
-    setLoading(false)
+    setLoading(false);
     if (response.code === 200) {
       setSuccessPopupVisible(true);
       setData(response.updatedData);
@@ -148,10 +149,30 @@ export default function Settingpage() {
     }
   };
   const textAreas = [
-    { label: "Giới thiệu", id: "WebsiteDiscription", minHeight: 101, value: data?.WebsiteDiscription },
-    { label: "Tuyển dụng", id: "WebsiteRecruit", minHeight: 88, value: data?.WebsiteRecruit },
-    { label: "Chính sách bảo mật", id: "WebsiteSecurity", minHeight: 101, value: data?.WebsiteSecurity },
-    { label: "Hỗ trợ", id: "WebsiteSupport", minHeight: 88, value: data?.WebsiteSupport },
+    {
+      label: "Giới thiệu",
+      id: "WebsiteDiscription",
+      minHeight: 101,
+      value: data?.WebsiteDiscription,
+    },
+    {
+      label: "Tuyển dụng",
+      id: "WebsiteRecruit",
+      minHeight: 88,
+      value: data?.WebsiteRecruit,
+    },
+    {
+      label: "Chính sách bảo mật",
+      id: "WebsiteSecurity",
+      minHeight: 101,
+      value: data?.WebsiteSecurity,
+    },
+    {
+      label: "Hỗ trợ",
+      id: "WebsiteSupport",
+      minHeight: 88,
+      value: data?.WebsiteSupport,
+    },
   ];
 
   // Thao tác popup
@@ -181,7 +202,7 @@ export default function Settingpage() {
   if (loading) {
     return <Loading />;
   }
-  console.log("social => ", data)
+  console.log("social => ", data);
 
   // const socialLinks = [
   //   {
@@ -210,17 +231,16 @@ export default function Settingpage() {
   //   },
   // ];
 
-
   return (
     <>
       <Helmet>
         <title>Thông tin web</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
           <div className="flex justify-end items-center w-full">
             <button
-              className="flex gap-3 justify-center items-center px-3 font-medium leading-none text-white rounded-lg bg-[#6C8299] h-[46px] min-h-[46px]"
+              className="flex gap-[0.5rem] justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] text-[#fff] min-h-[3rem] max-md:min-h-[2rem]"
               onClick={() => handlePopup("update")} // Sửa lỗi: Truyền tham số "update"
             >
               <img
@@ -229,15 +249,18 @@ export default function Settingpage() {
                 alt=""
                 className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />
-              <span className="gap-2.5 self-stretch my-auto" >Cập nhật</span>
+              <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
           </div>
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Cài đặt chung
           </div>
           <div className="flex flex-col mt-6 w-full font-medium leading-none max-md:max-w-full">
-            <div className="flex flex-col max-w-full min-h-[91px] w-[360px]">
-              <label className="text-neutral-900 text-opacity-50" htmlFor="website-name">
+            <div className="flex flex-col max-w-full min-h-[7.75rem] w-[25rem]">
+              <label
+                className="text-[#171717] text-opacity-50"
+                htmlFor="website-name"
+              >
                 Tên website
               </label>
               <input
@@ -245,14 +268,16 @@ export default function Settingpage() {
                 type="text"
                 value={data?.WebsiteName}
                 onChange={handleChange}
-                className="flex-1 shrink gap-2.5 self-stretch p-2.5 mt-2 whitespace-nowrap rounded-lg border border-solid border-slate-500 border-opacity-80 size-full text-neutral-900"
+                className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
               />
             </div>
-            <div className="flex flex-wrap gap-3 justify-between items-start mt-8 w-full max-md:max-w-full">
+            <div className="flex flex-wrap gap-3 justify-between items-start mt-[0.5rem] w-full max-md:max-w-full">
               <FileUpload
                 label="Logo Admin"
                 id="WebsiteLogoAdmin"
-                uploadImagePreviewRef={uploadImagePreviewRef["WebsiteLogoAdmin"]}
+                uploadImagePreviewRef={
+                  uploadImagePreviewRef["WebsiteLogoAdmin"]
+                }
                 uploadImageInputRef={uploadImageInputRef["WebsiteLogoAdmin"]}
                 handleImageChange={handleImageChange}
                 imageUrl={imageUrls["WebsiteLogoAdmin"]}
@@ -267,8 +292,8 @@ export default function Settingpage() {
                 imageUrl={imageUrls["WebsiteLogoUser"]}
               />
 
-              <div className="flex flex-col min-w-[240px] max-md:max-w-full">
-                <div className="text-neutral-900 text-opacity-50 max-md:max-w-full">
+              <div className="flex flex-col min-w-[15rem] max-md:max-w-full">
+                <div className="text-[#171717] text-opacity-50 max-md:max-w-full">
                   Icon Web
                 </div>
                 <div className="flex flex-wrap gap-4 items-center mt-2 w-full text-white max-md:max-w-full">
@@ -279,9 +304,7 @@ export default function Settingpage() {
                     className="object-contain self-stretch my-auto w-[67px] h-[67px] rounded-lg bg-[#CFCFCF]"
                     ref={uploadImagePreviewRef["WebsiteIcon"]}
                   />
-                  <button
-                    className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[46px]"
-                  >
+                  <button className="flex gap-[0.25rem] justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] text-[#fff] min-h-[3rem] max-md:min-h-[2rem]">
                     <img
                       loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/b89b8bfd22bc2795389e527250a9a6d8837d50745dd80eb6ef8da7f2fb81f4a1?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
@@ -289,9 +312,7 @@ export default function Settingpage() {
                       className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                     />
                     <span className="gap-2.5 self-stretch my-auto"></span>
-                    <label htmlFor="WebsiteIcon">
-                      Chọn tệp
-                    </label>
+                    <label htmlFor="WebsiteIcon">Chọn tệp</label>
                     <input
                       type="file"
                       className="gap-2.5 self-stretch my-auto form-control-file hidden" // Ẩn input file
@@ -303,38 +324,56 @@ export default function Settingpage() {
                     />
                   </button>
                 </div>
-                {/* <div className="mt-2 text-slate-500 text-opacity-80 max-md:max-w-full">
-        Không có tệp nào được chọn
-      </div> */}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex z-0 flex-col mt-10 w-full font-medium max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-[2.5rem] w-full font-medium max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Thông tin liên hệ
           </div>
-          <div className="flex flex-wrap gap-2 justify-between items-start mt-6 w-full max-md:max-w-full">
-            <ContactInput id="WebsitePhone" label="Số điện thoại" value={data?.WebsitePhone} type="tel" handleChange={handleChange} />
-            <ContactInput id="WebsiteEmail" label="Email" value={data?.WebsiteEmail} type="email" handleChange={handleChange} />
-            <ContactInput id="WebsiteCopyright" label="Copyright" value={data?.WebsiteCopyright} handleChange={handleChange} />
+          <div className="flex flex-wrap gap-2 justify-between items-start mt-[1.5rem] w-full max-md:max-w-full">
+            <ContactInput
+              id="WebsitePhone"
+              label="Số điện thoại"
+              value={data?.WebsitePhone}
+              type="tel"
+              handleChange={handleChange}
+            />
+            <ContactInput
+              id="WebsiteEmail"
+              label="Email"
+              value={data?.WebsiteEmail}
+              type="email"
+              handleChange={handleChange}
+            />
+            <ContactInput
+              id="WebsiteCopyright"
+              label="Copyright"
+              value={data?.WebsiteCopyright}
+              handleChange={handleChange}
+            />
           </div>
 
-          {data?.WebsiteSocial && data.WebsiteSocial.map((link, index) => (
-            <SocialLink
-              key={index}
-              {...link}
-              data-index={index}
-              handleChange={(e) =>
-                handleIconChange({ ...e, target: { ...e.target, dataset: { index, key: 'Value' } } })
-              }
-            />
-          ))}
+          {data?.WebsiteSocial &&
+            data.WebsiteSocial.map((link, index) => (
+              <SocialLink
+                key={index}
+                {...link}
+                data-index={index}
+                handleChange={(e) =>
+                  handleIconChange({
+                    ...e,
+                    target: { ...e.target, dataset: { index, key: "Value" } },
+                  })
+                }
+              />
+            ))}
         </div>
 
-        <div className="flex z-0 flex-col mt-10 w-full font-medium text-neutral-900 text-opacity-50 max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-[2.5rem] w-full font-medium text-[#171717] text-opacity-50 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Về chúng tôi
           </div>
           {textAreas.slice(0, 2).map((area, index) => (
@@ -344,17 +383,18 @@ export default function Settingpage() {
               id={area.id}
               minHeight={area.minHeight}
               value={data?.[area.id] || ""}
-              handleChange={(id, value) => setData((prevData) => ({
-                ...prevData,
-                [id]: value,  // Sử dụng id làm key
-              }))}
+              handleChange={(id, value) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  [id]: value, // Sử dụng id làm key
+                }))
+              }
             />
           ))}
-
         </div>
 
-        <div className="flex z-0 flex-col pb-16 mt-10 w-full font-medium text-neutral-900 text-opacity-50 max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col pb-16 mt-10 w-full font-medium text-[#171717] text-opacity-50 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             RESOURCE
           </div>
           {textAreas.slice(2).map((area, index) => (
@@ -364,10 +404,12 @@ export default function Settingpage() {
               id={area.id}
               minHeight={area.minHeight}
               value={data?.[area.id] || ""}
-              handleChange={(id, value) => setData((prevData) => ({
-                ...prevData,
-                [id]: value,  // Sử dụng id làm key
-              }))}
+              handleChange={(id, value) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  [id]: value, // Sử dụng id làm key
+                }))
+              }
             />
           ))}
         </div>
@@ -392,7 +434,6 @@ export default function Settingpage() {
         message="Cập nhật thất bại. Vui lòng thử lại sau!"
         onClose={closeErrorPopup}
       />
-
     </>
   );
 }

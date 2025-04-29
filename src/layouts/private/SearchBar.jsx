@@ -11,7 +11,7 @@ function SearchBar({ onSearch = () => { } }) {   // Nhận prop onSearch
         <img
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/ce9d43b270ae41158192dec03af70a1a/d65b3dbcd183bd0bf43e39ea99d6c9cc3223e800f0d05d6efe18b8c004e9ec5b?apiKey=ce9d43b270ae41158192dec03af70a1a&"
-          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[24px]"
+          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[2rem]"
           alt="search-icon"
         />
         <label htmlFor="searchInput" className="sr-only">Tìm kiếm</label>

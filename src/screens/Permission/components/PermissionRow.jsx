@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 
-export default function PermissionRow({ index, permission, isFirst, roles, onPermissionChange }) {
+export default function PermissionRow({
+  index,
+  permission,
+  isFirst,
+  roles,
+  onPermissionChange,
+}) {
   // console.log(index, permission)
   const getPermission = (permission) => {
     switch (permission) {
       case 0:
-        return 'Xem';
+        return "Xem";
       case 1:
-        return 'Thêm';
+        return "Thêm";
       case 2:
-        return 'Sửa';
+        return "Sửa";
       default:
-        return 'Xoá';
+        return "Xoá";
     }
   };
   // Tạo state để lưu trạng thái của các checkbox
@@ -38,9 +44,9 @@ export default function PermissionRow({ index, permission, isFirst, roles, onPer
     const updatedStates = [...checkboxStates];
     // console.log("checkboxStates", updatedStates)
     updatedStates[roleIndex] = !updatedStates[roleIndex]; // Đảo trạng thái checkbox
-    console.log("checkboxStates", updatedStates)
+    console.log("checkboxStates", updatedStates);
     setCheckboxStates(updatedStates);
-    console.log("checkboxStates", checkboxStates)
+    console.log("checkboxStates", checkboxStates);
 
     // Gửi dữ liệu về `PermissionTable`
     const roleId = roles[roleIndex]._id; // Lấy `roleId` chính xác
@@ -48,17 +54,23 @@ export default function PermissionRow({ index, permission, isFirst, roles, onPer
   };
 
   return (
-    <div className={`flex flex-wrap w-full bg-white h-[50px] max-md: min-w-[600px] ${!isFirst ? "mt-1.5" : ""}`}>
+    <div
+      className={`flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#171717] min-h-[3.75rem] cursor-pointer ${
+        !isFirst ? "mt-[0.375rem]" : ""
+      }`}
+    >
       {/* Ô hiển thị thông tin permission */}
-      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-xl font-medium whitespace-nowrap bg-[#EBF1F9] text-neutral-900">
-        <div className="gap-2.5 self-stretch my-auto ">{getPermission(index)}</div>
+      <div className="flex basis-1/5 min-w-0 justify-center items-center p-3 bg-[#EBF1F9]">
+        <div className="gap-2.5 self-stretch my-auto">
+          {getPermission(index)}
+        </div>
       </div>
 
       {/* Các ô chứa checkbox */}
       {checkboxStates.map((isChecked, index) => (
         <div
           key={index}
-          className="flex overflow-hidden flex-1 shrink gap-2.5 justify-center items-center p-1 basis-4 h-[50px] bg-white min-w-[120px]"
+          className="flex basis-1/5 min-w-0 justify-center items-center p-3"
         >
           <div className="flex justify-center items-center w-full relative">
             {/* Checkbox chính */}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { adminHistoryController } from "../../../controllers/history.controller";
 
 function formatDate(dateStr) {
