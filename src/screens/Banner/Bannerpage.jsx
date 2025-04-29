@@ -7,6 +7,7 @@ import { bannersController } from "../../controllers/banner.controller";
 import Loading from "../../components/Loading";
 import HistoryButton from "../../components/HistoryButton";
 import BannerHistory from "./components/BannerHistory";
+import { useRole } from "../../layouts/AppContext";
 
 function BannerList() {
   const [allBanners, setAllBanners] = useState([]);
@@ -14,6 +15,7 @@ function BannerList() {
 
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const { role } = useRole();
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
@@ -40,19 +42,15 @@ function BannerList() {
   const handleSearch = (value) => {
     const keyword = value.toLowerCase();
 
-    const filtered = allBanners.filter(banner => {
+    const filtered = allBanners.filter((banner) => {
       const bannerName = banner.BannerName?.toLowerCase() || "";
       const courseName = banner.course?.CourseName?.toLowerCase() || "";
 
-      return (
-        bannerName.includes(keyword) ||
-        courseName.includes(keyword)
-      );
+      return bannerName.includes(keyword) || courseName.includes(keyword);
     });
 
     setFilteredBanners(filtered);
   };
-
 
   if (loading) {
     return <Loading />;
@@ -71,7 +69,7 @@ function BannerList() {
                 Tổng số banner: {filteredBanners.length}
               </div>
             </div>
-            <TableHeader />
+            <TableHeader role={role} />
             {filteredBanners.length > 0 ? (
               filteredBanners.map((banner, index) => (
                 <BannerRow
@@ -80,12 +78,12 @@ function BannerList() {
                   index={index + 1}
                   name={banner.BannerName}
                   linkedCourse={banner.course.CourseName}
+                  role={role}
                 />
               ))
             ) : (
               <p className="mt-4 text-center">Không tìm thấy banner nào.</p>
             )}
-
           </div>
         </div>
         {isHistoryVisible && (

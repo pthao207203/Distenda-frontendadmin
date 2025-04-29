@@ -10,6 +10,7 @@ import { courseDetailController } from "../../controllers/course.controller";
 import CourseDetailHistory from "./components/CourseDetailHistory";
 
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
 
 function CourseDetails() {
   const [data, setData] = useState({});
@@ -19,6 +20,7 @@ function CourseDetails() {
   const [loading, setLoading] = useState(false);
 
   const editorRef = useRef(null);
+  const { role } = useRole();
 
   const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -136,7 +138,7 @@ function CourseDetails() {
   return (
     <>
       <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
-        <CourseHeader data={data} handleSubmit={handleSubmit} />
+        <CourseHeader data={data} handleSubmit={handleSubmit} role={role} />
         <CourseImage
           data={data}
           uploadImageInputRef={uploadImageInputRef}
@@ -144,6 +146,7 @@ function CourseDetails() {
           handleImageChange={handleImageChange}
           imageUrl={imageUrl}
           handleHistoryRequest={handleHistoryRequest}
+          role={role}
         />
         <CourseInfo
           data={data}
@@ -153,8 +156,9 @@ function CourseDetails() {
           handleEditorChange={handleEditorChange}
           handleToggle={handleToggle}
           editorRef={editorRef}
+          role={role}
         />
-        <ChapterList data={data} lessonChange={lessonChange} />
+        <ChapterList data={data} lessonChange={lessonChange} role={role} />
       </div>
       {isHistoryVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-10 overflow-hidden">

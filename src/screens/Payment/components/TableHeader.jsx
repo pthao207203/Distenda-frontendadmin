@@ -15,7 +15,7 @@ function TableHeader() {
 
       {/* Mã khóa học */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-center">Mã khóa học</span>
+        <span className="text-center">Tên khóa học</span>
       </div>
 
       {/* Giá */}

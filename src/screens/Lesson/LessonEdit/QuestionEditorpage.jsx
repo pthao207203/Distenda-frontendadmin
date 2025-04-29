@@ -1,37 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom"
-import { exerciseDetailController, exerciseUpdatePostController } from "../../../controllers/lesson.controller"
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  exerciseDetailController,
+  exerciseUpdatePostController,
+} from "../../../controllers/lesson.controller";
 import ContentSection from "./ContentSection";
 
 import Loading from "../../../components/Loading";
 import { PopupConfirmCancel } from "../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
+import { useRole } from "../../../layouts/AppContext";
 
 function QuestionEditor() {
-  // const sections = [
-  //   {
-  //     title: "Đề bài",
-  //     content: `Given an integer, n, perform the following conditional actions:
-  //               If n is odd, print Weird
-  //               If n is even and in the inclusive range of 2 to 5, print Not Weird
-  //               If n is even and in the inclusive range of 6 to 20, print Weird
-  //               If n is even and greater than 20, print Not Weird`,
-  //   },
-  //   {
-  //     title: "Template",
-  //     content: "",
-  //   },
-  //   {
-  //     title: "Đáp án",
-  //     content: "",
-  //   },
-  // ];
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      role &&
+      role.role &&
+      !role.role.RolePermissions?.includes("course_edit")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/courses");
+    }
+  }, [navigate, role]);
+
   const { LessonID } = useParams();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
-  const editorRef = useRef()
+  const editorRef = useRef();
 
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -39,15 +37,13 @@ function QuestionEditor() {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
 
   useEffect(() => {
-    console.log("vao")
     async function fetchData() {
-      console.log("vaof")
-      setLoading(true)
+      setLoading(true);
       const result = await exerciseDetailController(setLoading, LessonID);
-      setLoading(false)
+      setLoading(false);
       // console.log(result)
       if (result) {
-        setData(result)
+        setData(result);
       }
     }
 
@@ -57,12 +53,15 @@ function QuestionEditor() {
 
   const handlePopup = async (actionType) => {
     if (actionType === "update") {
-      console.log("khong vao")
-      const result = await exerciseUpdatePostController(setLoading, LessonID, data)
+      const result = await exerciseUpdatePostController(
+        setLoading,
+        LessonID,
+        data
+      );
       if (result.code === 200) {
-        setSuccessPopupVisible(true)
+        setSuccessPopupVisible(true);
       } else {
-        setErrorPopupVisible(true)
+        setErrorPopupVisible(true);
       }
     } else if (actionType === "cancel") {
       setPopupContent(
@@ -85,7 +84,7 @@ function QuestionEditor() {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false);
-    navigate(`/courses/lesson/detail/${LessonID}`)
+    navigate(`/courses/lesson/detail/${LessonID}`);
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
@@ -110,7 +109,7 @@ function QuestionEditor() {
         ...prevData.exercise,
         ExerciseTestcase: [
           ...prevData.exercise.ExerciseTestcase,
-          { Input: '', Output: '' }, // Thêm một test case mới với input và output rỗng
+          { Input: "", Output: "" }, // Thêm một test case mới với input và output rỗng
         ],
       },
     }));
@@ -149,7 +148,7 @@ function QuestionEditor() {
       },
     }));
   };
-  console.log(data)
+  console.log(data);
   if (loading) {
     return <Loading />;
   } else

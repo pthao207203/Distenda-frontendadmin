@@ -9,14 +9,15 @@ import Loading from "../../components/Loading";
 import HistoryButton from "../../components/HistoryButton";
 import AdminHistory from "./components/AdminHistory";
 
-import moment from 'moment';
-
+import moment from "moment";
+import { useRole } from "../../layouts/AppContext";
 
 function AdminPage() {
   const [allAdmins, setAllAdmins] = useState([]);
   const [filteredAdmins, setFilteredAdmins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const { role } = useRole();
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
@@ -41,7 +42,7 @@ function AdminPage() {
   const handleSearch = (value) => {
     const keyword = value.toLowerCase();
 
-    const filtered = allAdmins.filter(admin => {
+    const filtered = allAdmins.filter((admin) => {
       const fullName = admin.AdminFullName?.toLowerCase() || "";
       const roleName = admin.role?.RoleName?.toLowerCase() || "";
 
@@ -49,7 +50,8 @@ function AdminPage() {
         ? moment(admin.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")
         : "";
 
-      const statusText = admin.AdminDeleted === 1 ? "đang hoạt động" : "tạm dừng";
+      const statusText =
+        admin.AdminDeleted === 1 ? "đang hoạt động" : "tạm dừng";
 
       return (
         fullName.includes(keyword) ||
@@ -61,7 +63,6 @@ function AdminPage() {
 
     setFilteredAdmins(filtered);
   };
-
 
   if (loading) {
     return <Loading />;
@@ -75,7 +76,7 @@ function AdminPage() {
       </Helmet>
       <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         <section className="flex gap-3">
-          <AddAccountButton />
+          <AddAccountButton role={role} />
           <HistoryButton onClick={handleHistoryRequest} />
         </section>
         <section className="flex flex-wrap gap-3 mt-3 max-md:max-w-full">
@@ -122,9 +123,10 @@ function AdminPage() {
               <AdminTable key={index} {...admin} />
             ))
           ) : (
-            <p className="mt-4 text-center">Không tìm thấy quản trị viên nào.</p>
+            <p className="mt-4 text-center">
+              Không tìm thấy quản trị viên nào.
+            </p>
           )}
-
         </section>
       </main>
       {isHistoryVisible && (

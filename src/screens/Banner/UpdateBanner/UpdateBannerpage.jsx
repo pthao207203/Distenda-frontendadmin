@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ActionButton from "./components/ActionButton";
 import FormField from "./components/FormField";
 import uploadImage from "../../../components/UploadImage";
@@ -8,6 +8,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import moment from "moment";
 import Loading from "../../../components/Loading";
 import BannerDetailHistory from "./components/BannerDetailHistory";
+import { useRole } from "../../../layouts/AppContext";
 
 function BannerForm() {
   const [data, setData] = useState({
@@ -28,6 +29,19 @@ function BannerForm() {
   const uploadImageInputRef = useRef(null);
   const uploadImagePreviewRef = useRef(null);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      role &&
+      role.role &&
+      !role.role.RolePermissions?.includes("banner_edit")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/banner");
+    }
+  }, [navigate, role]);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {

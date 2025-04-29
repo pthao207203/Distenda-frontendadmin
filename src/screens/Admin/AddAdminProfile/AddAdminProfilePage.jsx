@@ -4,25 +4,35 @@ import { ActionButton } from "./components/ActionButton";
 import { adminCreateController } from "../../../controllers/admin.controller";
 
 import Loading from "../../../components/Loading";
+import { useRole } from "../../../layouts/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfile = () => {
   // Quản lý thông tin người dùng
   const [personalInfo, setPersonalInfo] = useState({
     AdminFullName: "",
     AdminEmail: "",
-    AdminPassword: "",
     AdminPhone: "",
     AdminLevel: "",
     AdminExp: "",
     AdminRole_id: "",
   });
 
-  const [roles, setRoles] = useState([
-    { _id: "", RoleName: "Chọn chức vụ" }
-  ]);
-
+  const [roles, setRoles] = useState([{ _id: "", RoleName: "Chọn chức vụ" }]);
 
   const [loading, setLoading] = useState(false);
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      role &&
+      role.role &&
+      !role.role.RolePermissions?.includes("course_create")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/admin");
+    }
+  }, [navigate, role]);
 
   useEffect(() => {
     async function fetchData() {
@@ -76,7 +86,6 @@ export const UserProfile = () => {
           {[
             { label: "Họ và tên", field: "AdminFullName" },
             { label: "Gmail", field: "AdminEmail" },
-            { label: "Mật khẩu", field: "AdminPassword" },
             { label: "Số điện thoại", field: "AdminPhone" },
             { label: "Trình độ chuyên môn", field: "AdminLevel" },
             { label: "Kinh nghiệm làm việc", field: "AdminExp" },
@@ -95,9 +104,9 @@ export const UserProfile = () => {
         <div className="flex flex-col mt-8">
           <h2 className="text-xl font-semibold mb-2">Chức vụ</h2>
           <select
-            value={personalInfo.AdminRole_id}  // Truyền giá trị AdminRole_id vào value của select
-            onChange={handleChange}  // Khi thay đổi giá trị, sẽ gọi handleChange để cập nhật AdminRole_id
-            id="AdminRole_id"  // Cập nhật id của select để phân biệt
+            value={personalInfo.AdminRole_id} // Truyền giá trị AdminRole_id vào value của select
+            onChange={handleChange} // Khi thay đổi giá trị, sẽ gọi handleChange để cập nhật AdminRole_id
+            id="AdminRole_id" // Cập nhật id của select để phân biệt
             className="w-[280px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
           >
             {roles.map((role) => (

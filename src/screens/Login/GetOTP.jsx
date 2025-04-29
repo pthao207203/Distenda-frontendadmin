@@ -1,16 +1,15 @@
 //Fix API của email trang này: kiểm tra email không tồn tại, email không hợp lệ do sai cú pháp
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { loginController } from '../../controllers/auth.controller.js';
+import { loginController } from "../../controllers/auth.controller.js";
 
-function GetOTP({ onNext, onSetEmail }) {
+function GetOTP({ onNext, onSetEmail, setResult }) {
   const [formData, setFormData] = useState({
-    AdminEmail: '',
-  })
+    AdminEmail: "",
+  });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false); //Xử lý loading button
 
   const handleChange = (e) => {
@@ -20,7 +19,7 @@ function GetOTP({ onNext, onSetEmail }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
     onSetEmail(formData.AdminEmail);
     setError(null);
     setSuccess(null);
@@ -30,13 +29,14 @@ function GetOTP({ onNext, onSetEmail }) {
     try {
       if (onNext) {
         const result = await loginController(formData, setSuccess, setError);
-        console.log(result)
+        console.log(result);
+        setResult(result.message);
         if (result.code === 200) {
           onNext(); // Chỉ gọi hàm onNext nếu OTP hợp lệ và xử lý thành công
         }
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setError("Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {
       setIsLoading(false); // Kết thúc trạng thái loading
@@ -52,10 +52,15 @@ function GetOTP({ onNext, onSetEmail }) {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col mt-4 w-full max-md:max-w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="lex flex-col mt-4 w-full max-md:max-w-full"
+      >
         <div className="flex flex-col w-full text-[1.125rem] max-md:text-[1rem] text-[#131313]">
           <div className="flex flex-col w-full  whitespace-nowrap">
-            <label htmlFor="email" className="self-start text-[#6C8299]">Email</label>
+            <label htmlFor="email" className="self-start text-[#6C8299]">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -69,7 +74,10 @@ function GetOTP({ onNext, onSetEmail }) {
           </div>
         </div>
 
-        <button type="submit" className={`flex flex-wrap gap-5 justify-center items-center mt-4 rounded-lg w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${isLoading ? "opacity-50 cursor-not-allowed" : ""
+        <button
+          type="submit"
+          className={`flex flex-wrap gap-5 justify-center items-center mt-4 rounded-lg w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
           {isLoading ? "Đang xử lý..." : "Nhận mã"}
