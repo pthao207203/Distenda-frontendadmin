@@ -69,9 +69,15 @@ function ChapterHeader({ onAddCategoryClick, role }) {
         <span className="text-center">Lần cuối cập nhật</span>
       </div>
       <button
-        disabled={!role?.role?.RolePermissions?.includes("course_create")}
+        disabled={
+          !(
+            role?.role?.RolePermissions?.includes("course_edit") ||
+            role?.role?.RolePermissions?.includes("course_only")
+          )
+        }
         className={`flex basis-1/3 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3  text-white  ${
-          role?.role?.RolePermissions?.includes("course_edit")
+          role?.role?.RolePermissions?.includes("course_edit") ||
+          role?.role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}
@@ -144,7 +150,9 @@ function ChapterRow({ id, lesson, lessonChange, role }) {
 
       {/* Actions */}
       <div className="flex basis-1/3 min-w-0 min-h-[70px] gap-2.5 justify-center px-3 py-2 bg-white">
-        {isEditing && role?.role?.RolePermissions?.includes("course_edit") ? (
+        {isEditing &&
+        (role?.role?.RolePermissions?.includes("course_edit") ||
+          role?.role?.RolePermissions?.includes("course_only")) ? (
           <>
             {/* Button Xong */}
             <button
@@ -165,11 +173,17 @@ function ChapterRow({ id, lesson, lessonChange, role }) {
           <>
             {/* Button Sửa */}
             <button
-              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
-              className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3 rounded-[99px] text-neutral-900 transition-colors ${
-                role?.role?.RolePermissions?.includes("course_edit")
-                  ? "bg-[#D1F669] hover:bg-[#a3e635]"
-                  : "bg-[#f0ffc7] cursor-not-allowed"
+              disabled={
+                !(
+                  role?.role?.RolePermissions?.includes("course_edit") ||
+                  role?.role?.RolePermissions?.includes("course_only")
+                )
+              }
+              className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3 rounded-[99px]  transition-colors ${
+                role?.role?.RolePermissions?.includes("course_edit") ||
+                role?.role?.RolePermissions?.includes("course_only")
+                  ? "bg-[#D1F669] hover:bg-[#a3e635] text-neutral-900"
+                  : "bg-[#f0ffc7] cursor-not-allowed text-neutral-300"
               }`}
               onClick={handleEditClick}
             >
@@ -177,9 +191,15 @@ function ChapterRow({ id, lesson, lessonChange, role }) {
             </button>
             {/* Button Xóa */}
             <button
-              disabled={!role?.role?.RolePermissions?.includes("course_delete")}
+              disabled={
+                !(
+                  role?.role?.RolePermissions?.includes("course_delete") ||
+                  role?.role?.RolePermissions?.includes("course_only")
+                )
+              }
               className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3  text-white rounded-[99px] transition-colors ${
-                role?.role?.RolePermissions?.includes("course_delete")
+                role?.role?.RolePermissions?.includes("course_delete") ||
+                role?.role?.RolePermissions?.includes("course_only")
                   ? "bg-[#DF322B] hover:bg-[#902723]"
                   : "bg-[#ffd1d1] cursor-not-allowed"
               }`}

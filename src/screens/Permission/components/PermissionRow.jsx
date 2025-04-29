@@ -39,7 +39,7 @@ export default function PermissionRow({
         });
       }
     });
-  }, []);
+  }, [permission, roles]);
 
   // Hàm xử lý khi thay đổi trạng thái checkbox
   const handleCheckboxChange = (roleIndex) => {

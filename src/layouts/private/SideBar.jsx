@@ -102,6 +102,10 @@ export default function SideBar({ headerHeight }) {
   ].filter((item) => item);
 
   console.log("SideBar => ", data);
+
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
     <>
       {isOpen && !isDesktop && (

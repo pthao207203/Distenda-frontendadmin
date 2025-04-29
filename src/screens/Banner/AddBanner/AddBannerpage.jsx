@@ -22,7 +22,6 @@ function BannerForm() {
 
   const editorRef = useRef(null);
 
-  const [imageSrc, setImageSrc] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
 
   const uploadImageInputRef = useRef(null);
@@ -45,7 +44,6 @@ function BannerForm() {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setImageSrc(imageURL);
       setSelectedFileName(file); // Lưu tên tệp đã chọn
 
       if (uploadImagePreviewRef.current) {
@@ -224,7 +222,7 @@ function BannerForm() {
             ref={uploadImagePreviewRef}
             loading="lazy"
             src={data?.UserAvatar ? data.UserAvatar : ""}
-            alt="Banner image"
+            alt="Banner"
             className="flex mt-2 w-full bg-[#EBF1F9] max-h-[300px] min-h-[200px] max-md:max-w-full object-contain"
           />
           <div className="flex flex-col mt-2 max-w-full w-[569px]">

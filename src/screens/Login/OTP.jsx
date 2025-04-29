@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { loginConfirmController } from "../../controllers/auth.controller.js";
-import Loading from "../../components/Loading.jsx";
 
 function OTP({ email, result }) {
   const [formData, setFormData] = useState({
