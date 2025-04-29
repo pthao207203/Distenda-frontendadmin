@@ -48,11 +48,6 @@ export default function SideBar({ headerHeight }) {
       icon: "/icons/home.svg",
       label: "Trang chủ",
     },
-    role?.role?.RolePermissions?.includes("message_view") && { 
-      link: "/message", 
-      icon: "/icons/category.svg", 
-      label: "Tin nhắn" 
-    },
     role?.role?.RolePermissions?.includes("course_view") && {
       link: "/courses",
       icon: "/icons/document.svg",
