@@ -84,13 +84,13 @@ export default function LessonRow({ setLoading, video, role }) {
           <button
             disabled={
               !(
-                role?.role?.RolePermissions?.includes("course_edit") ||
-                role?.role?.RolePermissions?.includes("course_only")
+                role?.RolePermissions?.includes("course_edit") ||
+                role?.RolePermissions?.includes("course_only")
               )
             }
             className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3 rounded-[99px] text-neutral-900 transition-colors ${
-              role?.role?.RolePermissions?.includes("course_edit") ||
-              role?.role?.RolePermissions?.includes("course_only")
+              role?.RolePermissions?.includes("course_edit") ||
+              role?.RolePermissions?.includes("course_only")
                 ? "bg-[#D1F669] hover:bg-[#a3e635]"
                 : "bg-[#f0ffc7] cursor-not-allowed"
             }`}
@@ -102,14 +102,14 @@ export default function LessonRow({ setLoading, video, role }) {
           <button
             disabled={
               !(
-                role?.role?.RolePermissions?.includes("course_delete") ||
-                role?.role?.RolePermissions?.includes("course_only")
+                role?.RolePermissions?.includes("course_delete") ||
+                role?.RolePermissions?.includes("course_only")
               )
             }
             onClick={handleDeleteClick}
             className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3 text-white rounded-[99px] transition-colors ${
-              role?.role?.RolePermissions?.includes("course_delete") ||
-              role?.role?.RolePermissions?.includes("course_only")
+              role?.RolePermissions?.includes("course_delete") ||
+              role?.RolePermissions?.includes("course_only")
                 ? "bg-[#DF322B] hover:bg-[#902723]"
                 : "bg-[#ffd1d1] cursor-not-allowed"
             }`}

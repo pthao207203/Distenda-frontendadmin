@@ -79,9 +79,9 @@ function UserHeader({ data, role }) {
       {/* Nút chặn hoặc bỏ chặn */}
       {isBlocked ? (
         <button
-          disabled={!role?.role?.RolePermissions?.includes("user_edit")}
+          disabled={!role?.RolePermissions?.includes("user_edit")}
           className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#6C8299] rounded-lg min-h-[46px] hover:bg-slate-00 ${
-            role?.role?.RolePermissions?.includes("user_edit")
+            role?.RolePermissions?.includes("user_edit")
               ? "bg-[#6C8299] hover:bg-[#55657a]"
               : "bg-[#CDD5DF] cursor-not-allowed"
           }`}
@@ -97,9 +97,9 @@ function UserHeader({ data, role }) {
         </button>
       ) : (
         <button
-          disabled={!role?.role?.RolePermissions?.includes("user_edit")}
+          disabled={!role?.RolePermissions?.includes("user_edit")}
           className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap bg-[#6C8299] rounded-lg min-h-[46px] hover:bg-slate-00 ${
-            role?.role?.RolePermissions?.includes("user_edit")
+            role?.RolePermissions?.includes("user_edit")
               ? "bg-[#DF322B] hover:bg-[#902723]"
               : "bg-[#ffd1d1] cursor-not-allowed"
           }`}

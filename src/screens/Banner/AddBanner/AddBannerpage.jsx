@@ -30,11 +30,7 @@ function BannerForm() {
   const { role } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
-    if (
-      role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("banner_create")
-    ) {
+    if (role && !role.RolePermissions?.includes("banner_create")) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/banner");
     }

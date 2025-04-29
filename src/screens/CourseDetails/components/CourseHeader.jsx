@@ -74,12 +74,12 @@ export function CourseHeader({ data, handleSubmit, role }) {
       {/* Nút Cập nhật */}
       <button
         disabled={
-          !role?.role?.RolePermissions?.includes("course_edit") ||
-          !role?.role?.RolePermissions?.includes("course_only")
+          !role?.RolePermissions?.includes("course_edit") ||
+          !role?.RolePermissions?.includes("course_only")
         }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px] ${
-          role?.role?.RolePermissions?.includes("course_edit") ||
-          role?.role?.RolePermissions?.includes("course_only")
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}
@@ -97,12 +97,12 @@ export function CourseHeader({ data, handleSubmit, role }) {
       {/* Nút Xóa */}
       <button
         disabled={
-          !role?.role?.RolePermissions?.includes("course_delete") ||
-          !role?.role?.RolePermissions?.includes("course_only")
+          !role?.RolePermissions?.includes("course_delete") ||
+          !role?.RolePermissions?.includes("course_only")
         }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-h-[46px] ${
-          role?.role?.RolePermissions?.includes("course_delete") ||
-          role?.role?.RolePermissions?.includes("course_only")
+          role?.RolePermissions?.includes("course_delete") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#DF322B] hover:bg-[#902723]"
             : "bg-[#ffd1d1] cursor-not-allowed"
         }`}

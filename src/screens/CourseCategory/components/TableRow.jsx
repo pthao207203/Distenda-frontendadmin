@@ -39,9 +39,9 @@ function TableRow({ categories, role }) {
             <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-2.5 justify-center px-3 py-2  min- w-[258px]">
               {/* Button Sửa */}
               <button
-                disabled={!role?.role?.RolePermissions?.includes("course_edit")}
+                disabled={!role?.RolePermissions?.includes("course_edit")}
                 className={`${
-                  role?.role?.RolePermissions?.includes("course_edit")
+                  role?.RolePermissions?.includes("course_edit")
                     ? "bg-[#D1F669] hover:bg-[#a3e635]"
                     : "bg-[#f0ffc7] cursor-not-allowed"
                 } flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3 rounded-[99px] text-neutral-900 transition-colors`}
@@ -50,11 +50,9 @@ function TableRow({ categories, role }) {
               </button>
               {/* Button Xóa */}
               <button
-                disabled={
-                  !role?.role?.RolePermissions?.includes("course_delete")
-                }
+                disabled={!role?.RolePermissions?.includes("course_delete")}
                 className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-3  text-white rounded-[99px] transition-colors ${
-                  role?.role?.RolePermissions?.includes("course_delete")
+                  role?.RolePermissions?.includes("course_delete")
                     ? "bg-[#DF322B] hover:bg-[#902723]"
                     : "bg-[#ffd1d1] cursor-not-allowed"
                 }`}

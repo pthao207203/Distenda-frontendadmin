@@ -242,9 +242,9 @@ export default function Settingpage() {
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
           <div className="flex justify-end items-center w-full">
             <button
-              disabled={!role?.role?.RolePermissions?.includes("setting_edit")}
+              disabled={!role?.RolePermissions?.includes("setting_edit")}
               className={`flex gap-3 justify-center items-center px-3 font-medium leading-none text-white rounded-lg bg-[#6C8299] h-[46px] min-h-[46px] ${
-                role?.role?.RolePermissions?.includes("setting_edit")
+                role?.RolePermissions?.includes("setting_edit")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"
               }`}

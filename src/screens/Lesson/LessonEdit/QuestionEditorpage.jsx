@@ -18,9 +18,8 @@ function QuestionEditor() {
   useEffect(() => {
     if (
       role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("course_edit") &&
-      !role?.role?.RolePermissions?.includes("course_only")
+      !role?.RolePermissions?.includes("course_edit") &&
+      !role?.RolePermissions?.includes("course_only")
     ) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/courses");

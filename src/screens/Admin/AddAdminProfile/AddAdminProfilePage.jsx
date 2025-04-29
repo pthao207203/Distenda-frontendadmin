@@ -24,11 +24,7 @@ export const UserProfile = () => {
   const { role } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
-    if (
-      role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("course_create")
-    ) {
+    if (role && !role.RolePermissions?.includes("admin_create")) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/admin");
     }
