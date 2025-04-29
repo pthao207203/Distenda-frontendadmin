@@ -42,67 +42,70 @@ export default function SideBar({ headerHeight }) {
     }
   }, [isDesktop]);
 
-  const menuItems = [
-    role?.role?.RolePermissions?.includes("dashboard_view") && {
-      link: "/",
-      icon: "/icons/home.svg",
-      label: "Trang chủ",
-    },
-    role?.role?.RolePermissions?.includes("message_view") && { 
-      link: "/message", 
-      icon: "/icons/category.svg", 
-      label: "Tin nhắn" 
-    },
-    role?.role?.RolePermissions?.includes("course_view") && {
-      link: "/courses",
-      icon: "/icons/document.svg",
-      label: "Khóa học",
-    },
-    role?.role?.RolePermissions?.includes("user_view") && {
-      link: "/user",
-      icon: "/icons/2user.svg",
-      label: "Người dùng",
-    },
-    role?.role?.RolePermissions?.includes("admin_view") && {
-      link: "/admin",
-      icon: "/icons/work.svg",
-      label: "Quản trị viên",
-    },
-    role?.role?.RolePermissions?.includes("payment_view") && {
-      link: "/payment",
-      icon: "/icons/paper.svg",
-      label: "Hóa đơn",
-    },
-    role?.role?.RolePermissions?.includes("voucher_view") && {
-      link: "/voucher",
-      icon: "/icons/discount.svg",
-      label: "Voucher",
-    },
-    role?.role?.RolePermissions?.includes("banner_view") && {
-      link: "/banner",
-      icon: "/icons/banner.svg",
-      label: "Banner",
-    },
-    role?.role?.RolePermissions?.includes("role_view") && {
-      link: "/authorities",
-      icon: "/icons/setting.svg",
-      label: "Phân quyền",
-    },
-    // role?.role?.RolePermissions?.includes("noti_view") && {
-    //   link: "/notification",
-    //   icon: "/icons/notification.svg",
-    //   label: "Thông báo",
-    // },
-    role?.role?.RolePermissions?.includes("setting_view") && {
-      link: "/setting",
-      icon: "/icons/category.svg",
-      label: "Thông tin web",
-    },
-  ].filter((item) => item);
-
-  const adminAvatar = data?.setting?.user?.AdminAvatar || "/profile.svg";
+  const [menuItems, setMenuItems] = useState([]);
+  useEffect(() => {
+    setMenuItems(
+      [
+        role?.RolePermissions?.includes("dashboard_view") && {
+          link: "/",
+          icon: "/icons/home.svg",
+          label: "Trang chủ",
+        },
+        role?.RolePermissions?.includes("message_view") && {
+          link: "/message",
+          icon: "/icons/category.svg",
+          label: "Tin nhắn",
+        },
+        (role?.RolePermissions?.includes("course_view") ||
+          role?.role?.RolePermissions?.includes("course_only")) && {
+          link: "/courses",
+          icon: "/icons/document.svg",
+          label: "Khóa học",
+        },
+        role?.RolePermissions?.includes("user_view") && {
+          link: "/user",
+          icon: "/icons/2user.svg",
+          label: "Người dùng",
+        },
+        role?.RolePermissions?.includes("admin_view") && {
+          link: "/admin",
+          icon: "/icons/work.svg",
+          label: "Quản trị viên",
+        },
+        role?.RolePermissions?.includes("payment_view") && {
+          link: "/payment",
+          icon: "/icons/paper.svg",
+          label: "Hóa đơn",
+        },
+        role?.RolePermissions?.includes("voucher_view") && {
+          link: "/voucher",
+          icon: "/icons/discount.svg",
+          label: "Voucher",
+        },
+        role?.RolePermissions?.includes("banner_view") && {
+          link: "/banner",
+          icon: "/icons/banner.svg",
+          label: "Banner",
+        },
+        role?.RolePermissions?.includes("role_view") && {
+          link: "/authorities",
+          icon: "/icons/setting.svg",
+          label: "Phân quyền",
+        },
+        role?.RolePermissions?.includes("setting_view") && {
+          link: "/setting",
+          icon: "/icons/category.svg",
+          label: "Thông tin web",
+        },
+      ].filter((item) => item)
+    );
+  }, [role]);
 
   console.log("SideBar => ", data);
+
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
     <>
       {isOpen && !isDesktop && (
@@ -121,7 +124,7 @@ export default function SideBar({ headerHeight }) {
         }}
         onClick={(e) => e.stopPropagation()} // Ngăn sự kiện lan đến overlay
       >
-        <div className="flex gap-2 justify-evenly items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
+        <div className="flex gap-4 justify-start items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
           <img
             loading="lazy"
             src={
@@ -131,12 +134,11 @@ export default function SideBar({ headerHeight }) {
             }
             alt="Profile"
             className="rounded-full object-cover  w-[3rem] h-[3rem] max-md:w-[2.5rem] max-md:h-[2.5rem]"
-            
           />
           <div>
             <h4
               className="mb-1 font-semibold shrink"
-              style={{ fontSize: "1.25rem", color: "black" }}
+              style={{ fontSize: "1.5rem", color: "black" }}
             >
               {data?.setting?.user?.AdminFullName?.split(" ")
                 .slice(-2)
@@ -148,15 +150,15 @@ export default function SideBar({ headerHeight }) {
           </div>
         </div>
 
-        <div className="flex flex-col overflow-auto px-3">
+        <div className="flex flex-col overflow-auto px-[0.75rem]">
           {menuItems.map((item, index) => (
-            <Link to={item.link} key={index}>
+            <Link to={item.link} key={index} onClick={() => setIsOpen(false)}>
               <div
-                className={`flex items-center text-xl gap-4 px-2 py-3 text-[1.125rem] ${
+                className={`flex items-center gap-4 px-2 py-3 text-[1.25rem] ${
                   (location.pathname.includes(item.link) &&
                     item.link !== "/") ||
                   (item.link === "/" && location.pathname === "/")
-                    ? "bg-[#EBF1F9] font-medium p-2 rounded-xl"
+                    ? "bg-[#EBF1F9] font-medium px-[0.75rem] py-[1rem] rounded-xl"
                     : ""
                 }`}
                 style={{ color: "black" }}

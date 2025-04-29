@@ -6,16 +6,11 @@ import PopUp from "./components/PopUp";
 import { categoryController } from "../../controllers/category.controller";
 
 import Loading from "../../components/Loading";
-
-const courseData = [
-  { id: 1, name: "HTML", courseCount: 1 },
-  { id: 2, name: "CSS", courseCount: 1 },
-  { id: 3, name: "JavaScript", courseCount: 1 },
-  { id: 4, name: "Node.js", courseCount: 1 },
-];
+import { useRole } from "../../layouts/AppContext";
 
 function CourseTable() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { role } = useRole();
 
   const handleAddCategoryClick = () => {
     setIsPopupOpen(true);
@@ -63,9 +58,16 @@ function CourseTable() {
             <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3 bg-[#EBF1F9] ">
               <span className="text-center">Số khóa học</span>
             </div>
-            <div className="flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 text-white">
-              <button
-                className="flex items-center gap-2 text-center"
+            <button
+              disabled={!role?.RolePermissions?.includes("course_create")}
+              className={`flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 text-white ${
+                role?.RolePermissions?.includes("course_edit")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
+            >
+              <div
+                className={`flex items-center gap-2 text-center `}
                 onClick={handleAddCategoryClick}
               >
                 <img
@@ -75,13 +77,13 @@ function CourseTable() {
                   className="w-[30px] aspect-square"
                 />
                 <span className="text-center max-md:hidden">Danh mục mới</span>
-              </button>
-            </div>
+              </div>
+            </button>
           </div>
 
           {/* Nội dung bảng */}
-          {courseData.length > 0 ? (
-            <TableRow categories={data} />
+          {data !== null ? (
+            <TableRow categories={data} role={role} />
           ) : (
             <div className="text-center text-gray-500 mt-5">
               Không có danh mục nào để hiển thị.

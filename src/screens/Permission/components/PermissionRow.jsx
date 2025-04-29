@@ -11,10 +11,12 @@ export default function PermissionRow({
   const getPermission = (permission) => {
     switch (permission) {
       case 0:
-        return "Xem";
+        return "Thay đổi của bản thân";
       case 1:
-        return "Thêm";
+        return "Xem";
       case 2:
+        return "Thêm";
+      case 3:
         return "Sửa";
       default:
         return "Xoá";
@@ -37,7 +39,7 @@ export default function PermissionRow({
         });
       }
     });
-  }, []);
+  }, [permission, roles]);
 
   // Hàm xử lý khi thay đổi trạng thái checkbox
   const handleCheckboxChange = (roleIndex) => {
@@ -55,13 +57,13 @@ export default function PermissionRow({
 
   return (
     <div
-      className={`flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#171717] min-h-[3.75rem] cursor-pointer ${
-        !isFirst ? "mt-[0.375rem]" : ""
+      className={`flex flex-wrap w-full bg-white h-[50px] max-md: min-w-[600px] ${
+        !isFirst ? "mt-1.5" : ""
       }`}
     >
       {/* Ô hiển thị thông tin permission */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center p-3 bg-[#EBF1F9]">
-        <div className="gap-2.5 self-stretch my-auto">
+      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-xl font-medium whitespace-nowrap bg-[#EBF1F9] text-neutral-900">
+        <div className="gap-2.5 self-stretch my-auto ">
           {getPermission(index)}
         </div>
       </div>

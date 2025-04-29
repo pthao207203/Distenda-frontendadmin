@@ -5,16 +5,18 @@ import PermissionHeader from "./components/PermissionHeader";
 import ActionButtons from "./components/ActionButton";
 import { rolesController } from "../../controllers/role.controller";
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
 
 export default function PermissionTable() {
   const permissionGroups = [
     {
       title: "Tổng quan",
-      permissions: ["dashboard_view", "", "", ""],
+      permissions: ["", "dashboard_view", "", "", ""],
     },
     {
       title: "Khóa học",
       permissions: [
+        "course_only",
         "course_view",
         "course_create",
         "course_edit",
@@ -23,19 +25,26 @@ export default function PermissionTable() {
     },
     {
       title: "Người dùng",
-      permissions: ["user_view", "user_create", "user_edit", "user_delete"],
+      permissions: ["", "user_view", "user_create", "user_edit", "user_delete"],
     },
     {
       title: "Quản trị viên",
-      permissions: ["admin_view", "admin_create", "admin_edit", "admin_delete"],
+      permissions: [
+        "",
+        "admin_view",
+        "admin_create",
+        "admin_edit",
+        "admin_delete",
+      ],
     },
     {
       title: "Hoá đơn",
-      permissions: ["payment_view", "payment_create", "", "payment_delete"],
+      permissions: ["", "payment_view", "", "", ""],
     },
     {
       title: "Voucher",
       permissions: [
+        "",
         "voucher_view",
         "voucher_create",
         "voucher_edit",
@@ -45,6 +54,7 @@ export default function PermissionTable() {
     {
       title: "Banner",
       permissions: [
+        "",
         "banner_view",
         "banner_create",
         "banner_edit",
@@ -53,36 +63,19 @@ export default function PermissionTable() {
     },
     {
       title: "Nhóm quyền",
-      permissions: ["role_view", "role_create", "role_edit", "role_delete"],
-    },
-    {
-      title: "Thông báo",
-      permissions: ["noti_view", "noti_create", "noti_edit", "noti_delete"],
+      permissions: ["", "role_view", "role_create", "role_edit", "role_delete"],
     },
     {
       title: "Thông tin web",
-      permissions: ["setting_view", "", "setting_edit", ""],
+      permissions: ["", "setting_view", "", "setting_edit", ""],
     },
   ];
 
-  // const roles = [
-  //   {
-  //     name: "Quản trị viên",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/ce9d43b270ae41158192dec03af70a1a/6be2a4d09c558667270ec256fe0af0140bf78c959a9235fca9e3ef9efb4b3cad?apiKey=7a79403a23cb489f853e4845c47ede19&"
-  //   },
-  //   {
-  //     name: "Quản lý người dùng",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/ce9d43b270ae41158192dec03af70a1a/931d916ce0cfe5a4cefc4e80238db86ccc690a79dd00cd5660a8bace536a336a?apiKey=7a79403a23cb489f853e4845c47ede19&"
-  //   },
-  //   {
-  //     name: "Giảng viên",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/ce9d43b270ae41158192dec03af70a1a/6be2a4d09c558667270ec256fe0af0140bf78c959a9235fca9e3ef9efb4b3cad?apiKey=7a79403a23cb489f853e4845c47ede19&"
-  //   }
-  // ];
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [permissions, setPermissions] = useState([]);
+  const { role } = useRole();
 
   useEffect(() => {
     async function fetchData() {
@@ -139,6 +132,7 @@ export default function PermissionTable() {
         <ActionButtons
           selectedRoles={selectedRoles}
           permissions={formattedPermissions}
+          role={role}
         />
 
         <PermissionHeader roles={roles} setSelectedRoles={setSelectedRoles} />

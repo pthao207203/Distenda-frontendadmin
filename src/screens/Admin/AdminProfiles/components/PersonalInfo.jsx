@@ -1,12 +1,13 @@
+import React from "react";
 import moment from "moment";
 
-const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRequest }) => {
-  // Class và nội dung text cho status
-  const statusClass =
-    data?.CourseStatus === 1 ? "bg-[#D1F669]" : "bg-[#FFD75B]";
-  const statusText = data?.CourseStatus === 1 ? "Đang hoạt động" : "Tạm dừng";
-  console.log("roles", roles);
-
+const PersonalInfo = ({
+  data,
+  handleChange,
+  handleToggle,
+  roles,
+  handleHistoryRequest,
+}) => {
   return (
     <div className="flex flex-col mt-10 w-full text-xl max-md:max-w-full">
       <div className="font-semibold text-[#171717] max-md:max-w-full">
@@ -148,7 +149,10 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               >
                 Lần cuối cập nhật
               </label>
-              <button className="flex gap-3 justify-center items-center" onClick ={handleHistoryRequest}>
+              <button
+                className="flex gap-3 justify-center items-center"
+                onClick={handleHistoryRequest}
+              >
                 <img
                   loading="lazy"
                   src="/icons/Show.svg"
@@ -161,7 +165,7 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
             {moment(
                 data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
                   data?.createdAt
-              ).format("DD/MM/YYYY")}   
+              ).format("DD/MM/YYYY")}
             </span>
           </div>
         </div>

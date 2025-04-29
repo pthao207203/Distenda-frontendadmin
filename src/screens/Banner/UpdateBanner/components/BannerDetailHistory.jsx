@@ -75,6 +75,9 @@ export default function BannerDetailHistory({ onClose }) {
     );
   });
 
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
     <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">
       {/* Nút đóng popup */}

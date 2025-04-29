@@ -6,7 +6,11 @@ function SearchBar({ onSearch = () => { } }) {   // Nhận prop onSearch
   };
 
   return (
-    <form className="flex items-start w-full text-[#14375F] max-md:max-w-full" role="search" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="flex items-start w-full text-[#14375F] max-md:max-w-full"
+      role="search" 
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="flex flex-wrap gap-3 items-center px-3 py-3 bg-[#D6E4F6] min-w-[15rem] rounded-[6.25rem] w-full min-h-[3.75rem] max-md:min-h-[2.75rem]">
         <img
           loading="lazy"
@@ -14,13 +18,12 @@ function SearchBar({ onSearch = () => { } }) {   // Nhận prop onSearch
           className="object-contain shrink-0 self-stretch my-auto aspect-square w-[2rem]"
           alt="search-icon"
         />
-        <label htmlFor="searchInput" className="sr-only">Tìm kiếm</label>
         <input
           type="search"
           id="searchInput"
-          className="flex-1 gap-2.5 self-stretch my-auto bg-transparent border-none outline-none"
+          className="flex-1 gap-2.5 self-stretch my-auto bg-transparent border-none outline-none placeholder-[#14375F]"
           placeholder="Tìm kiếm"
-          onChange={handleChange}     // Lắng nghe sự kiện nhập
+          onChange={handleChange}
         />
       </div>
     </form>

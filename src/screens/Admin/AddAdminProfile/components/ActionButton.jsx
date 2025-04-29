@@ -31,7 +31,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false); // Ẩn popup thành công
-    window.location.reload();
+    window.location.href("/admin");
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công

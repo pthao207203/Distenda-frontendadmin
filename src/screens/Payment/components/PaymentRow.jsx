@@ -1,7 +1,7 @@
 import * as React from "react";
-import moment from 'moment';
+import moment from "moment";
 
-export default function PaymentRow({pay, onRowClick}) {
+export default function PaymentRow({ pay, onRowClick }) {
   const getStatusStyles = (status) => {
     switch (status) {
       case -1: //Chờ thanh toán
@@ -35,27 +35,37 @@ export default function PaymentRow({pay, onRowClick}) {
     >
       {/* Mã thanh toán */}
       <div className="flex basis-1/6 min-w-0 justify-center p-3 items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{pay._id}</span>
+        <span className="text-[#131313] text-center text-xl font-medium truncate">
+          {pay.orderId ? pay.orderId : pay._id}
+        </span>
       </div>
 
       {/* Tên người dùng */}
       <div className="flex basis-1/6 min-w-0 justify-center p-3 items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{pay.user}</span>
+        <span className="text-[#131313] text-center text-xl font-medium truncate">
+          {pay.userName}
+        </span>
       </div>
 
       {/* Mã khóa học */}
       <div className="flex basis-1/6 min-w-0 justify-center p-3 items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{pay.course}</span>
+        <span className="text-[#131313] text-center text-xl font-medium truncate">
+          {pay.courseName}
+        </span>
       </div>
 
       {/* Giá */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{pay.PayTotal? pay.PayTotal : 0}</span>
+        <span className="text-[#131313] text-center text-xl font-medium truncate">
+          {pay.PayTotal ? pay.PayTotal : 0}
+        </span>
       </div>
 
       {/* Thời gian */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{moment(pay.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")}</span>
+        <span className="text-[#131313] text-center text-xl font-medium truncate">
+          {moment(pay.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")}
+        </span>
       </div>
 
       {/* Trạng thái */}
@@ -65,7 +75,9 @@ export default function PaymentRow({pay, onRowClick}) {
             pay.PayStatus
           )} min-h-[2.5rem] rounded-[6.25rem]`}
         >
-          <span className="text-center text-xl font-medium truncate">{getStatusText(pay.PayStatus)}</span>
+          <span className="text-center text-xl font-medium truncate">
+            {getStatusText(pay.PayStatus)}
+          </span>
         </div>
       </div>
     </div>

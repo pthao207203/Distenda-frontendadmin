@@ -6,6 +6,8 @@ import uploadImage from "../../../components/UploadImage";
 import { Editor } from "@tinymce/tinymce-react";
 
 import Loading from "../../../components/Loading";
+import { useRole } from "../../../layouts/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function BannerForm() {
   const [data, setData] = useState({
@@ -20,17 +22,24 @@ function BannerForm() {
 
   const editorRef = useRef(null);
 
-  const [imageSrc, setImageSrc] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
 
   const uploadImageInputRef = useRef(null);
   const uploadImagePreviewRef = useRef(null);
 
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (role && !role.RolePermissions?.includes("banner_create")) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/banner");
+    }
+  }, [navigate, role]);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setImageSrc(imageURL);
       setSelectedFileName(file); // Lưu tên tệp đã chọn
 
       if (uploadImagePreviewRef.current) {
@@ -209,7 +218,7 @@ function BannerForm() {
             ref={uploadImagePreviewRef}
             loading="lazy"
             src={data?.UserAvatar ? data.UserAvatar : ""}
-            alt="Banner image"
+            alt="Banner"
             className="flex mt-2 w-full bg-[#EBF1F9] max-h-[300px] min-h-[200px] max-md:max-w-full object-contain"
           />
           <div className="flex flex-col mt-2 max-w-full w-[569px]">

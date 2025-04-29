@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CourseSelection from "./CourseSelection";
 import { useNavigate } from "react-router-dom";
 
-function ActionButton({ text }) {
+function ActionButton({ text, role }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -10,7 +10,7 @@ function ActionButton({ text }) {
     if (text === "Danh mục") {
       navigate("/category"); // Điều hướng tới trang CourseCategorypage
     } else if (text === "Thêm khóa học") {
-      navigate("/courses/create")
+      navigate("/courses/create");
       // togglePopup(); // Hiển thị popup
     } else {
       console.log(`Action for "${text}" not implemented.`);
@@ -25,7 +25,20 @@ function ActionButton({ text }) {
     <div>
       {/* Nút Action */}
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-w-[240px] hover:bg-[#55657a] transition-colors"
+        disabled={
+          !(
+            role?.RolePermissions?.includes("course_create") ||
+            role?.RolePermissions?.includes("course_only") ||
+            text === "Danh mục"
+          )
+        }
+        className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-w-[240px] transition-colors ${
+          role?.RolePermissions?.includes("course_create") ||
+          role?.RolePermissions?.includes("course_only") ||
+          text === "Danh mục"
+            ? "bg-[#6C8299] hover:bg-[#55657a]"
+            : "bg-[#CDD5DF]"
+        }`}
         onClick={handleClick}
       >
         <img

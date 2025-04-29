@@ -14,11 +14,13 @@ import { PopupConfirm } from "../../components/PopupConfirm";
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
 
 export default function Settingpage() {
   const [data, setData] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const { role } = useRole();
 
   // const editorRef = useRef(null);
 
@@ -240,7 +242,12 @@ export default function Settingpage() {
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
           <div className="flex justify-end items-center w-full">
             <button
-              className="flex gap-[0.5rem] justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] text-[#fff] min-h-[3rem] max-md:min-h-[2rem]"
+              disabled={!role?.RolePermissions?.includes("setting_edit")}
+              className={`flex gap-3 justify-center items-center px-3 font-medium leading-none text-white rounded-lg bg-[#6C8299] h-[46px] min-h-[46px] ${
+                role?.RolePermissions?.includes("setting_edit")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("update")} // Sửa lỗi: Truyền tham số "update"
             >
               <img
@@ -256,9 +263,9 @@ export default function Settingpage() {
             Cài đặt chung
           </div>
           <div className="flex flex-col mt-6 w-full font-medium leading-none max-md:max-w-full">
-            <div className="flex flex-col max-w-full min-h-[7.75rem] w-[25rem]">
+            <div className="flex flex-col max-w-full min-h-[91px] w-[360px]">
               <label
-                className="text-[#171717] text-opacity-50"
+                className="text-neutral-900 text-opacity-50"
                 htmlFor="website-name"
               >
                 Tên website
@@ -304,7 +311,7 @@ export default function Settingpage() {
                     className="object-contain self-stretch my-auto w-[67px] h-[67px] rounded-lg bg-[#CFCFCF]"
                     ref={uploadImagePreviewRef["WebsiteIcon"]}
                   />
-                  <button className="flex gap-[0.25rem] justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] text-[#fff] min-h-[3rem] max-md:min-h-[2rem]">
+                  <button className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[46px]">
                     <img
                       loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/b89b8bfd22bc2795389e527250a9a6d8837d50745dd80eb6ef8da7f2fb81f4a1?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
@@ -333,7 +340,7 @@ export default function Settingpage() {
           <div className="font-semibold text-[#171717] max-md:max-w-full">
             Thông tin liên hệ
           </div>
-          <div className="flex flex-wrap gap-2 justify-between items-start mt-[1.5rem] w-full max-md:max-w-full">
+          <div className="flex flex-wrap gap-2 justify-between items-start mt-6 w-full max-md:max-w-full">
             <ContactInput
               id="WebsitePhone"
               label="Số điện thoại"

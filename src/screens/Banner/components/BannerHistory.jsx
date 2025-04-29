@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { bannerHistoryController } from "../../../controllers/history.controller";
 
 function formatDate(dateStr) {
@@ -28,8 +26,6 @@ const getActionStyle = (action) => {
 
 export default function BannerHistory({ onClose }) {
   const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
-  const [histories, setHistories] = React.useState([]);
-  const navigate = useNavigate();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -47,9 +43,9 @@ export default function BannerHistory({ onClose }) {
     fetchData();
   }, []);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return "Đang tải...";
+  }
   console.log("Course History => ", data);
 
   // Hàm đóng popup
@@ -74,7 +70,7 @@ export default function BannerHistory({ onClose }) {
   });
 
   return (
-    <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">
+    <main className="relative flex overflow-hidden flex-col justify-start items-center md:p-[2.5rem] p-[1.5rem] text-[1.5rem] font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full max-h-[85%] max-md:p-5">
       {/* Nút đóng popup */}
       <img
         loading="lazy"
@@ -84,11 +80,11 @@ export default function BannerHistory({ onClose }) {
         onClick={handleClose}
       />
 
-      <div className="flex flex-wrap gap-3 items-center px-3 py-2 mt-2 w-full text-[1.25rem] leading-none text-[#6C8299] bg-white backdrop-blur-[100px] min-h-[50px] rounded-[100px] border border-solid border-[#6C8299] max-md:max-w-full">
+      <div className="flex gap-3 items-center md:text-[1.25rem] text-[1rem] px-[0.75rem] py-[0.5rem] mt-2 w-full leading-none text-[#6C8299] bg-white backdrop-blur-[100px] min-h-[3rem] rounded-[100px] border border-solid border-[#6C8299] max-md:max-w-full">
         <img
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/669888cc237b300e928dbfd847b76e4236ef4b5a?placeholderIfAbsent=true&apiKey=d911d70ad43c41e78d81b9650623c816"
           alt="Search icon"
-          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[30px]"
+          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[1.875rem]"
         />
         <input
           type="search"
@@ -96,7 +92,7 @@ export default function BannerHistory({ onClose }) {
           placeholder="Tìm kiếm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 md:text-[1.25rem] bg-transparent border-none outline-none placeholder-[#6C8299] text-[#6C8299] focus:ring-2 focus:ring-red-dark focus:ring-opacity-50"
+          className="flex-1 md:text-[1.25rem] text-[1rem] bg-transparent border-none outline-none placeholder-[#6C8299] text-[#6C8299] focus:ring-2 focus:ring-red-dark focus:ring-opacity-50"
         />
       </div>
       {filteredData && filteredData.length > 0 ? (
@@ -116,13 +112,16 @@ export default function BannerHistory({ onClose }) {
                   loading="lazy"
                   src={avatar}
                   alt="Avatar"
-                  className="rounded-full object-cover"
-                  style={{ width: "34px", height: "34px" }}
+                  className="rounded-full object-cover shrink-0 w-[2rem] h-[2rem] max-md:w-[1.85rem] max-md:h-[1.85rem]"
                 />
-                <h4 className="font-medium text-lg text-black">
+                <h4 className="font-medium md:text-[1.125rem] text-[1rem] text-black">
                   {name}, {bannerName} ({time})
                 </h4>
-                <span className={`${color} font-medium text-lg`}>{text}</span>
+                <span
+                  className={`${color} font-medium md:text-[1.125rem] text-[1rem]`}
+                >
+                  {text}
+                </span>
               </div>
             );
           })}

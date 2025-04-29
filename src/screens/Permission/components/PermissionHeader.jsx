@@ -5,10 +5,8 @@ export default function PermissionHeader({ roles, setSelectedRoles }) {
 
   const handleRoleClick = (index, id) => {
     setSelectedRoleIndex(selectedRoleIndex === index ? null : index);
-    setSelectedRoles(prev =>
-      prev.includes(id)
-        ? prev.filter(role => role !== id)
-        : [...prev, id]
+    setSelectedRoles((prev) =>
+      prev.includes(id) ? prev.filter((role) => role !== id) : [...prev, id]
     );
   };
   return (
@@ -23,8 +21,9 @@ export default function PermissionHeader({ roles, setSelectedRoles }) {
         return (
           <div
             key={index}
-            className={`flex basis-1/5 min-w-0 gap-2 justify-center items-center text-[#171717] truncate ${isSelected ? "bg-[#FF3C00]/20" : "" // Thêm màu nền khi được chọn
-              }`}
+            className={`min-w-[120px] flex flex-1 shrink gap-3 px-2 justify-center items-center basis-0 min-h-[70px] ${
+              isSelected ? "bg-[#FF3C00]/20" : "" // Thêm màu nền khi được chọn
+            }`}
             onClick={() => handleRoleClick(index, role._id)}
           >
             <img
