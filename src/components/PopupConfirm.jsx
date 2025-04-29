@@ -9,19 +9,19 @@ export const PopupConfirm = ({ isVisible, content, onConfirm, onClose }) => {
         <div className="flex flex-col items-center w-full text-center">
           <img
             src={`${process.env.PUBLIC_URL}/icons/charcoal_dot.svg`}
-            className="object-contain shrink-0 my-auto w-14 aspect-square"
+            className="object-contain aspect-square w-[3.5rem] max-md:w-[2.5rem]"
             alt="Icon"
           />
-          <p className="mt-6 text-xl text-neutral-900 font-semibold text-center">{content}</p>
-          <div className="mt-4 flex gap-3 justify-center items-center min-h-[70px] py-4 rounded-lg text-2xl">
+          <p className="mt-6 text-[1.25rem] max-md:text-[1rem] text-neutral-900 font-medium text-center">{content}</p>
+          <div className="mt-4 flex gap-3 justify-center items-center rounded-lg text-[1.5rem] max-md:text-[1.125rem]">
             <button
-              className="w-[150px] h-[60px] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
+              className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
               onClick={onConfirm}
             >
               Có
             </button>
             <button
-              className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
+              className="md:w-[9.375rem] md:h-[3.75rem] w-[5rem] h-[3rem] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
               onClick={onClose}
             >
               Không
