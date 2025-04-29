@@ -1,17 +1,17 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function AddAccountButton() {
   const navigate = useNavigate();
 
   const handleAddAccount = () => {
-    navigate('/admin/create');
+    navigate("/admin/create");
   };
 
   return (
     <div className="flex justify-end items-center w-full">
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium text-white rounded-lg bg-[#6C8299] min-w-[240px] hover:bg-slate-600"
+        className="flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium text-white rounded-lg bg-[#6C8299] min-w-[15rem] hover:bg-slate-600"
         onClick={handleAddAccount}
       >
         <img
