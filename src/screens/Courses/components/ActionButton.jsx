@@ -27,14 +27,14 @@ function ActionButton({ text, role }) {
       <button
         disabled={
           !(
-            role?.role?.RolePermissions?.includes("course_create") ||
-            role?.role?.RolePermissions?.includes("course_only") ||
+            role?.RolePermissions?.includes("course_create") ||
+            role?.RolePermissions?.includes("course_only") ||
             text === "Danh mục"
           )
         }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-w-[240px] transition-colors ${
-          role?.role?.RolePermissions?.includes("course_create") ||
-          role?.role?.RolePermissions?.includes("course_only") ||
+          role?.RolePermissions?.includes("course_create") ||
+          role?.RolePermissions?.includes("course_only") ||
           text === "Danh mục"
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF]"

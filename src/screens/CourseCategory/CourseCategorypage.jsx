@@ -59,9 +59,9 @@ function CourseTable() {
               <span className="text-center">Số khóa học</span>
             </div>
             <button
-              disabled={!role?.role?.RolePermissions?.includes("course_create")}
+              disabled={!role?.RolePermissions?.includes("course_create")}
               className={`flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 text-white ${
-                role?.role?.RolePermissions?.includes("course_edit")
+                role?.RolePermissions?.includes("course_edit")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"
               }`}

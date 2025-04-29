@@ -81,9 +81,9 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
       {/* Các nút hành động */}
       <div className="flex gap-2.5 items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
         <button
-          disabled={!role?.role?.RolePermissions?.includes("role_delete")}
+          disabled={!role?.RolePermissions?.includes("role_delete")}
           className={`flex gap-3 justify-center items-center px-3 py-3 whitespace-nowrap rounded-lg min-h-[46px] ${
-            role?.role?.RolePermissions?.includes("role_delete")
+            role?.RolePermissions?.includes("role_delete")
               ? "bg-[#DF322B] hover:bg-[#902723]"
               : "bg-[#ffd1d1] cursor-not-allowed"
           }`}
@@ -98,10 +98,10 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
           <span className="gap-2.5 self-stretch my-auto min-w-[85px]">Xóa</span>
         </button>
         <button
-          disabled={!role?.role?.RolePermissions?.includes("role_create")}
+          disabled={!role?.RolePermissions?.includes("role_create")}
           className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-h-[46px]
             ${
-              role?.role?.RolePermissions?.includes("role_create")
+              role?.RolePermissions?.includes("role_create")
                 ? "bg-[#6C8299] hover:bg-[#55657a]"
                 : "bg-[#CDD5DF] cursor-not-allowed"
             }`}
@@ -118,9 +118,9 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
           </span>
         </button>
         <button
-          disabled={!role?.role?.RolePermissions?.includes("role_edit")}
+          disabled={!role?.RolePermissions?.includes("role_edit")}
           className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px] ${
-            role?.role?.RolePermissions?.includes("role_edit")
+            role?.RolePermissions?.includes("role_edit")
               ? "bg-[#6C8299] hover:bg-[#55657a]"
               : "bg-[#CDD5DF] cursor-not-allowed"
           }`}

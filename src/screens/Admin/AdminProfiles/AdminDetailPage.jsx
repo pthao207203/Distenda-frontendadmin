@@ -36,7 +36,7 @@ function AdminDetailPage() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const result = await adminDetailController(AdminID, setLoading);
+      const result = await adminDetailController(AdminID);
 
       if (result) {
         setData(result);
@@ -120,26 +120,23 @@ function AdminDetailPage() {
     if (action === "update") {
       setLoading(true);
       const newData = await handleSubmit();
-      setLoading(false);
       console.log("newData", newData);
-      const result = await adminUpdatePostController(
-        setLoading,
-        data._id,
-        newData
-      );
+      const result = await adminUpdatePostController(data._id, newData);
+      setLoading(false);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
     } else {
-      console.log("xoas");
-      const result = await adminDeleteController(setLoading, data._id);
+      setLoading(true);
+      const result = await adminDeleteController(data._id);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
+      setLoading(false);
     }
   };
 
@@ -202,9 +199,9 @@ function AdminDetailPage() {
           {/* Nút hành động */}
           <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[240px]">
             <button
-              disabled={!role?.role?.RolePermissions?.includes("admin_edit")}
+              disabled={!role?.RolePermissions?.includes("admin_edit")}
               className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] ${
-                role?.role?.RolePermissions?.includes("admin_edit")
+                role?.RolePermissions?.includes("admin_edit")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"
               }`}
@@ -219,9 +216,9 @@ function AdminDetailPage() {
               <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
             <button
-              disabled={!role?.role?.RolePermissions?.includes("admin_delete")}
+              disabled={!role?.RolePermissions?.includes("admin_delete")}
               className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap rounded-lg min-h-[46px] ${
-                role?.role?.RolePermissions?.includes("admin_delete")
+                role?.RolePermissions?.includes("admin_delete")
                   ? "bg-[#DF322B] hover:bg-[#902723]"
                   : "bg-[#ffd1d1] cursor-not-allowed"
               }`}
