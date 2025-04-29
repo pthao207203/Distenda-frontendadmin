@@ -19,9 +19,9 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
       const result = await adminCreatePostController(personalInfo);
       // Hiển thị popup thành công/thất bại
       if (result.code === 200) {
-        setSuccessPopupVisible(true)
+        setSuccessPopupVisible(true);
       } else {
-        setErrorPopupVisible(false)
+        setErrorPopupVisible(false);
       }
       // navigate("/admin"); // Điều hướng đến trang AdminPage
     } else if (label === "Hủy") {
@@ -31,7 +31,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false); // Ẩn popup thành công
-    window.location.reload();
+    window.location.href("/admin");
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
@@ -47,7 +47,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
   };
 
   const baseClasses =
-    "flex gap-3 justify-center items-center px-8 py-3 rounded-lg min-h-[46px] max-md:px-5";
+    "flex gap-3 justify-center items-center px-8 rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:px-[1.25rem]";
   const variantClasses =
     variant === "primary"
       ? "text-white bg-[#6C8299] hover:bg-slate-600"
@@ -55,7 +55,10 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   return (
     <>
-      <button className={`${baseClasses} ${variantClasses}`} onClick={handleClick}>
+      <button
+        className={`${baseClasses} ${variantClasses}`}
+        onClick={handleClick}
+      >
         {icon && (
           <img
             loading="lazy"

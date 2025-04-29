@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { loginConfirmController } from "../../controllers/auth.controller.js";
-import Loading from "../../components/Loading.jsx";
 
 function OTP({ email, result }) {
   const [formData, setFormData] = useState({
@@ -24,7 +24,19 @@ function OTP({ email, result }) {
 
     try {
       // Gọi API xử lý
-      await loginConfirmController(formData, setSuccess, setError, navigate);
+      const result = await loginConfirmController(
+        formData,
+        setSuccess,
+        setError
+      );
+      setTimeout(() => {
+        navigate("/"); // Điều hướng tới trang chủ
+      }, 3000);
+      Cookies.set("token", result.token, {
+        expires: 7, // số ngày hết hạn (ở đây là 7 ngày)
+        path: "/", // cookie có hiệu lực toàn site
+        sameSite: "Lax", // tăng bảo mật, tránh CSRF
+      });
     } catch (err) {
       setError("Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {

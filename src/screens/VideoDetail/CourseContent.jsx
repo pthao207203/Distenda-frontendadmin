@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CourseHeader } from "./CourseHeader";
-import { NavigationBreadcrumb } from "./NavigationBreadcrumb";
 import { VideoSection } from "./VideoSection";
 import { videoDetailController } from "../../controllers/lesson.controller";
 import moment from "moment";
@@ -39,7 +37,7 @@ export default function CourseContent() {
     }
 
     fetchData();
-  }, []);
+  }, [VideoID]);
 
   if (loading) {
     return <Loading />;
@@ -51,10 +49,17 @@ export default function CourseContent() {
             <form className="flex flex-wrap gap-10 justify-end items-end w-full font-medium leading-none max-md:max-w-full">
               <div className="flex gap-2.5 items-start text-xl text-white min-w-[240px]">
                 <button
+                  disabled={
+                    !(
+                      role?.RolePermissions?.includes("course_edit") ||
+                      role?.RolePermissions?.includes("course_only")
+                    )
+                  }
                   onClick={onClick}
                   type="submit"
                   className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
-                    role?.role?.RolePermissions?.includes("course_edit")
+                    role?.RolePermissions?.includes("course_edit") ||
+                    role?.RolePermissions?.includes("course_only")
                       ? "bg-[#6C8299] hover:bg-[#55657a]"
                       : "bg-[#CDD5DF] cursor-not-allowed"
                   }`}
@@ -70,9 +75,16 @@ export default function CourseContent() {
                   </span>
                 </button>
                 <button
+                  disabled={
+                    !(
+                      role?.RolePermissions?.includes("course_delete") ||
+                      role?.RolePermissions?.includes("course_only")
+                    )
+                  }
                   type="button"
                   className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
-                    role?.role?.RolePermissions?.includes("course_delete")
+                    role?.RolePermissions?.includes("course_delete") ||
+                    role?.RolePermissions?.includes("course_only")
                       ? "bg-[#DF322B] hover:bg-[#902723]"
                       : "bg-[#ffd1d1] cursor-not-allowed"
                   }`}

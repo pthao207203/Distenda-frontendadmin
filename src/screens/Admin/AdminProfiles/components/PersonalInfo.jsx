@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 
-const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRequest }) => {
-  // Class và nội dung text cho status
-  const statusClass =
-    data?.CourseStatus === 1 ? "bg-[#D1F669]" : "bg-[#FFD75B]";
-  const statusText = data?.CourseStatus === 1 ? "Đang hoạt động" : "Tạm dừng";
-  console.log("roles", roles);
-
+const PersonalInfo = ({
+  data,
+  handleChange,
+  handleToggle,
+  roles,
+  handleHistoryRequest,
+}) => {
   return (
     <div className="flex flex-col mt-10 w-full text-xl max-md:max-w-full">
-      <div className="font-semibold text-neutral-900 max-md:max-w-full">
+      <div className="font-semibold text-[#171717] max-md:max-w-full">
         Thông tin cá nhân
       </div>
       <div className="flex flex-col mt-6 w-full font-medium leading-none max-md:max-w-full">
-        <div className="flex flex-wrap gap-10 justify-between items-start w-full max-md:max-w-full">
+        <div className="flex flex-wrap gap-[1rem] justify-between items-start w-full max-md:max-w-full">
           {/* Họ và tên */}
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <label
               htmlFor="AdminFullName"
-              className="text-neutral-900 text-opacity-50"
+              className="text-[#171717] text-opacity-50"
             >
               Họ và tên
             </label>
@@ -28,15 +28,15 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               type="text"
               value={data?.AdminFullName}
               onChange={handleChange}
-              className="p-2.5 mt-2 rounded-lg border border-solid border-slate-500 text-neutral-900"
+              className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             />
           </div>
 
           {/* Gmail */}
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <label
               htmlFor="AdminEmail"
-              className="text-neutral-900 text-opacity-50"
+              className="text-[#171717] text-opacity-50"
             >
               Gmail
             </label>
@@ -45,15 +45,15 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               type="email"
               value={data?.AdminEmail}
               onChange={handleChange}
-              className="p-2.5 mt-2 rounded-lg border border-solid border-slate-500 text-neutral-900"
+              className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             />
           </div>
 
           {/* Số điện thoại */}
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <label
               htmlFor="AdminPhone"
-              className="text-neutral-900 text-opacity-50"
+              className="text-[#171717] text-opacity-50"
             >
               Số điện thoại
             </label>
@@ -62,17 +62,17 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               type="tel"
               value={data?.AdminPhone}
               onChange={handleChange}
-              className="p-2.5 mt-2 rounded-lg border border-solid border-slate-500 text-neutral-900"
+              className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             />
           </div>
         </div>
 
         {/* Chức vụ */}
-        <div className="flex flex-wrap gap-10 justify-between items-start mt-8 max-w-full">
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+        <div className="flex flex-wrap gap-[2rem] justify-between items-start mt-8 max-w-full">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <label
               htmlFor="position"
-              className="text-neutral-900 text-opacity-50"
+              className="text-[#171717] text-opacity-50"
             >
               Chức vụ
             </label>
@@ -80,7 +80,7 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               id="AdminRole_id"
               value={data?.AdminRole_id}
               onChange={(e) => handleChange(e)} // Kích hoạt hàm onChange khi chọn
-              className="p-2.5 mt-2 rounded-lg border border-solid border-slate-500 text-neutral-900"
+              className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             >
               {roles &&
                 roles.length > 0 &&
@@ -99,7 +99,7 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
               id="position"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
-              className="p-2.5 mt-2 rounded-lg border border-solid border-slate-500 text-neutral-900"
+              className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             >
               {positionOptions.map((role) => (
                 <option key={role._id} value={role._id} disabled={role.disabled}>
@@ -110,46 +110,49 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
           </div>
 
           {/* Trạng thái */}
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <label
               htmlFor="AdminStatus"
-              className="text-neutral-900 text-opacity-50"
+              className="text-[#171717] text-opacity-50"
             >
               Trạng thái
             </label>
             {data?.AdminStatus === 1 ? (
               <button
                 onClick={handleToggle}
-                className={`flex justify-center items-center p-3 mt-2 w-full rounded-[99px] bg-[#D1F669]`}
+                className={`flex justify-center items-center p-3 mt-2 w-full min-h-[2.5rem] rounded-[6.25rem] bg-[#D1F669]`}
               >
                 Đang hoạt động
               </button>
             ) : (
               <button
                 onClick={handleToggle}
-                className={`flex justify-center items-center p-3 mt-2 w-full rounded-[99px] bg-[#FFD75B]`}
+                className={`flex justify-center items-center p-3 mt-2 w-full min-h-[2.5rem] rounded-[6.25rem] bg-[#FFD75B]`}
               >
                 Tạm dừng
               </button>
             )}
             {/* <button
               onClick={handleToggle}
-              className={`flex justify-center items-center p-3 mt-2 w-full rounded-[99px] ${statusClass}`}
+              className={`flex justify-center items-center p-3 mt-2 w-full min-h-[2.5rem] rounded-[6.25rem] ${statusClass}`}
             >
               {statusText}
             </button> */}
           </div>
 
           {/* Lần cuối cập nhật */}
-          <div className="flex flex-col min-h-[91px] min-w-[240px] w-[360px]">
+          <div className="flex flex-col min-h-[3.75rem] max-md:min-h-[2.75rem] min-w-[15rem] w-[22rem]">
             <div className="flex gap-3 items-center">
               <label
                 htmlFor="AdminLastUpdated"
-                className="text-neutral-900 text-opacity-50"
+                className="text-[#171717] text-opacity-50"
               >
                 Lần cuối cập nhật
               </label>
-              <button className="flex gap-3 justify-center items-center" onClick ={handleHistoryRequest}>
+              <button
+                className="flex gap-3 justify-center items-center"
+                onClick={handleHistoryRequest}
+              >
                 <img
                   loading="lazy"
                   src="/icons/Show.svg"
@@ -158,11 +161,11 @@ const PersonalInfo = ({ data, handleChange, handleToggle, roles, handleHistoryRe
                 />
               </button>
             </div>
-            <span className="p-2.5 mt-2 rounded-lg text-neutral-900">
+            <span className="p-[0.625rem] mt-2 rounded-lg text-[#171717]">
             {moment(
                 data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
                   data?.createdAt
-              ).format("DD/MM/YYYY")}   
+              ).format("DD/MM/YYYY")}
             </span>
           </div>
         </div>

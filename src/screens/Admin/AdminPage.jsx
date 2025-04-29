@@ -74,23 +74,23 @@ function AdminPage() {
       <Helmet>
         <title>Quản trị viên</title>
       </Helmet>
-      <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <main className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <section className="flex gap-3">
           <AddAccountButton role={role} />
           <HistoryButton onClick={handleHistoryRequest} />
         </section>
-        <section className="flex flex-wrap gap-3 mt-3 max-md:max-w-full">
+        <section className="flex flex-wrap gap-3 mt-[1.5rem] max-md:max-w-full">
           <SearchBar onSearch={handleSearch} />
         </section>
-        <div className="flex flex-col mt-6 w-full text-neutral-900 max-md:max-w-full">
+        <div className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
           <div className="text-right max-md:max-w-full">
             Tổng số quản trị viên: {totalAdmin}
           </div>
         </div>
         {/* Bảng quản lý admin */}
-        <section className="flex flex-col mt-3 w-full text-[#131313] max-md:max-w-full">
+        <section className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
           {/* Header của bảng */}
-          <div className="flex overflow-hidden w-full rounded-t-3xl bg-[#6C8299] min-h-[70px] max-md:max-w-full">
+          <div className="flex overflow-hidden w-full rounded-t-[1.5rem] bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem]">
             {/* Cột ID */}
             <div className="flex basis-1/5 min-w-0 justify-center items-center text-white">
               <span className="text-center">Ảnh đại diện</span>
@@ -123,14 +123,14 @@ function AdminPage() {
               <AdminTable key={index} {...admin} />
             ))
           ) : (
-            <p className="mt-4 text-center">
+            <p className="mt-[1rem] text-center">
               Không tìm thấy quản trị viên nào.
             </p>
           )}
         </section>
       </main>
       {isHistoryVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-10 overflow-hidden">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-[2.5rem] overflow-hidden">
           <AdminHistory onClose={handleCloseHistoryRequest} />
         </div>
       )}

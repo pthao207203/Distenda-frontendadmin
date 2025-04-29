@@ -13,10 +13,16 @@ export default function TableHeader({ onClickVideo, role }) {
         </div>
       </div>
       <button
-        disabled={!role?.role?.RolePermissions?.includes("course_create")}
+        disabled={
+          !(
+            role?.RolePermissions?.includes("course_create") ||
+            role?.RolePermissions?.includes("course_only")
+          )
+        }
         onClick={onClickVideo}
         className={`flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3  text-white ${
-          role?.role?.RolePermissions?.includes("course_edit")
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}

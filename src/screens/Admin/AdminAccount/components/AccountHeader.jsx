@@ -1,7 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 /* eslint-disable jsx-a11y/img-redundant-alt */
-export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup, onAvatarChange, uploadImagePreviewRef }) {
+export function AccountHeader({
+  name,
+  email,
+  avatarSrc,
+  updateIconSrc,
+  openPopup,
+  onAvatarChange,
+  uploadImagePreviewRef,
+}) {
   const fileInputRef = useRef(null); // Tham chiếu đến input file
 
   // Hàm xử lý nhấp vào ảnh
@@ -33,7 +41,9 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
         </div>
         <div className="flex flex-col self-stretch my-auto">
           <div className="flex flex-col">
-            <div className="text-[1.5rem] max-md:text-[1.25rem] font-semibold text-neutral-900">{name}</div>
+            <div className="text-[1.5rem] max-md:text-[1.25rem] font-semibold text-neutral-900">
+              {name}
+            </div>
             <div className="mt-3 text-[1.125rem] max-md:text-[1rem] font-medium text-neutral-900 text-opacity-50">
               {email}
             </div>
@@ -52,7 +62,9 @@ export function AccountHeader({ name, email, avatarSrc, updateIconSrc, openPopup
           alt=""
           className="object-contain shrink-0 self-center my-auto w-[1.5rem] aspect-square"
         />
-        <span className="gap-2.5 self-center text-center my-auto">Cập nhật</span>
+        <span className="gap-2.5 self-center text-center my-auto">
+          Cập nhật
+        </span>
       </button>
     </div>
   );

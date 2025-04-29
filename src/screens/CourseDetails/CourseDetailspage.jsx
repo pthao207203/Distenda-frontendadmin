@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CourseHeader } from "./components/CourseHeader";
 import { CourseImage } from "./components/CourseImage";
 import { CourseInfo } from "./components/CourseInfo";
@@ -42,6 +41,7 @@ function CourseDetails() {
   };
 
   const { CourseID } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -51,24 +51,31 @@ function CourseDetails() {
       setLoading(false);
       // console.log(result)
       if (result) {
+        if (
+          !role?.RolePermissions?.includes("course_view") &&
+          result.course.CourseIntructor.toString() !== result.user
+        ) {
+          console.log("Không có quyền, chuyển về trang chủ");
+          navigate("/courses");
+        }
         setCategory((prevRoles) => [
           { _id: "", CategoryName: "Chọn danh mục", disabled: true },
-          ...result.categories,
+          ...result.course.categories,
         ]);
         setIntructor((prevRoles) => [
           { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
-          ...result.intructors,
+          ...result.course.intructors,
         ]);
-        setSelectedFileName(result.CoursePicture);
-        setImageUrl(result.CoursePicture);
-        setData(result);
+        setSelectedFileName(result.course.CoursePicture);
+        setImageUrl(result.course.CoursePicture);
+        setData(result.course);
       }
     }
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [role]);
+  console.log(data);
   const handleSubmit = async () => {
     let uploadedImageUrl = data.BannerPicture;
     // Upload ảnh nếu người dùng đã chọn
