@@ -37,7 +37,7 @@ function CategoryPopup({ onClose, data }) {
   };
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
+    const { id } = e.target;
     setCategoryParent_id(id);
   };
 

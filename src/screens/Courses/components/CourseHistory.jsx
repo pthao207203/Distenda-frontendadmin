@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { courseHistoryController } from "../../../controllers/history.controller";
 
 function formatDate(dateStr) {
@@ -28,8 +26,6 @@ const getActionStyle = (action) => {
 
 export default function CourseHistory({ onClose }) {
   const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
-  const [histories, setHistories] = React.useState([]);
-  const navigate = useNavigate();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -73,7 +69,9 @@ export default function CourseHistory({ onClose }) {
       actionText.includes(keyword)
     );
   });
-
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
     <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">
       {/* Nút đóng popup */}

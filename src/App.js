@@ -28,7 +28,7 @@ import CourseAdmin from './screens/CourseAdmin/CourseContent';
 import VideoDetail from './screens/VideoDetail/CourseContent';
 import CourseBuilder from './screens/CourseBuilder/CourseBuilder';
 import CourseCreation from './screens/CourseCreation/CourseCreation';
-import LessonDetail from './screens/Lesson/CourseDetailspage'
+// import LessonDetail from './screens/Lesson/CourseDetailspage'
 import QuestionEditorpage from './screens/Lesson/LessonEdit/QuestionEditorpage';
 import Permission from './screens/Permission/PermissionPage';
 import Setting from './screens/Setting/Settingpage';

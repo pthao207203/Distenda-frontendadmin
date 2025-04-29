@@ -70,7 +70,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
 
   const handleConfirmAddRole = async () => {
     console.log(`Thêm chức vụ: ${name}`);
-    const response = await rolesCreateController(name);
+    await rolesCreateController(name);
     setAddRolePopupVisible(false);
     setName(""); // Reset tên chức vụ
     window.location.reload();
