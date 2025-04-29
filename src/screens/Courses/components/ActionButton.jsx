@@ -9,10 +9,7 @@ function ActionButton({ text, role }) {
   const handleClick = () => {
     if (text === "Danh mục") {
       navigate("/category"); // Điều hướng tới trang CourseCategorypage
-    } else if (
-      text === "Thêm khóa học" &&
-      role?.role?.RolePermissions?.includes("course_create")
-    ) {
+    } else if (text === "Thêm khóa học") {
       navigate("/courses/create");
       // togglePopup(); // Hiển thị popup
     } else {
@@ -28,8 +25,16 @@ function ActionButton({ text, role }) {
     <div>
       {/* Nút Action */}
       <button
+        disabled={
+          !(
+            role?.role?.RolePermissions?.includes("course_create") ||
+            role?.role?.RolePermissions?.includes("course_only") ||
+            text === "Danh mục"
+          )
+        }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-w-[240px] transition-colors ${
           role?.role?.RolePermissions?.includes("course_create") ||
+          role?.role?.RolePermissions?.includes("course_only") ||
           text === "Danh mục"
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF]"

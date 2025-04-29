@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CourseHeader } from "./CourseHeader";
-import { NavigationBreadcrumb } from "./NavigationBreadcrumb";
 import { VideoSection } from "./VideoSection";
 import {
   videoDetailController,
@@ -37,7 +35,8 @@ export default function CourseContent() {
     if (
       role &&
       role.role &&
-      !role.role.RolePermissions?.includes("course_edit")
+      !role.role.RolePermissions?.includes("course_edit") &&
+      !role?.role?.RolePermissions?.includes("course_only")
     ) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/courses");
@@ -46,16 +45,14 @@ export default function CourseContent() {
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("vaof")
       const result = await videoDetailController(setLoading, VideoID);
-      // console.log(result)
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
     }
 
     fetchData();
-  }, []);
+  }, [VideoID]);
 
   const handleChange = (e) => {
     // Kiểm tra nếu e.target tồn tại (dành cho input và select)
@@ -79,10 +76,8 @@ export default function CourseContent() {
       setPopupLoading(true);
       // Upload video nếu người dùng đã chọn
       let uploadedVideoUrl = "";
-      console.log("Uploaded Image URL:", selectedFileName);
       if (selectedFileName) {
         uploadedVideoUrl = await uploadVideo(selectedFileName);
-        console.log("Uploaded Image URL:", uploadedVideoUrl);
         setData((prev) => ({
           ...prev,
           VideoUrl: uploadedVideoUrl,
