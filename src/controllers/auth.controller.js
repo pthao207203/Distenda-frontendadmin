@@ -20,16 +20,13 @@ export const loginController = async (data, setSuccess, setError) => {
 
 
 // [POST] /auth/loginConfirm
-export const loginConfirmController = async (data, setSuccess, setError, navigate) => {
+export const loginConfirmController = async (data, setSuccess, setError) => {
   try {
     const result = await loginConfirmService(data); // Gọi service để xử lý API
     if (result.code === 400) {
       setError(result.message);
     } else {
       setSuccess(result.message || 'Đăng nhập thành công!');
-      setTimeout(() => {
-        navigate('/'); // Điều hướng tới trang chủ
-      }, 3000);
     }
     return result;
   } catch (err) {
