@@ -15,6 +15,7 @@ import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import AdminDetailHistory from "./components/AdminDetailHistory";
+import { useRole } from "../../../layouts/AppContext";
 
 function AdminDetailPage() {
   const navigate = useNavigate();
@@ -28,14 +29,9 @@ function AdminDetailPage() {
   const [popupContent, setPopupContent] = useState("");
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
-  const editorRef = useRef(null);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-
-  const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
-
-  const uploadImageInputRef = useRef(null);
-  const uploadImagePreviewRef = useRef(null);
+  const { role } = useRole();
 
   useEffect(() => {
     async function fetchData() {
@@ -46,7 +42,6 @@ function AdminDetailPage() {
         setData(result);
 
         setSelectedFileName(result.AdminAvatar);
-        setImageUrl(result.AdminAvatar);
         setRoles((prevRoles) => [
           { _id: "", RoleName: "Chọn chức vụ", disabled: true },
           ...result.roles,
@@ -207,7 +202,12 @@ function AdminDetailPage() {
           {/* Nút hành động */}
           <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[240px]">
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-slate-500 min-h-[46px]"
+              disabled={!role?.role?.RolePermissions?.includes("admin_edit")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] ${
+                role?.role?.RolePermissions?.includes("admin_edit")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("update")}
             >
               <img
@@ -219,7 +219,12 @@ function AdminDetailPage() {
               <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap bg-red-600 rounded-lg min-h-[46px]"
+              disabled={!role?.role?.RolePermissions?.includes("admin_delete")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap rounded-lg min-h-[46px] ${
+                role?.role?.RolePermissions?.includes("admin_delete")
+                  ? "bg-[#DF322B] hover:bg-[#902723]"
+                  : "bg-[#ffd1d1] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("delete")}
             >
               <img

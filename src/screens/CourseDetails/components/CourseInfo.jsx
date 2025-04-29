@@ -9,6 +9,7 @@ export function CourseInfo({
   category,
   intructor,
   editorRef,
+  role,
 }) {
   const voteCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   let totalVotes = 0; // Tổng số lượt vote
@@ -38,6 +39,7 @@ export function CourseInfo({
           </label>
           <div className="flex relative gap-2.5 items-start px-2.5 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
             <input
+              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
               type="text"
               id="CourseName"
               value={data?.CourseName}
@@ -55,6 +57,7 @@ export function CourseInfo({
           </label>
           <div className="flex relativen min-w-[240px] w-[400px] gap-2.5 items-start px-2.5 py-3 mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
             <select
+              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
               id="CourseCatogory"
               value={data?.CourseCatogory}
               onChange={(e) => handleInputChange(e)} // Kích hoạt hàm onChange khi chọn
@@ -84,6 +87,7 @@ export function CourseInfo({
           </label>
           <div className="flex relativen w-full gap-2.5 items-start px-2.5 py-3 mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
             <select
+              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
               id="CourseIntructor"
               value={data?.CourseIntructor}
               onChange={(e) => handleInputChange(e)} // Kích hoạt hàm onChange khi chọn
@@ -107,6 +111,7 @@ export function CourseInfo({
       </div>
       <div className="flex flex-wrap gap-10 items-start mt-6 w-full text-xl font-medium leading-none max-md:max-w-full">
         <StatItem
+          disabled={!role?.role?.RolePermissions?.includes("course_edit")}
           id="CoursePrice"
           label="Giá"
           value={data?.CoursePrice}
@@ -114,6 +119,7 @@ export function CourseInfo({
           handleInputChange={handleInputChange}
         />
         <StatItem
+          disabled={!role?.role?.RolePermissions?.includes("course_edit")}
           id="CourseDiscount"
           label="Giảm giá"
           value={data?.CourseDiscount}
@@ -126,6 +132,7 @@ export function CourseInfo({
           <div className="text-neutral-900 text-opacity-50">Trạng thái</div>
           {data?.CourseStatus === 1 ? (
             <button
+              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
               onClick={handleToggle}
               className="flex mt-3 gap-3 justify-center items-center px-3 py-[20px] min-w-[300px] bg-lime-300 min-h-[40px] rounded-[99px]"
             >
@@ -133,6 +140,7 @@ export function CourseInfo({
             </button>
           ) : (
             <button
+              disabled={!role?.role?.RolePermissions?.includes("course_edit")}
               onClick={handleToggle}
               className="flex mt-3 gap-3 justify-center items-center px-3.5 py-[20px] min-w-[300px] bg-[#FFD75B] min-h-[40px] rounded-[99px]"
             >
@@ -168,6 +176,7 @@ export function CourseInfo({
       {showMore && (
         <div className="mt-6">
           <EditableDetail
+            disabled={!role?.role?.RolePermissions?.includes("course_edit")}
             id="CourseDescription"
             title="Mô tả"
             value={data?.CourseDescription}
@@ -175,6 +184,7 @@ export function CourseInfo({
             editorRef={editorRef}
           />
           <EditableDetail
+            disabled={!role?.role?.RolePermissions?.includes("course_edit")}
             id="CourseOverview"
             title="Tổng quan khóa học"
             value={data?.CourseOverview}
@@ -182,6 +192,7 @@ export function CourseInfo({
             editorRef={editorRef}
           />
           <EditableDetail
+            disabled={!role?.role?.RolePermissions?.includes("course_edit")}
             id="CourseLearning"
             title="Bạn sẽ học được gì?"
             value={data?.CourseLearning}
@@ -194,12 +205,13 @@ export function CourseInfo({
   );
 }
 
-function StatItem({ id, label, value, type, handleInputChange }) {
+function StatItem({ disabled, id, label, value, type, handleInputChange }) {
   const renderValue = () => {
     switch (type) {
       case "input":
         return (
           <input
+            disabled={disabled}
             id={id}
             type="text"
             value={value}
@@ -228,11 +240,12 @@ function StatItem({ id, label, value, type, handleInputChange }) {
   );
 }
 
-function EditableDetail({ id, title, value, onChange, editorRef }) {
+function EditableDetail({ disabled, id, title, value, onChange, editorRef }) {
   return (
     <div className="mt-6">
       <h3 className="text-xl font-semibold text-neutral-900">{title}</h3>
       <Editor
+        disabled={disabled}
         id={id}
         apiKey="ra8co6ju1rrspizsq3cqhi3e8p7iknltlh2v77d58cbrys8m"
         onInit={(_evt, editor) => (editorRef.current = editor)}

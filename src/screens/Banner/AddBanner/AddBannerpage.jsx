@@ -6,6 +6,8 @@ import uploadImage from "../../../components/UploadImage";
 import { Editor } from "@tinymce/tinymce-react";
 
 import Loading from "../../../components/Loading";
+import { useRole } from "../../../layouts/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function BannerForm() {
   const [data, setData] = useState({
@@ -25,6 +27,19 @@ function BannerForm() {
 
   const uploadImageInputRef = useRef(null);
   const uploadImagePreviewRef = useRef(null);
+
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      role &&
+      role.role &&
+      !role.role.RolePermissions?.includes("banner_create")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/banner");
+    }
+  }, [navigate, role]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

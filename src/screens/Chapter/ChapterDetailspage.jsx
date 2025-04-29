@@ -11,6 +11,7 @@ import { lessonDetailController } from "../../controllers/lesson.controller";
 
 import Loading from "../../components/Loading";
 import ChapterDetailHistory from "./components/ChapterDetailHistory";
+import { useRole } from "../../layouts/AppContext";
 
 // const lessons = [
 //   { id: 1, name: "HTML cơ bản", lastUpdated: "29/11/2024 23:13" },
@@ -25,6 +26,8 @@ function CourseLesson() {
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const { LessonID } = useParams();
   const navigate = useNavigate();
+
+  const { role } = useRole();
 
   const onClickExercise = () => {
     navigate(`/courses/lesson/exercise/create/${data._id}`);
@@ -54,24 +57,6 @@ function CourseLesson() {
     return <Loading />;
   }
   console.log("coursedetail => ", data);
-
-  // Hàm cập nhật dữ liệu khi người dùng nhập vào
-  const handleChange = (e) => {
-    // Kiểm tra nếu e.target tồn tại (dành cho input và select)
-    if (e?.target) {
-      const { id, value } = e.target;
-      setData((prevData) => ({
-        ...prevData,
-        [id]: value, // Cập nhật theo id của input
-      }));
-    } else if (e) {
-      // Nếu không có e.target (TinyMCE)
-      setData((prevData) => ({
-        ...prevData,
-        [e.id]: e.getContent(), // Lấy nội dung từ TinyMCE và cập nhật theo id
-      }));
-    }
-  };
 
   const lessonChange = (videoID, event) => {
     const newLessonName = event.target.value; // Lấy giá trị từ input
@@ -113,15 +98,6 @@ function CourseLesson() {
                 <span className="p-2.5 mt-2 rounded-lg text-neutral-900">
                   {data.LessonName}
                 </span>
-                {/* <div className="flex relative gap-2.5 items-start px-2.5 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
-                  <input
-                    type="text"
-                    id="LessonName"
-                    value={data.LessonName}
-                    onChange={handleChange} // Thêm xử lý onChange
-                    className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
-                  />
-                </div> */}
               </div>
               <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
                 <div className="flex gap-3 items-center">
@@ -155,7 +131,7 @@ function CourseLesson() {
           <div className="self-stretch my-auto font-semibold text-neutral-900">
             Bài tập
           </div>
-          <EditButton onClick={onClickExercise} />
+          <EditButton onClick={onClickExercise} role={role} />
         </div>
         <div className="flex z-0 flex-col mt-10 w-full text-xl text-neutral-900 max-md:max-w-full">
           <div className="flex flex-wrap gap-6 items-start w-full max-md:max-w-full">
@@ -165,7 +141,7 @@ function CourseLesson() {
             </div>
           </div>
           <div className="flex flex-col pb-16 mt-6 w-full font-medium leading-none max-md:max-w-full">
-            <TableHeader onClickVideo={onClickVideo} />
+            <TableHeader onClickVideo={onClickVideo} role={role} />
             {data?.video?.length > 0 &&
               data.video.map((video, index) => (
                 <LessonRow
@@ -173,6 +149,7 @@ function CourseLesson() {
                   key={index}
                   video={video}
                   lessonChange={lessonChange}
+                  role={role}
                 />
               ))}
           </div>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-function TableHeader() {
+function TableHeader({ role }) {
   const navigate = useNavigate(); // Khởi tạo navigate
 
   // Hàm xử lý khi nhấn vào nút "Banner mới"
@@ -21,7 +21,12 @@ function TableHeader() {
         <div className="gap-2.5 self-stretch my-auto">Khóa học liên kết</div>
       </div>
       <button
-        className="flex basis-1/4 min-w-0 gap-3 justify-center items-center px-3 min-h-[70px] text-white"
+        disabled={!role?.role?.RolePermissions?.includes("banner_create")}
+        className={`flex basis-1/4 min-w-0 gap-3 justify-center items-center px-3 min-h-[70px] text-white ${
+          role?.role?.RolePermissions?.includes("banner_create")
+            ? "bg-[#6C8299] hover:bg-[#55657a]"
+            : "bg-[#CDD5DF] cursor-not-allowed"
+        }`}
         onClick={handleAddBanner} // Gắn sự kiện onClick để điều hướng
       >
         <img

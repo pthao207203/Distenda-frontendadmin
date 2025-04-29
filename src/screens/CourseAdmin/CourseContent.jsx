@@ -15,6 +15,7 @@ import { PopupConfirm } from "../../components/PopupConfirm";
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import { PopupLoading } from "../../components/PopupLoading";
+import { useRole } from "../../layouts/AppContext";
 
 export default function CourseContent() {
   const [data, setData] = useState();
@@ -22,6 +23,7 @@ export default function CourseContent() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const editorRef = useRef();
+  const { role } = useRole();
 
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -31,9 +33,16 @@ export default function CourseContent() {
 
   const { VideoID } = useParams();
 
-  const onClick = () => {
-    navigate(`/courses/lesson/video/edit/${VideoID}`);
-  };
+  useEffect(() => {
+    if (
+      role &&
+      role.role &&
+      !role.role.RolePermissions?.includes("course_edit")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/courses");
+    }
+  }, [navigate, role]);
 
   useEffect(() => {
     async function fetchData() {

@@ -7,12 +7,14 @@ import { videoDetailController } from "../../controllers/lesson.controller";
 import moment from "moment";
 import Loading from "../../components/Loading";
 import VideoDetailHistory from "./VideoDetailHistory";
+import { useRole } from "../../layouts/AppContext";
 
 export default function CourseContent() {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const navigate = useNavigate();
+  const { role } = useRole();
 
   const { VideoID } = useParams();
   const handleHistoryRequest = () => {
@@ -51,7 +53,11 @@ export default function CourseContent() {
                 <button
                   onClick={onClick}
                   type="submit"
-                  className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299]"
+                  className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
+                    role?.role?.RolePermissions?.includes("course_edit")
+                      ? "bg-[#6C8299] hover:bg-[#55657a]"
+                      : "bg-[#CDD5DF] cursor-not-allowed"
+                  }`}
                 >
                   <img
                     loading="lazy"
@@ -65,7 +71,11 @@ export default function CourseContent() {
                 </button>
                 <button
                   type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 bg-[#DF322B] rounded-lg"
+                  className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
+                    role?.role?.RolePermissions?.includes("course_delete")
+                      ? "bg-[#DF322B] hover:bg-[#902723]"
+                      : "bg-[#ffd1d1] cursor-not-allowed"
+                  }`}
                 >
                   <img
                     loading="lazy"

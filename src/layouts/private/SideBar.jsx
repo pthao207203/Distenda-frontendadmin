@@ -48,12 +48,13 @@ export default function SideBar({ headerHeight }) {
       icon: "/icons/home.svg",
       label: "Trang chủ",
     },
-    role?.role?.RolePermissions?.includes("message_view") && { 
-      link: "/message", 
-      icon: "/icons/category.svg", 
-      label: "Tin nhắn" 
+    role?.role?.RolePermissions?.includes("message_view") && {
+      link: "/message",
+      icon: "/icons/category.svg",
+      label: "Tin nhắn",
     },
-    role?.role?.RolePermissions?.includes("course_view") && {
+    (role?.role?.RolePermissions?.includes("course_view") ||
+      role?.role?.RolePermissions?.includes("course_only")) && {
       link: "/courses",
       icon: "/icons/document.svg",
       label: "Khóa học",
@@ -100,8 +101,6 @@ export default function SideBar({ headerHeight }) {
     },
   ].filter((item) => item);
 
-  const adminAvatar = data?.setting?.user?.AdminAvatar || "/profile.svg";
-
   console.log("SideBar => ", data);
   return (
     <>
@@ -131,7 +130,6 @@ export default function SideBar({ headerHeight }) {
             }
             alt="Profile"
             className="rounded-full object-cover  w-[3rem] h-[3rem] max-md:w-[2.5rem] max-md:h-[2.5rem]"
-            
           />
           <div>
             <h4
