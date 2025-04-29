@@ -62,6 +62,7 @@ function DashboardPage() {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: {
               position: 'top',  // Đặt vị trí của legend
@@ -101,6 +102,7 @@ function DashboardPage() {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: { position: 'top' },
             title: { display: true, text: 'Tỉ lệ đơn hàng theo mức giá khóa học' }
@@ -170,28 +172,31 @@ function DashboardPage() {
         {/* Stats Section */}
         <main>
           <div className="max-w-full flex flex-col items-center w-full p-16 font-medium bg-white basis-0 max-md:p-5 max-md:max-w-full">
-            <div className="flex flex-1 flex-wrap flex-grow shrink gap-4 w-full justify-evenly items-center text-white max-md:max-w-full">
+            <div className="grid grid-cols-4 max-md:grid-cols-2 gap-4 max-md:gap-3 w-full justify-evenly items-center text-white max-md:max-w-full">
               {stats.map((stat, index) => (
                 <StatCard key={index} {...stat} />
               ))}
             </div>
 
             {/* Chart Section */}
-            <section className="py-8 grid grid-cols-1 lg:grid-cols-8 gap-8 w-full">  {/* Thay đổi số cột trong grid */}
+            <section className="py-8 grid grid-cols-1 md:grid-cols-8 gap-8 w-full">  {/* Thay đổi số cột trong grid */}
               {/* Biểu đồ Lợi nhuận */}
-              <div className="bg-white p-6 rounded-[20px] border border-[#cdd5de] col-span-5"> {/* col-span-5 để chiếm 5 cột */}
-                <h3 className="text-lg font-semibold mb-4">Lợi nhuận và Doanh Thu</h3>
-                <canvas ref={chartRef} width="100%" height="50%"></canvas>
-
+              <div className="bg-white p-6 rounded-[20px] border border-[#cdd5de] md:col-span-5"> {/* col-span-5 để chiếm 5 cột */}
+                <h3 className="text-[1.125rem] font-semibold mb-4">Lợi nhuận và Doanh Thu</h3>
+                <div className="w-full h-[17rem] sm:h-[25rem]">
+                <canvas ref={chartRef} style={{ display: 'block' }}></canvas>
+                </div>
               </div>
 
               {/* Biểu đồ Tỉ lệ chuyển đổi */}
-              <div className="bg-white p-6 rounded-[20px] border border-[#cdd5de] col-span-3">
-                <h3 className="text-lg font-semibold mb-4">Tỉ lệ phân bổ học viên theo danh mục khóa học</h3>
-                <canvas ref={chartRefDoughnut} width="10%" height="10%"></canvas>
+              <div className="bg-white p-6 rounded-[20px] border border-[#cdd5de] md:col-span-3">
+                <h3 className="text-[1.125rem] font-semibold mb-4">Tỉ lệ phân bổ học viên theo danh mục khóa học</h3>
+                <div className="w-full h-[17rem] sm:h-[25rem]">
+                <canvas ref={chartRefDoughnut} style={{ display: 'block' }}></canvas>
+                </div>
               </div>
             </section>
-            <section className="flex flex-col mt-1 w-full text-xl text-neutral-900 max-md:max-w-full">
+            <section className="flex flex-col mt-1 w-full text-[1.25rem] max-md:text-[1rem] text-neutral-900 max-md:max-w-full">
               <TableHeader />
               {data?.courses.map((course, index) => (
                 <CourseTableRow key={index} {...course} />

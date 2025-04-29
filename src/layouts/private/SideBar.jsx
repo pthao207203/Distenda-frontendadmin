@@ -121,7 +121,7 @@ export default function SideBar({ headerHeight }) {
         }}
         onClick={(e) => e.stopPropagation()} // Ngăn sự kiện lan đến overlay
       >
-        <div className="flex gap-2 justify-evenly items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
+        <div className="flex gap-4 justify-start items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
           <img
             loading="lazy"
             src={
@@ -136,7 +136,7 @@ export default function SideBar({ headerHeight }) {
           <div>
             <h4
               className="mb-1 font-semibold shrink"
-              style={{ fontSize: "1.25rem", color: "black" }}
+              style={{ fontSize: "1.5rem", color: "black" }}
             >
               {data?.setting?.user?.AdminFullName?.split(" ")
                 .slice(-2)
@@ -148,15 +148,15 @@ export default function SideBar({ headerHeight }) {
           </div>
         </div>
 
-        <div className="flex flex-col overflow-auto px-3">
+        <div className="flex flex-col overflow-auto px-[0.75rem]">
           {menuItems.map((item, index) => (
             <Link to={item.link} key={index}>
               <div
-                className={`flex items-center text-xl gap-4 px-2 py-3 text-[1.125rem] ${
+                className={`flex items-center gap-4 px-2 py-3 text-[1.25rem] ${
                   (location.pathname.includes(item.link) &&
                     item.link !== "/") ||
                   (item.link === "/" && location.pathname === "/")
-                    ? "bg-[#EBF1F9] font-medium p-2 rounded-xl"
+                    ? "bg-[#EBF1F9] font-medium px-[0.75rem] py-[1rem] rounded-xl"
                     : ""
                 }`}
                 style={{ color: "black" }}

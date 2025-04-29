@@ -18,7 +18,7 @@ export function AdminInfoField({ label, value, editable, onChange }) {
   }`;
 
   return (
-    <div className="flex flex-col mt-8 max-w-full min-h-[91px] min-w-[240px] w-[360px]">
+    <div className="flex flex-col mb-8 max-w-full min-h-[5.5rem] max-md:min-h-[4rem] md:min-w-[20rem] min-w-[15rem] max-md:max-w-full">
       {/* Label cho trường */}
       <label className="text-neutral-900 text-opacity-50 ">{label}</label>
       {/* Input thay thế cho div */}
