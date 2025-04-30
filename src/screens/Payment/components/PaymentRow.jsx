@@ -2,6 +2,7 @@ import * as React from "react";
 import moment from "moment";
 
 export default function PaymentRow({ pay, onRowClick }) {
+  console.log("pay", pay);
   const getStatusStyles = (status) => {
     switch (status) {
       case -1: //Chờ thanh toán
@@ -43,14 +44,14 @@ export default function PaymentRow({ pay, onRowClick }) {
       {/* Tên người dùng */}
       <div className="flex basis-1/6 min-w-0 justify-center p-3 items-center">
         <span className="text-[#131313] text-center text-xl font-medium truncate">
-          {pay.userName}
+          {pay.UserId?.UserFullName}
         </span>
       </div>
 
       {/* Mã khóa học */}
       <div className="flex basis-1/6 min-w-0 justify-center p-3 items-center bg-[#EBF1F9]">
         <span className="text-[#131313] text-center text-xl font-medium truncate">
-          {pay.courseName}
+          {pay.CourseId?.CourseName}
         </span>
       </div>
 
