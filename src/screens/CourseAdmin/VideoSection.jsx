@@ -18,7 +18,7 @@ export function VideoSection({ video, selectedFileName, setSelectedFileName }) {
 
   return (
     <div className="flex flex-col mt-11 w-full max-md:mt-10 max-md:max-w-full">
-      <label className="text-xl font-medium leading-none text-neutral-900 text-opacity-50 max-md:max-w-full">
+      <label className="md:text-[1.25rem] text-[1rem]  font-medium leading-none text-neutral-900 text-opacity-50 max-md:max-w-full">
         Video <span className="text-red-600">*</span>
       </label>
       <div className="flex flex-col mt-2 w-full bg-[#EBF1F9] max-md:max-w-full">
@@ -35,7 +35,7 @@ export function VideoSection({ video, selectedFileName, setSelectedFileName }) {
           className="object-contain z-10 w-full aspect-[1.77] max-md:max-w-full"
         /> */}
       </div>
-      <div className="flex flex-col mt-2 max-w-full text-xl font-medium leading-none w-[569px]">
+      <div className="flex flex-col mt-2 max-w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none w-[569px]">
         <input
           type="file"
           className="gap-2.5 self-stretch my-auto form-control-file hidden" // Ẩn input file
@@ -46,7 +46,7 @@ export function VideoSection({ video, selectedFileName, setSelectedFileName }) {
           onChange={handleVideoChange}
         />
         <label
-          className="flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[46px]"
+          className="flex gap-3 justify-center items-center self-start md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299]"
           for="VideoFile"
         >
           <img

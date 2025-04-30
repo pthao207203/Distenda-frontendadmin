@@ -50,27 +50,27 @@ export default function LessonRow({ setLoading, video, role }) {
   };
   return (
     <>
-      <div className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[70px] cursor-pointer">
+      <div className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[3.75rem] max-md:min-h-[2.75rem] cursor-pointer">
         {/* STT */}
-        <div className="flex basis-1/4 min-w-0 min-h-[70px] shrink justify-center items-center px-3 bg-[#EBF1F9]  ">
-          <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] shrink justify-center items-center px-3 bg-[#EBF1F9]  ">
+          <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem]  font-medium truncate">
             {video._id}
           </span>
         </div>
 
         {/* Tên bài học */}
-        <div className="flex basis-1/4 min-w-0 min-h-[70px] shrink justify-center items-center px-3 bg-white  ">
+        <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] shrink justify-center items-center px-3 bg-white  ">
           <button
             onClick={onClick}
-            className="text-[#131313] text-center text-xl font-medium truncate"
+            className="text-[#131313] text-center md:text-[1.25rem] text-[1rem]  font-medium truncate"
           >
             {video.VideoName}
           </button>
         </div>
 
         {/* Lần cuối cập nhật */}
-        <div className="flex basis-1/4 min-w-0 min-h-[70px] justify-center items-center px-3 bg-[#EBF1F9] ">
-          <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center items-center px-3 bg-[#EBF1F9] ">
+          <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem]  font-medium truncate">
             {moment(
               video?.editedBy?.[video.editedBy?.length - 1]?.editedAt ||
                 video?.createdAt
@@ -79,7 +79,7 @@ export default function LessonRow({ setLoading, video, role }) {
         </div>
 
         {/* Hành động */}
-        <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-2.5 justify-center px-3 py-2">
+        <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] gap-2.5 justify-center px-3 py-2">
           {/* Button Sửa */}
           <button
             disabled={
@@ -114,7 +114,7 @@ export default function LessonRow({ setLoading, video, role }) {
                 : "bg-[#ffd1d1] cursor-not-allowed"
             }`}
           >
-            <div className="self-center shrink w-[90%] max-w-full px-4 py-2 rounded-[99px] justify-center items-center inline-flex text-center text-xl font-medium">
+            <div className="self-center shrink w-[90%] max-w-full px-4 py-2 rounded-[99px] justify-center items-center inline-flex text-center md:text-[1.25rem] text-[1rem]  font-medium">
               Xóa
             </div>
           </button>

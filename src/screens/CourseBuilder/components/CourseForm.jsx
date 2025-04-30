@@ -124,7 +124,7 @@ export function CourseForm() {
         <form className="flex overflow-hidden flex-col px-16 pt-8 w-full font-medium bg-white max-md:px-5 max-md:max-w-full min-h-screen">
           <div className="flex flex-col pb-16 w-full max-md:max-w-full">
             <div className="flex flex-wrap gap-10 w-full max-md:max-w-full">
-              <div className="flex flex-col flex-1 shrink justify-center self-start text-xl basis-0 min-w-[240px] max-md:max-w-full">
+              <div className="flex flex-col flex-1 shrink justify-center self-start md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] max-md:max-w-full">
                 <label
                   htmlFor="VideoName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -136,15 +136,15 @@ export function CourseForm() {
                   id="VideoName"
                   type="text"
                   value={data.VideoName}
-                  className="flex-1 shrink gap-2.5 self-stretch px-3 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full"
+                  className="flex-1 shrink gap-2.5 self-stretch md:p-3 max-md:p-2 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[3.75rem] max-md:min-h-[2.75rem] text-neutral-900 max-md:max-w-full"
                   aria-required="true"
                 />
               </div>
-              <div className="flex gap-2.5 items-end px-2 text-xl whitespace-nowrap min-w-[240px]">
+              <div className="flex gap-2.5 items-end px-2 md:text-[1.25rem] text-[1rem]  whitespace-nowrap">
                 <button
                   onClick={() => handlePopup("create")}
                   type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[63px] w-[180px]"
+                  className="flex gap-3 justify-center items-center md:p-3 max-md:p-2 w-auto text-white rounded-lg bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem]"
                 >
                   <img
                     loading="lazy"
@@ -157,13 +157,13 @@ export function CourseForm() {
                 <button
                   onClick={() => handlePopup("cancel")}
                   type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#CDD5DF] min-h-[63px] text-[#14375F] w-[180px]"
+                  className="flex gap-3 justify-center items-center md:p-3 max-md:p-2 rounded-lg bg-[#CDD5DF] min-h-[3.75rem] max-md:min-h-[2.75rem] text-[#14375F] w-auto"
                 >
                   <span className="gap-2.5 self-stretch my-auto">Hủy</span>
                 </button>
               </div>
             </div>
-            {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+            {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label htmlFor="VideoUrl" className="text-neutral-900 text-opacity-50 max-md:max-w-full">
                 Link video <span className="text-red-600">*</span>
               </label>
@@ -172,11 +172,11 @@ export function CourseForm() {
                 id="VideoUrl"
                 type="text"
                 value={data.VideoUrl}
-                className="flex-1 shrink gap-2.5 self-stretch px-3 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[200px] text-neutral-900 max-md:max-w-full"
+                className="flex-1 shrink gap-2.5 self-stretch md:p-3 max-md:p-2 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[200px] text-neutral-900 max-md:max-w-full"
                 aria-required="true"
               />
             </div> */}
-            <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+            <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label
                 htmlFor="VideoUrl"
                 className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -222,7 +222,7 @@ export function CourseForm() {
                 }}
               />
             </div>
-            <div className="flex flex-col mt-11 w-full text-xl max-md:mt-10 max-md:max-w-full">
+            <div className="flex flex-col mt-11 w-full md:text-[1.25rem] text-[1rem]  max-md:mt-10 max-md:max-w-full">
               <label
                 htmlFor="videoUpload"
                 className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -249,7 +249,7 @@ export function CourseForm() {
                 <label
                   for="VideoFile"
                   type="button"
-                  className="flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[46px]"
+                  className="flex gap-3 justify-center items-center self-start md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299]"
                 >
                   <img
                     loading="lazy"

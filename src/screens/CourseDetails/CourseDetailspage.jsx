@@ -144,7 +144,7 @@ function CourseDetails() {
   };
   return (
     <>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem]  font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         <CourseHeader data={data} handleSubmit={handleSubmit} role={role} />
         <CourseImage
           data={data}

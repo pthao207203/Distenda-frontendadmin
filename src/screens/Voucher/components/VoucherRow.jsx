@@ -25,8 +25,8 @@ const VoucherRow = ({ id, index, voucher, isDeleted = false }) => {
   };
 
   const getStatusStyles = (status) => {
-    if (status === 1) return { bgColor: "bg-lime-300", text: "Hoạt động" };
-    if (status === 0) return { bgColor: "bg-amber-300", text: "Tạm dừng" };
+    if (status === 1) return { bgColor: "bg-[#D1F669]", text: "Hoạt động" };
+    if (status === 0) return { bgColor: "bg-[#FFD75B]", text: "Tạm dừng" };
     return { bgColor: "bg-gray-300", text: "Không xác định" };
   };
 

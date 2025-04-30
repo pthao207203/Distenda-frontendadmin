@@ -3,8 +3,8 @@ import React from 'react';
 function ImageUpload({ uploadImageInputRef, uploadImagePreviewRef, handleImageChange, imageUrl }) {
   return (
     <div className="flex flex-col font-medium leading-none">
-      <div className="flex flex-col min-h-[395px]">
-        <label htmlFor="CoursePicture" className="text-xl text-neutral-900">
+      <div className="flex flex-col min-h-[20rem]">
+        <label htmlFor="CoursePicture" className="md:text-[1.25rem] text-[1rem]  text-neutral-900">
           Ảnh khoá học
         </label>
         <label htmlFor="image" className="relative">
@@ -13,7 +13,7 @@ function ImageUpload({ uploadImageInputRef, uploadImagePreviewRef, handleImageCh
             loading="lazy"
             src={imageUrl}
             alt=""
-            className="object-cover shrink-0 self-end aspect-[1.61] mt-2 w-full h-full rounded-lg border border-solid border-slate-500 border-opacity-80 border-none"
+            className="object-cover shrink-0 self-end aspect-[1.61] mt-2 w-full h-full rounded-lg border border-solid border-slate-500 border-opacity-80"
           />
 
           {/* Button chọn tệp nằm trên ảnh và ở giữa */}
@@ -21,7 +21,7 @@ function ImageUpload({ uploadImageInputRef, uploadImagePreviewRef, handleImageCh
             <button
               type="button"
               onClick={() => document.getElementById('CoursePicture').click()}
-              className="flex gap-3 justify-center items-center px-3 py-3 text-2xl text-white rounded-lg bg-[#6C8299] z-10 hover:bg-[#6C8299]/50"
+              className="flex gap-2 justify-center items-center md:p-3 max-md:p-2 text-[1.25rem] max-md:text-[1.125rem] text-white rounded-lg bg-[#6C8299] z-10 hover:bg-[#6C8299]/50"
             >
               <img
                 loading="lazy"
@@ -29,7 +29,7 @@ function ImageUpload({ uploadImageInputRef, uploadImagePreviewRef, handleImageCh
                 alt=""
                 className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
               />
-              <span className="gap-2.5 self-stretch my-auto text-2xl">Chọn tệp</span>
+              <span className="gap-2.5 self-stretch my-auto text-[1.25rem] max-md:text-[1.125rem]">Chọn tệp</span>
               <input
                 type="file"
                 id="CoursePicture"

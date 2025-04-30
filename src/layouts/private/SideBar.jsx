@@ -144,7 +144,7 @@ export default function SideBar({ headerHeight }) {
                 .slice(-2)
                 .join(" ")}
             </h4>
-            <h4 className="font-medium text-[1.125rem] text-black">
+            <h4 className="font-medium md:text-[1.125rem] text-[1rem] text-black">
               {data?.role?.RoleName || "Không có vai trò"}
             </h4>
           </div>
@@ -179,7 +179,7 @@ export default function SideBar({ headerHeight }) {
       {!isDesktop && !isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed top-[0.75rem] left-[1.125rem] z-50 p-2 text-white rounded-md max-md:top-[0.275rem] max-md:left-[0.25rem]"
+          className="fixed top-[0.675rem] left-[1.125rem] z-50 p-2 text-white rounded-md max-md:top-[0.475rem] max-md:left-[0.25rem]"
         >
           {/* Biểu tượng SVG */}
           <svg
