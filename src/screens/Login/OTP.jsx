@@ -43,6 +43,7 @@ function OTP({ email, result }) {
       setIsLoading(false); // Kết thúc trạng thái loading
     }
   };
+
   return (
     <div className="flex z-0 flex-col w-full max-md:max-w-full">
       <div className="flex flex-col w-full leading-none max-md:max-w-full">
@@ -119,7 +120,7 @@ function OTP({ email, result }) {
 
         <button
           type="submit"
-          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[58px] text-white max-md:max-w-full ${
+          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

@@ -15,44 +15,35 @@ export async function courseHistoryController(setLoading) {
 }
 
 // [GET] /admin/courses/detail/:CourseID/history
-export async function lessonHistoryController(setLoading, CourseId) {
+export async function lessonHistoryController(CourseId) {
   try {
-    setLoading(true); // Đang tải
     const result = await lessonHistoryService(CourseId); // Gọi API
     console.log("lesson history ", result);
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 
 // [GET] /admin/lesson/detail/:LessonId/history
-export async function videoHistoryController(setLoading, LessonId) {
+export async function videoHistoryController(LessonId) {
   try {
-    setLoading(true); // Đang tải
     const result = await videoHistoryService(LessonId); // Gọi API
     console.log("video history: ", result);
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 
 // [GET] /admin/video/detail/:VideoId/history
-export async function videoDetailHistoryController(setLoading, VideoId) {
+export async function videoDetailHistoryController(VideoId) {
   try {
-    setLoading(true); // Đang tải
     const result = await videoDetailHistoryService(VideoId); // Gọi API
     console.log("video detail history: ", result);
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 
@@ -71,16 +62,13 @@ export async function adminHistoryController(setLoading) {
 }
 
 // [GET] /admin/admin/detail/:AdminID/history
-export async function adminDetailHistoryController(setLoading, AdminId) {
+export async function adminDetailHistoryController(AdminId) {
   try {
-    setLoading(true); // Đang tải
     const result = await adminDetailHistoryService(AdminId); // Gọi API
     console.log("admin detail history ", result);
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 

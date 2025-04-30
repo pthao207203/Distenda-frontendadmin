@@ -24,7 +24,6 @@ function AdminDetailPage() {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [roles, setRoles] = useState([]); // Mảng roles duy nhất
-  const [imageUrl, setImageUrl] = useState(""); // State for image URL
   const [action, setAction] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -201,7 +200,7 @@ function AdminDetailPage() {
           <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[15rem]">
             <button
               disabled={!role?.RolePermissions?.includes("admin_edit")}
-              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] min-h-[3.75rem] max-md:min-h-[2.75rem] ${
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
                 role?.RolePermissions?.includes("admin_edit")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"

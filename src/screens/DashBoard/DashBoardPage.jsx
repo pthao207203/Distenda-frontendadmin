@@ -16,7 +16,9 @@ function DashboardPage() {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       const result = await dashboardController(setLoading);
+      setLoading(false);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
@@ -28,6 +30,7 @@ function DashboardPage() {
   ChartJS.register(...registerables);
 
   useEffect(() => {
+    let chart, polarAreaChart;
     // Biểu đồ lợi nhuận (Line chart with multi-axis)
     if (data && chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
@@ -76,12 +79,12 @@ function DashboardPage() {
         },
       };
 
-      // eslint-disable-next-line no-unused-vars
-      const chart = new ChartJS(ctx, config);
+      chart = new ChartJS(ctx, config);
     }
 
     // Biểu đồ Tỉ lệ chuyển đổi (Polar Area Chart) - Dữ liệu tĩnh
     if (chartRefDoughnut.current) {
+      console.log("dooo");
       const ctx = chartRefDoughnut.current.getContext("2d");
       const config = {
         type: "polarArea",
@@ -107,14 +110,20 @@ function DashboardPage() {
           },
         },
       };
-      // eslint-disable-next-line no-unused-vars
-      const polarAreaChart = new ChartJS(ctx, config); // Tạo biểu đồ Polar Area
+      polarAreaChart = new ChartJS(ctx, config); // Tạo biểu đồ Polar Area
     }
+
+    return () => {
+      chart?.destroy();
+      polarAreaChart?.destroy();
+    };
+
   }, [data]); // Chạy lại khi dữ liệu thay đổi
 
   if (loading) {
     return <Loading />;
   }
+  console.log("dashboard => ", data);
 
   const stats = [
     {
@@ -169,6 +178,11 @@ function DashboardPage() {
       iconSrc: "./icons/star.svg",
     },
   ];
+  // console.log("totalIncome", (data.totalIncome - data.totalIncomeAgo) / data.totalIncome * 100)
+  // console.log("totalProfit", stats[1].percentage)
+  // console.log("data?.totalIncome", data?.totalIncome)
+  // console.log("data?.totalIncomeAgo", data?.totalIncomeAgo)
+  console.log(chartRefDoughnut.current); // Kiểm tra xem chartRefDoughnut có giá trị hợp lệ không
 
   return (
     <>

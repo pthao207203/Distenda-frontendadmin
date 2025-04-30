@@ -1,4 +1,8 @@
-import { loginService, logoutService, loginConfirmService } from '../services/auth.service';
+import {
+  loginService,
+  logoutService,
+  loginConfirmService,
+} from "../services/auth.service";
 
 // [POST] /auth/login
 export const loginController = async (data, setSuccess, setError) => {
@@ -7,7 +11,7 @@ export const loginController = async (data, setSuccess, setError) => {
     if (result.code === 400) {
       setError(result.message);
     } else {
-      setSuccess(result.message || 'Gửi mã OTP thành công!');
+      setSuccess(result.message || "Gửi mã OTP thành công!");
       // setTimeout(() => {
       //   navigate('/'); // Điều hướng tới trang chủ
       // }, 3000);
@@ -17,7 +21,6 @@ export const loginController = async (data, setSuccess, setError) => {
     setError(err); // Cập nhật lỗi nếu xảy ra
   }
 };
-
 
 // [POST] /auth/loginConfirm
 export const loginConfirmController = async (data, setSuccess, setError) => {
@@ -37,12 +40,10 @@ export const loginConfirmController = async (data, setSuccess, setError) => {
 // [GET] /auth/logout
 export const logoutController = async (navigate) => {
   try {
-    await logoutService(); // Gọi service để xử lý API
-    navigate('/login');  // Điều hướng tới trang đăng nhập
+    const result = await logoutService(); // Gọi service để xử lý API
+    navigate("/login"); // Điều hướng tới trang đăng nhập
+    return result;
   } catch (err) {
     // setError(err); // Cập nhật lỗi nếu xảy ra
   }
 };
-
-
-
