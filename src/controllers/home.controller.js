@@ -15,17 +15,13 @@ export async function dashboardController(setLoading) {
 }
 
 // [GET] /admin/header
-export async function headerController(setLoading) {
+export async function headerController() {
   try {
-    setLoading(true);
     const result = await headerService(); // Gọi service để xử lý API
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
     return null; // Trả về null hoặc giá trị mặc định khi lỗi
-  } finally {
-    setLoading(false); // Tắt trạng thái tải
   }
 };
 

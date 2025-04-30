@@ -1,39 +1,51 @@
-import React from 'react';
+import React from "react";
 
 // Component để hiển thị hình ảnh với bóng đổ
-function ImageWithShadow({ src, alt }) {
-    return (
-        <img
-            loading="lazy"
-            src={src}
-            alt={alt}
-            className="object-contain shrink-0 bg-none w-[60px]"
-        />
-    );
-}
+// function ImageWithShadow({ src, alt }) {
+//   return (
+//     <img
+//       loading="lazy"
+//       src={src}
+//       alt={alt}
+//       className="object-contain shrink-0 bg-none w-[60px]"
+//     />
+//   );
+// }
 
 function PopupImage({ onClose, content }) {
-    const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
+  const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
 
-    // Hàm đóng popup
-    const handleClose = (e) => {
-        // Kiểm tra nếu người dùng click vào nền đen hoặc icon đóng
-        if (e.target === e.currentTarget) {
-            setIsOpen(false);
-            onClose && onClose(); // Đảm bảo gọi onClose từ cha nếu có
-        }
-    };
+  // Hàm đóng popup
+  const handleClose = (e) => {
+    // Kiểm tra nếu người dùng click vào nền đen hoặc icon đóng
+    if (e.target === e.currentTarget) {
+      setIsOpen(false);
+      onClose && onClose(); // Đảm bảo gọi onClose từ cha nếu có
+    }
+  };
 
-    // Dữ liệu hình ảnh trang trí ở các góc
-    const cornerImages = [
-        { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/59b9819b2f8bcba5a532bac25a2a11282419b6aabd38e3a3bd70b97c7bbec430?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e", alt: "Top left decorative element" },
-        { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/631194690e0d3936d5085113c8d86eb3414e79c243145ce47d95df9316e6e37e?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e", alt: "Top right decorative element" },
-        { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/29ca412ec35dc720602a949c8cfc32eb796543795e2d5aa33c030019556c26ae?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9ce1976069f6b0e", alt: "Bottom left decorative element" },
-        { src: "https://cdn.builder.io/api/v1/image/assets/TEMP/37fc4790a46aa078c69f7f7e2592a3795899a59503c0ea27bb49607794680bdf?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e", alt: "Bottom right decorative element" },
-    ];
+  // Dữ liệu hình ảnh trang trí ở các góc
+  // const cornerImages = [
+  //   {
+  //     src: "https://cdn.builder.io/api/v1/image/assets/TEMP/59b9819b2f8bcba5a532bac25a2a11282419b6aabd38e3a3bd70b97c7bbec430?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e",
+  //     alt: "Top left decorative element",
+  //   },
+  //   {
+  //     src: "https://cdn.builder.io/api/v1/image/assets/TEMP/631194690e0d3936d5085113c8d86eb3414e79c243145ce47d95df9316e6e37e?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e",
+  //     alt: "Top right decorative element",
+  //   },
+  //   {
+  //     src: "https://cdn.builder.io/api/v1/image/assets/TEMP/29ca412ec35dc720602a949c8cfc32eb796543795e2d5aa33c030019556c26ae?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9ce1976069f6b0e",
+  //     alt: "Bottom left decorative element",
+  //   },
+  //   {
+  //     src: "https://cdn.builder.io/api/v1/image/assets/TEMP/37fc4790a46aa078c69f7f7e2592a3795899a59503c0ea27bb49607794680bdf?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e",
+  //     alt: "Bottom right decorative element",
+  //   },
+  // ];
 
-    // Nếu popup đã đóng, không render gì
-    if (!isOpen) return null;
+  // Nếu popup đã đóng, không render gì
+  if (!isOpen) return null;
 
     return (
         <div
@@ -59,7 +71,7 @@ function PopupImage({ onClose, content }) {
                     <img
                         loading="lazy"
                         src={content || ""}
-                        alt="Image"
+                        alt="abc"
                         className="self-center object-cover"
                         style={{
                             objectFit: 'contain', // Dùng 'contain' để giữ tỷ lệ

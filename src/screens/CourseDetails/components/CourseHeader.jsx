@@ -6,13 +6,13 @@ import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import Loading from "../../../components/Loading";
 
-export function CourseHeader({ data, handleSubmit }) {
+export function CourseHeader({ data, handleSubmit, role }) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [action, setAction] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const handlePopup = (actionType) => {
     setAction(actionType);
@@ -21,7 +21,7 @@ export function CourseHeader({ data, handleSubmit }) {
     } else if (actionType === "delete") {
       setPopupContent(
         <>
-          Bạn muốn xóa người dùng này?
+          Bạn muốn xóa khóa học này?
           <br />
           Khóa học sẽ không thể khôi phục sau khi xóa.
         </>
@@ -37,13 +37,17 @@ export function CourseHeader({ data, handleSubmit }) {
 
   const confirmAction = async () => {
     setPopupVisible(false);
-    // 
+    //
     if (action === "update") {
-      setLoading(true)
-      const newData = await handleSubmit()
-      setLoading(false)
-      console.log("newData", newData)
-      const result = await courseUpdatePostController(setLoading, data._id, newData)
+      setLoading(true);
+      const newData = await handleSubmit();
+      setLoading(false);
+      console.log("newData", newData);
+      const result = await courseUpdatePostController(
+        setLoading,
+        data._id,
+        newData
+      );
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
@@ -54,11 +58,11 @@ export function CourseHeader({ data, handleSubmit }) {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false);
-    // window.location.reload();
+    window.location.reload();
   };
   const closeErrorPopup = () => {
-    setErrorPopupVisible(false); // Ẩn popup thành công
-    // window.location.reload();
+    setErrorPopupVisible(false);
+    window.location.reload();
   };
 
   if (loading) {
@@ -69,7 +73,18 @@ export function CourseHeader({ data, handleSubmit }) {
     <div className="flex gap-2.5 items-end self-start text-xl font-medium leading-none text-white">
       {/* Nút Cập nhật */}
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px]"
+        disabled={
+          !(
+            role?.RolePermissions?.includes("course_edit") ||
+            role?.RolePermissions?.includes("course_only")
+          )
+        }
+        className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px] ${
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
+            ? "bg-[#6C8299] hover:bg-[#55657a]"
+            : "bg-[#CDD5DF] cursor-not-allowed"
+        }`}
         onClick={() => handlePopup("update")}
       >
         <img
@@ -83,7 +98,16 @@ export function CourseHeader({ data, handleSubmit }) {
 
       {/* Nút Xóa */}
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 bg-[#DF322B] rounded-lg min-h-[46px]"
+        disabled={
+          !role?.RolePermissions?.includes("course_delete") ||
+          !role?.RolePermissions?.includes("course_only")
+        }
+        className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-h-[46px] ${
+          role?.RolePermissions?.includes("course_delete") ||
+          role?.RolePermissions?.includes("course_only")
+            ? "bg-[#DF322B] hover:bg-[#902723]"
+            : "bg-[#ffd1d1] cursor-not-allowed"
+        }`}
         onClick={() => handlePopup("delete")}
       >
         <img

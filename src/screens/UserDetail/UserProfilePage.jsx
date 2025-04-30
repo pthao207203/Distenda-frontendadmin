@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import UserHeader from './components/UserHeader';
-import PersonalInfo from './components/PersonalInfo';
-import CourseTableHeader from './components/CourseTableHeader';
+import UserHeader from "./components/UserHeader";
+import PersonalInfo from "./components/PersonalInfo";
+import CourseTableHeader from "./components/CourseTableHeader";
 import CourseTableRow from "./components/CourseTableRow";
 import { userDetailController } from "../../controllers/user.controller";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
 
 function UserProfile() {
   const { UserID } = useParams(); // Lấy giá trị UserID từ URL
   console.log("ID from URL: ", UserID);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const { role } = useRole();
 
   useEffect(() => {
     async function fetchData() {
@@ -27,24 +29,21 @@ function UserProfile() {
   }, [UserID]);
 
   if (loading) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
-  console.log("User Detail => ", data)
+  console.log("User Detail => ", data);
   return (
-    <div className="flex flex-col flex-1 justify-start items-center shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
-      {data && <UserHeader data={data} />}
+    <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
+      {data && <UserHeader data={data} role={role} />}
       {data && <PersonalInfo data={data} />}
-      <section className="flex flex-col pb-16 mt-3 w-full text-neutral-900 max-md:max-w-full">
+      <section className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
         <CourseTableHeader />
-        {data && data.UserCourse && data.UserCourse.length > 0 && data.UserCourse.map((course, index) => (
-          <CourseTableRow
-          key={index}
-            index={index}
-            course={course}
-          />
-        ))}
+        {data &&
+          data.UserCourse &&
+          data.UserCourse.length > 0 &&
+          data.UserCourse.map((course, index) => (
+            <CourseTableRow key={index} index={index} course={course} />
+          ))}
       </section>
     </div>
   );

@@ -8,6 +8,7 @@ export function CourseImage({
   uploadImagePreviewRef,
   handleImageChange,
   handleHistoryRequest,
+  role,
 }) {
   // console.log("data", data)
   return (
@@ -30,7 +31,10 @@ export function CourseImage({
               <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
                 Lần cuối cập nhật
               </div>
-              <button className="flex gap-3 justify-center items-center" onClick ={handleHistoryRequest}>
+              <button
+                className="flex gap-3 justify-center items-center"
+                onClick={handleHistoryRequest}
+              >
                 <img
                   loading="lazy"
                   src="/icons/Show.svg"
@@ -48,10 +52,20 @@ export function CourseImage({
           </div>
         </div>
         <div className="flex flex-col mt-4 max-w-full text-xl font-medium leading-none w-[569px]">
-          <button>
+          <button
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
+          >
             <label
               htmlFor="CoursePicture"
-              className="flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[46px] w-[166px]"
+              className={`flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg min-h-[46px] w-[166px] ${
+                role?.RolePermissions?.includes("course_edit") ||
+                role?.RolePermissions?.includes("course_only")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
             >
               <img
                 loading="lazy"

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
-import uploadImage from '../../components/UploadImage';
-import uploadFile from '../../components/UploadFile';
-import './Message.css';
-import PopupImage from './PopupImage';
-import InfoMessage from './InfoMessage';
+import uploadImage from "../../components/UploadImage";
+import uploadFile from "../../components/UploadFile";
+import "./Message.css";
+import PopupImage from "./PopupImage";
+import InfoMessage from "./InfoMessage";
 import {
     loadUsersMessagedAdmin,
     loadMessagesWithUser,
@@ -12,9 +12,9 @@ import {
     updateMessageStatus,
 
 } from '../../controllers/message.controller';
-import { createMessage, getMessages } from '../../services/message.service';
+import { getMessages } from '../../services/message.service';
 import { io } from "socket.io-client";
-const socket = io('http://localhost:3001');
+const socket = io(process.env.REACT_APP_API_BASE_URL);
 
 const Message = () => {
     const [users, setUsers] = useState([]);
@@ -34,101 +34,98 @@ const Message = () => {
     const [infoFiles, setInfoFiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const openInfoMessagePopup = () => {
-        if (message.length > 0) {
-            const images = message
-                .filter(msg => msg.image)
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))   // Sắp xếp từ mới -> cũ
-                .map(msg => msg.image);   // Lấy đường dẫn ảnh
-            setInfoImages(images);
+  const openInfoMessagePopup = () => {
+    if (message.length > 0) {
+      const images = message
+        .filter((msg) => msg.image)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sắp xếp từ mới -> cũ
+        .map((msg) => msg.image); // Lấy đường dẫn ảnh
+      setInfoImages(images);
 
-            const files = message
-                .filter(msg => msg.file && msg.file.fileUrl)
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))   // Mới -> cũ
-                .map(msg => ({
-                    fileName: msg.file.fileName,
-                    fileUrl: msg.file.fileUrl
-                }));
-            setInfoFiles(files);
+      const files = message
+        .filter((msg) => msg.file && msg.file.fileUrl)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Mới -> cũ
+        .map((msg) => ({
+          fileName: msg.file.fileName,
+          fileUrl: msg.file.fileUrl,
+        }));
+      setInfoFiles(files);
+    }
+    setIsInfoMessagePopupOpen(true);
+  };
+
+  const closeInfoMessagePopup = () => {
+    setIsInfoMessagePopupOpen(false);
+  };
+
+  const openPopup = (imgSrc) => {
+    setPopupImageSrc(imgSrc);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setPopupImageSrc(null);
+  };
+
+  // 🔁 Load danh sách học viên
+  useEffect(() => {
+    loadUsersMessagedAdmin(token, (data) => setUsers(data || []));
+  }, [token]);
+
+  // 🔁 Load tin nhắn từ các học viên
+  useEffect(() => {
+    if (users.length > 0) {
+      const fetchAllMessages = async () => {
+        const groupedMessages = {}; // tạo 1 object để lưu tin nhắn của từng user
+        for (const user of users) {
+          const res = await loadMessagesWithUser(user._id, token); // sửa lại là loadMessagesWithUser thay vì loadMessages
+          if (res?.success) {
+            groupedMessages[user._id] = res.data;
+          }
         }
-        setIsInfoMessagePopupOpen(true);
-    };
+        setMessagesByUser(groupedMessages);
 
+        // Tự động chọn người có tin nhắn gần nhất
+        const latest = Object.entries(groupedMessages)
+          .flatMap(([_id, msgs]) =>
+            msgs.length > 0
+              ? [{ _id, latestTime: new Date(msgs[msgs.length - 1].createdAt) }]
+              : []
+          )
+          .sort((a, b) => b.latestTime - a.latestTime)[0];
 
-    const closeInfoMessagePopup = () => {
-        setIsInfoMessagePopupOpen(false);
-    };
-
-
-    const openPopup = (imgSrc) => {
-        setPopupImageSrc(imgSrc);
-        setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
-        setPopupImageSrc(null);
-    };
-
-    // 🔁 Load danh sách học viên
-    useEffect(() => {
-        loadUsersMessagedAdmin(token, (data) => setUsers(data || []));
-    }, [token]);
-
-
-    // 🔁 Load tin nhắn từ các học viên
-    useEffect(() => {
-        if (users.length > 0) {
-            const fetchAllMessages = async () => {
-                const groupedMessages = {}; // tạo 1 object để lưu tin nhắn của từng user
-                for (const user of users) {
-                    const res = await loadMessagesWithUser(user._id, token); // sửa lại là loadMessagesWithUser thay vì loadMessages
-                    if (res?.success) {
-                        groupedMessages[user._id] = res.data;
-                    }
-                }
-                setMessagesByUser(groupedMessages);
-
-                // Tự động chọn người có tin nhắn gần nhất
-                const latest = Object.entries(groupedMessages)
-                    .flatMap(([_id, msgs]) =>
-                        msgs.length > 0
-                            ? [{ _id, latestTime: new Date(msgs[msgs.length - 1].createdAt) }]
-                            : []
-                    )
-                    .sort((a, b) => b.latestTime - a.latestTime)[0];
-
-                if (latest) {
-                    const matchedUser = users.find(u => u._id === latest._id);
-                    if (matchedUser) {
-                        setSelectedUser(matchedUser);
-                        setMessages(groupedMessages[latest._id]); // Cập nhật tin nhắn của người vừa chọn
-                        updateMessageStatus(latest._id); // Đánh dấu tin nhắn là đã đọc
-                    }
-                }
-            };
-            fetchAllMessages();
+        if (latest) {
+          const matchedUser = users.find((u) => u._id === latest._id);
+          if (matchedUser) {
+            setSelectedUser(matchedUser);
+            setMessages(groupedMessages[latest._id]); // Cập nhật tin nhắn của người vừa chọn
+            updateMessageStatus(latest._id); // Đánh dấu tin nhắn là đã đọc
+          }
         }
-    }, [users, token]);
+      };
+      fetchAllMessages();
+    }
+  }, [users, token]);
 
-    // 📤 Gửi tin nhắn từ admin
-    const handleSendMessage = async () => {
-        if (!newMessage && !selectedImage && !selectedFile) return;
-        if (!selectedUser) return;
+  // 📤 Gửi tin nhắn từ admin
+  const handleSendMessage = async () => {
+    if (!newMessage && !selectedImage && !selectedFile) return;
+    if (!selectedUser) return;
 
-        let uploadedImageUrl = null;
-        let uploadedFileData = null;
+    let uploadedImageUrl = null;
+    let uploadedFileData = null;
 
-        if (selectedImage) {
-            uploadedImageUrl = await uploadImage(selectedImage);
-        }
-        if (selectedFile) {
-            const fileUrl = await uploadFile(selectedFile);
-            uploadedFileData = {
-                fileName: selectedFile.name,
-                fileUrl: fileUrl
-            };
-        }
+    if (selectedImage) {
+      uploadedImageUrl = await uploadImage(selectedImage);
+    }
+    if (selectedFile) {
+      const fileUrl = await uploadFile(selectedFile);
+      uploadedFileData = {
+        fileName: selectedFile.name,
+        fileUrl: fileUrl,
+      };
+    }
 
         const tempMessage = {
             content: newMessage,
@@ -148,12 +145,12 @@ const Message = () => {
             uploadImagePreviewRef.current.src = "";
         }
 
-        setMessagesByUser(prev => {
-            const updated = { ...prev };
-            if (!updated[selectedUser._id]) updated[selectedUser._id] = [];
-            updated[selectedUser._id] = [...updated[selectedUser._id], tempMessage];
-            return updated;
-        });
+    setMessagesByUser((prev) => {
+      const updated = { ...prev };
+      if (!updated[selectedUser._id]) updated[selectedUser._id] = [];
+      updated[selectedUser._id] = [...updated[selectedUser._id], tempMessage];
+      return updated;
+    });
 
         // 2️⃣ Gửi lên server
         const messageData = {
@@ -164,103 +161,101 @@ const Message = () => {
             file: uploadedFileData || {}
         };
 
-        setNewMessage('');
-        setSelectedImage(null);
-        setSelectedFile(null);
-        if (uploadImagePreviewRef.current) {
-            uploadImagePreviewRef.current.src = "";
+    setNewMessage("");
+    setSelectedImage(null);
+    setSelectedFile(null);
+    if (uploadImagePreviewRef.current) {
+      uploadImagePreviewRef.current.src = "";
+    }
+
+    await sendMessageFromAdmin(messageData, (sentMsg) => {
+      socket.emit("sendMessage", sentMsg);
+      setMessages((prev) =>
+        prev.map((msg) => (msg === tempMessage ? sentMsg : msg))
+      );
+
+      setMessagesByUser((prev) => {
+        const updated = { ...prev };
+        if (!updated[selectedUser._id]) updated[selectedUser._id] = [];
+        updated[selectedUser._id] = [...updated[selectedUser._id], sentMsg];
+        return updated;
+      });
+    });
+  };
+
+  // 📂 Upload ảnh (chưa xử lý)
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setSelectedImage(file);
+      setPreviewImageUrl(imageURL);
+
+      if (uploadImagePreviewRef.current) {
+        uploadImagePreviewRef.current.src = imageURL;
+      }
+    }
+  };
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  // ✅ Chọn 1 người dùng để nhắn
+  const handleSelectUser = async (user) => {
+    setSelectedUser(user);
+    setMessages([]); // 👈 Xoá ngay toàn bộ tin nhắn cũ
+
+    try {
+      // 🟡 Chờ tin nhắn mới từ backend
+      const res = await getMessages(user._id, token);
+      if (res.success) {
+        setMessages(res.data); // 👉 Cập nhật tin nhắn với người mới
+      }
+
+      await updateMessageStatus(user._id);
+
+      setMessagesByUser((prev) => {
+        const updated = { ...prev };
+        if (updated[user._id]) {
+          updated[user._id] = updated[user._id].map((msg) =>
+            msg.sender?.senderRole === "user" ? { ...msg, isRead: true } : msg
+          );
         }
-
-        await sendMessageFromAdmin(messageData, (sentMsg) => {
-            socket.emit('sendMessage', sentMsg);
-            setMessages(prev => prev.map(msg =>
-                msg === tempMessage ? sentMsg : msg
-            ));
-
-            setMessagesByUser(prev => {
-                const updated = { ...prev };
-                if (!updated[selectedUser._id]) updated[selectedUser._id] = [];
-                updated[selectedUser._id] = [...updated[selectedUser._id], sentMsg];
-                return updated;
-            });
-        });
-    };
-
-    // 📂 Upload ảnh (chưa xử lý)
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const imageURL = URL.createObjectURL(file);
-            setSelectedImage(file);
-            setPreviewImageUrl(imageURL);
-
-
-            if (uploadImagePreviewRef.current) {
-                uploadImagePreviewRef.current.src = imageURL;
-            }
-        }
-    };
-    const handleFileUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setSelectedFile(file);
-        }
-    };
-
-
-    // ✅ Chọn 1 người dùng để nhắn
-    const handleSelectUser = async (user) => {
-        setSelectedUser(user);
-        setMessages([]); // 👈 Xoá ngay toàn bộ tin nhắn cũ
-
-        try {
-            // 🟡 Chờ tin nhắn mới từ backend
-            const res = await getMessages(user._id, token);
-            if (res.success) {
-                setMessages(res.data); // 👉 Cập nhật tin nhắn với người mới
-            }
-
-            await updateMessageStatus(user._id);
-
-            setMessagesByUser(prev => {
-                const updated = { ...prev };
-                if (updated[user._id]) {
-                    updated[user._id] = updated[user._id].map(msg =>
-                        msg.sender?.senderRole === 'user' ? { ...msg, isRead: true } : msg
-                    );
-                }
-                return updated;
-            });
-        } catch (error) {
-            console.error("❌ Lỗi khi lấy tin nhắn:", error);
-        }
-    };
+        return updated;
+      });
+    } catch (error) {
+      console.error("❌ Lỗi khi lấy tin nhắn:", error);
+    }
+  };
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [message]);
 
 
-    useEffect(() => {
-        socket.on('receiveMessage', (data) => {
-            const senderId = data.sender?.userId;
-            if (!senderId) return;  // Nếu không có senderId thì bỏ qua
+  useEffect(() => {
+    socket.on("receiveMessage", (data) => {
+      const senderId = data.sender?.userId;
+      if (!senderId) return; // Nếu không có senderId thì bỏ qua
 
-            if (selectedUser && senderId === selectedUser._id) {
-                setMessages(prev => [...prev, data]);
-            }
-            if (data.type === 'image') {
-                // Thêm vào tin nhắn với ảnh
-                setMessages(prev => [...prev, data]);
-            }
-            setMessagesByUser(prev => {
-                const updated = { ...prev };
-                if (!updated[senderId]) updated[senderId] = [];
-                updated[senderId] = [...updated[senderId], data];
-                return updated;
-            });
-            console.log('📥 Received on client:', data);
-        });
+      if (selectedUser && senderId === selectedUser._id) {
+        setMessages((prev) => [...prev, data]);
+      }
+      if (data.type === "image") {
+        // Thêm vào tin nhắn với ảnh
+        setMessages((prev) => [...prev, data]);
+      }
+      setMessagesByUser((prev) => {
+        const updated = { ...prev };
+        if (!updated[senderId]) updated[senderId] = [];
+        updated[senderId] = [...updated[senderId], data];
+        return updated;
+      });
+      console.log("📥 Received on client:", data);
+    });
 
         return () => {
             socket.off('receiveMessage');
@@ -568,6 +563,7 @@ const Message = () => {
                                                     loading="lazy"
                                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/8bbfb14016c67d4716e0a6366eed76fac938e5a78f6cba88c3ed041abcc52d72?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
                                                     className="absolute w-[10px] h-[10px] object-contain z-50"
+                                                    alt="fdsfjdsl"
                                                 />
                                             </button>
                                         </div>
@@ -602,6 +598,7 @@ const Message = () => {
                                             >
                                                 <img
                                                     loading="lazy"
+                                                    alt="fsfds"
                                                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/8bbfb14016c67d4716e0a6366eed76fac938e5a78f6cba88c3ed041abcc52d72?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
                                                     className="absolute w-[10px] h-[10px] object-contain z-50 "
                                                 />

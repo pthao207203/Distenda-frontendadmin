@@ -58,45 +58,57 @@ const TableHeader = () => {
     <div className="flex overflow-hidden mt-3 flex-wrap w-full rounded-t-3xl bg-[#6C8299] min-h-[70px] max-md:max-w-full">
       {/* Column: Category */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3 bg-indigo-50">
-        <div className="text-[#131313] text-center text-xl font-medium truncate">Danh mục</div>
+        <div className="text-[#131313] text-center text-xl font-medium truncate">
+          Danh mục
+        </div>
       </div>
 
       {/* Column: Name */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3">
-        <div className="text-[#fff] text-center text-xl font-medium truncate">Tên khóa</div>
+        <div className="text-[#fff] text-center text-xl font-medium truncate">
+          Tên khóa
+        </div>
       </div>
 
       {/* Column: Sold */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3 bg-indigo-50">
-        <div className="text-[#131313] text-center text-xl font-medium truncate">Đã bán</div>
+        <div className="text-[#131313] text-center text-xl font-medium truncate">
+          Đã bán
+        </div>
       </div>
 
       {/* Column: Price */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3">
-        <div className="text-[#fff] text-center text-xl font-medium truncate">Giá</div>
+        <div className="text-[#fff] text-center text-xl font-medium truncate">
+          Giá
+        </div>
       </div>
 
       {/* Column: Profit */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3 bg-indigo-50">
-        <div className="text-[#131313] text-center text-xl font-medium truncate">Lợi nhuận</div>
+        <div className="text-[#131313] text-center text-xl font-medium truncate">
+          Lợi nhuận
+        </div>
       </div>
 
       {/* Column: Status */}
       <div className="flex basis-1/6 min-w-0 min-h-[70px] justify-center items-center px-3">
-        <div className="text-[#fff] text-center text-xl font-medium truncate">Trạng thái</div>
+        <div className="text-[#fff] text-center text-xl font-medium truncate">
+          Trạng thái
+        </div>
       </div>
     </div>
   );
 };
 
-const TableHeaderCell = ({ label, bgColor, textColor }) => {
-  return (
-    <div
-      className={`flex flex-1 shrink gap-3 justify-center items-center px-3 py-5 h-full ${bgColor} ${textColor} basis-0`}
-    >
-      <span className="gap-2.5 self-stretch my-auto">{label}</span>
-    </div>
-  );
-};
+// const TableHeaderCell = ({ label, bgColor, textColor }) => {
+//   return (
+//     <div
+//       className={`flex flex-1 shrink gap-3 justify-center items-center px-3 py-5 h-full ${bgColor} ${textColor} basis-0`}
+//     >
+//       <span className="gap-2.5 self-stretch my-auto">{label}</span>
+//     </div>
+//   );
+// };
 
 export default LinkedCourses;

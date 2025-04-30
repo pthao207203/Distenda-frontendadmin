@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { videoCreatePostController } from "../../../controllers/lesson.controller";
 import { Editor } from "@tinymce/tinymce-react";

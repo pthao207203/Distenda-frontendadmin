@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import PersonalInfo from "./components/PersonalInfo";
@@ -15,6 +15,7 @@ import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import AdminDetailHistory from "./components/AdminDetailHistory";
+import { useRole } from "../../../layouts/AppContext";
 
 function AdminDetailPage() {
   const navigate = useNavigate();
@@ -28,25 +29,19 @@ function AdminDetailPage() {
   const [popupContent, setPopupContent] = useState("");
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
-  const editorRef = useRef(null);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-
-  const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
-
-  const uploadImageInputRef = useRef(null);
-  const uploadImagePreviewRef = useRef(null);
+  const { role } = useRole();
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const result = await adminDetailController(AdminID, setLoading);
+      const result = await adminDetailController(AdminID);
 
       if (result) {
         setData(result);
 
         setSelectedFileName(result.AdminAvatar);
-        setImageUrl(result.AdminAvatar);
         setRoles((prevRoles) => [
           { _id: "", RoleName: "Chọn chức vụ", disabled: true },
           ...result.roles,
@@ -63,7 +58,7 @@ function AdminDetailPage() {
   }
 
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
     console.log("selectedFileName", selectedFileName);
     if (selectedFileName) {
@@ -125,26 +120,23 @@ function AdminDetailPage() {
     if (action === "update") {
       setLoading(true);
       const newData = await handleSubmit();
-      setLoading(false);
       console.log("newData", newData);
-      const result = await adminUpdatePostController(
-        setLoading,
-        data._id,
-        newData
-      );
+      const result = await adminUpdatePostController(data._id, newData);
+      setLoading(false);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
     } else {
-      console.log("xoas");
-      const result = await adminDeleteController(setLoading, data._id);
+      setLoading(true);
+      const result = await adminDeleteController(data._id);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
+      setLoading(false);
     }
   };
 
@@ -181,10 +173,10 @@ function AdminDetailPage() {
 
   return (
     <>
-      <div className="flex overflow-hidden flex-col px-16 pt-16 bg-white min-h-screen max-md:px-5">
-        <div className="flex flex-wrap gap-10 items-start w-full max-md:max-w-full">
+      <div className="flex overflow-hidden flex-col p-[4rem] bg-white min-h-screen max-md:px-[1.25rem]">
+        <div className="flex flex-wrap gap-[2.5rem] items-start w-full max-md:max-w-full">
           {/* Thông tin giảng viên */}
-          <div className="flex flex-wrap flex-1 shrink gap-4 items-center basis-0 min-w-[240px] max-md:max-w-full">
+          <div className="flex flex-wrap flex-1 shrink gap-4 items-center basis-0 min-w-[15rem] max-md:max-w-full">
             <img
               loading="lazy"
               src={
@@ -193,21 +185,26 @@ function AdminDetailPage() {
                   : "https://cdn.builder.io/api/v1/image/assets/TEMP/9f4c77a7cd8d0d6938085c2329962000d9898f65d43cbc645023d10de84cf689?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
               }
               alt="Instructor profile"
-              className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[119px]"
+              className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[9rem]"
             />
             <div className="flex flex-col self-stretch my-auto">
-              <div className="text-2xl font-semibold text-neutral-900">
+              <div className="text-2xl font-semibold text-[#171717]">
                 {data?.AdminFullName ? data?.AdminFullName : "Null"}
               </div>
-              <div className="mt-3 text-lg font-medium text-neutral-900 text-opacity-50">
+              <div className="mt-3 text-lg font-medium text-[#171717] text-opacity-50">
                 {data?.AdminEmail ? data.AdminEmail : "Null"}
               </div>
             </div>
           </div>
           {/* Nút hành động */}
-          <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[240px]">
+          <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[15rem]">
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-slate-500 min-h-[46px]"
+              disabled={!role?.RolePermissions?.includes("admin_edit")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
+                role?.RolePermissions?.includes("admin_edit")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("update")}
             >
               <img
@@ -219,7 +216,12 @@ function AdminDetailPage() {
               <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
             <button
-              className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap bg-red-600 rounded-lg min-h-[46px]"
+              disabled={!role?.RolePermissions?.includes("admin_delete")}
+              className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap bg-red-600 rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
+                role?.RolePermissions?.includes("admin_delete")
+                  ? "bg-[#DF322B] hover:bg-[#902723]"
+                  : "bg-[#ffd1d1] cursor-not-allowed"
+              }`}
               onClick={() => handlePopup("delete")}
             >
               <img
@@ -243,8 +245,8 @@ function AdminDetailPage() {
         />
 
         {/* Tiêu đề Khóa học */}
-        <div className="flex flex-col mt-10 w-full text-xl text-neutral-900 max-md:max-w-full">
-          <div className="flex flex-wrap gap-6 items-start w-full max-md:max-w-full">
+        <div className="flex flex-col mt-[2.5rem] w-full text-xl text-[#171717] max-md:max-w-full">
+          <div className="flex flex-wrap gap-[1.5rem] items-start w-full max-md:max-w-full">
             <div className="font-semibold">Khóa học giảng viên</div>
             <div className="flex-1 shrink font-medium leading-none text-right basis-0 max-md:max-w-full">
               Tổng số khóa học: {totalCourse}
@@ -252,29 +254,29 @@ function AdminDetailPage() {
           </div>
 
           {/* Header Table */}
-          <div className="flex overflow-hidden flex-wrap w-full mt-3 rounded-t-3xl bg-[#6C8299] font-medium min-min-h-[70px] max-md:max-w-full">
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] bg-[#EBF1F9] basis-1/6 min-w-0">
+          <div className="flex overflow-hidden mt-[1.5rem] w-full font-medium text-[#171717] rounded-t-[1.5rem] bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem]">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
               <span className="text-center">Tên khóa học</span>
             </div>
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] text-white basis-1/6 min-w-0">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center text-white">
               <span className="text-center">Tên giảng viên</span>
             </div>
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] bg-[#EBF1F9] basis-1/6 min-w-0">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
               <span className="text-center">Đã bán</span>
             </div>
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] text-white basis-1/6 min-w-0">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center text-white">
               <span className="text-center">Giá</span>
             </div>
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] bg-[#EBF1F9] basis-1/6 min-w-0">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
               <span className="text-center">Lợi nhuận</span>
             </div>
-            <div className="flex shrink justify-center items-center px-3 py-0 min-h-[70px] text-white basis-1/6 min-w-0">
+            <div className="flex basis-1/6 min-w-0 justify-center items-center text-white">
               <span className="text-center">Trạng thái</span>
             </div>
           </div>
 
           {/* Dữ liệu Table */}
-          <div className="flex overflow-hidden flex-wrap w-full rounded-b-3xl bg-white min-min-h-[70px] max-md:max-w-full">
+          <div className="flex overflow-hidden flex-wrap w-full bg-white text-[#131313] min-h-[3.75rem] cursor-pointer">
             {data &&
               data.course &&
               data.course.length > 0 &&
@@ -309,7 +311,7 @@ function AdminDetailPage() {
         />
       </div>
       {isHistoryVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-10 overflow-hidden">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-[2.5rem] overflow-hidden">
           <AdminDetailHistory onClose={handleCloseHistoryRequest} />
         </div>
       )}
