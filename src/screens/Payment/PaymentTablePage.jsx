@@ -6,7 +6,7 @@ import TableHeader from "./components/TableHeader";
 import SearchBar from "../../layouts/private/SearchBar";
 import { payController } from "../../controllers/pay.controller";
 import Loading from "../../components/Loading";
-import moment from 'moment';
+import moment from "moment";
 
 function PaymentTable() {
   const [allPayments, setAllPayments] = useState([]);
@@ -27,7 +27,7 @@ function PaymentTable() {
 
   const handleSearch = (value) => {
     const keyword = value.toLowerCase();
-    const filtered = allPayments.filter(pay => {
+    const filtered = allPayments.filter((pay) => {
       const id = pay._id?.toLowerCase() || "";
       const user = pay.user?.toLowerCase() || "";
       const course = pay.course?.toLowerCase() || "";
@@ -35,9 +35,12 @@ function PaymentTable() {
       const createdAt = pay.createdBy?.createdAt
         ? moment(pay.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")
         : "";
-      const statusText = pay.PayStatus === 1
-        ? "đã thanh toán"
-        : (pay.PayStatus === 0 ? "đã hủy" : "chờ thanh toán");
+      const statusText =
+        pay.PayStatus === 1
+          ? "đã thanh toán"
+          : pay.PayStatus === 0
+          ? "đã hủy"
+          : "chờ thanh toán";
 
       return (
         id.includes(keyword) ||
@@ -52,7 +55,6 @@ function PaymentTable() {
     setFilteredPayments(filtered);
   };
 
-
   if (loading) {
     return <Loading />;
   }
@@ -62,6 +64,8 @@ function PaymentTable() {
   const handleRowClick = (pay) => {
     navigate(`detail/${pay._id}`);
   };
+
+  console.log(allPayments);
 
   return (
     <>
@@ -84,7 +88,6 @@ function PaymentTable() {
           ) : (
             <p className="mt-4 text-center">Không tìm thấy hóa đơn nào.</p>
           )}
-
         </div>
       </div>
     </>

@@ -77,7 +77,7 @@ function CourseDetails() {
   }, [role]);
   console.log(data);
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.CoursePicture;
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
       uploadedImageUrl = await uploadImage(selectedFileName);
