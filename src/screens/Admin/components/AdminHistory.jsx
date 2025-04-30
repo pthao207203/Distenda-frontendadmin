@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { adminHistoryController } from "../../../controllers/history.controller";
 
 function formatDate(dateStr) {
@@ -28,7 +26,6 @@ const getActionStyle = (action) => {
 
 export default function AdminHistory({ onClose }) {
   const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
-  const navigate = useNavigate();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -73,8 +70,11 @@ export default function AdminHistory({ onClose }) {
     );
   });
 
+  if (loading) {
+    return "Đang tải...";
+  }
   return (
-    <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">
+    <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[21.625rem] max-md:p-[1.25rem]">
       {/* Nút đóng popup */}
       <img
         loading="lazy"
@@ -88,7 +88,7 @@ export default function AdminHistory({ onClose }) {
         <img
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/669888cc237b300e928dbfd847b76e4236ef4b5a?placeholderIfAbsent=true&apiKey=d911d70ad43c41e78d81b9650623c816"
           alt="Search icon"
-          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[30px]"
+          className="object-contain shrink-0 self-stretch my-auto aspect-square w-[2rem]"
         />
         <input
           type="search"
@@ -117,7 +117,7 @@ export default function AdminHistory({ onClose }) {
                   src={avatar}
                   alt="Avatar"
                   className="rounded-full object-cover"
-                  style={{ width: "34px", height: "34px" }}
+                  style={{ width: "2.5rem", height: "2.5rem" }}
                 />
                 <h4 className="font-medium text-lg text-black">
                   {name}, {adminName} ({time})

@@ -2,10 +2,16 @@ export default function EditButton({ onClick, role }) {
   return (
     <div className="flex gap-2.5 items-center self-stretch my-auto font-medium leading-none text-white">
       <button
-        disabled={!role?.role?.RolePermissions?.includes("course_edit")}
+        disabled={
+          !(
+            role?.RolePermissions?.includes("course_edit") ||
+            role?.RolePermissions?.includes("course_only")
+          )
+        }
         onClick={onClick}
         className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] ${
-          role?.role?.RolePermissions?.includes("course_edit")
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}

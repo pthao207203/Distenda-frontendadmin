@@ -1,6 +1,4 @@
 import * as React from "react";
-import cloudinary from "cloudinary-video-player";
-import { useRef, useEffect } from "react";
 
 export function VideoSection({ video }) {
   return (

@@ -73,9 +73,13 @@ export function CourseHeader({ data, handleSubmit, role }) {
     <div className="flex gap-2.5 items-end self-start text-xl font-medium leading-none text-white">
       {/* Nút Cập nhật */}
       <button
-        disabled={!role?.role?.RolePermissions?.includes("course_edit")}
+        disabled={
+          !role?.RolePermissions?.includes("course_edit") ||
+          !role?.RolePermissions?.includes("course_only")
+        }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px] ${
-          role?.role?.RolePermissions?.includes("course_edit")
+          role?.RolePermissions?.includes("course_edit") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}
@@ -92,9 +96,13 @@ export function CourseHeader({ data, handleSubmit, role }) {
 
       {/* Nút Xóa */}
       <button
-        disabled={!role?.role?.RolePermissions?.includes("course_delete")}
+        disabled={
+          !role?.RolePermissions?.includes("course_delete") ||
+          !role?.RolePermissions?.includes("course_only")
+        }
         className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-h-[46px] ${
-          role?.role?.RolePermissions?.includes("course_delete")
+          role?.RolePermissions?.includes("course_delete") ||
+          role?.RolePermissions?.includes("course_only")
             ? "bg-[#DF322B] hover:bg-[#902723]"
             : "bg-[#ffd1d1] cursor-not-allowed"
         }`}

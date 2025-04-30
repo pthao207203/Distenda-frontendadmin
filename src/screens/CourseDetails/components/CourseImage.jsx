@@ -53,12 +53,16 @@ export function CourseImage({
         </div>
         <div className="flex flex-col mt-4 max-w-full text-xl font-medium leading-none w-[569px]">
           <button
-            disabled={!role?.role?.RolePermissions?.includes("course_edit")}
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
           >
             <label
               htmlFor="CoursePicture"
               className={`flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg min-h-[46px] w-[166px] ${
-                role?.role?.RolePermissions?.includes("course_edit")
+                role?.RolePermissions?.includes("course_edit") ||
+                role?.RolePermissions?.includes("course_only")
                   ? "bg-[#6C8299] hover:bg-[#55657a]"
                   : "bg-[#CDD5DF] cursor-not-allowed"
               }`}

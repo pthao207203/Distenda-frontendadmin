@@ -1,6 +1,4 @@
-//Fix API của email trang này: kiểm tra email không tồn tại, email không hợp lệ do sai cú pháp
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { loginController } from "../../controllers/auth.controller.js";
 

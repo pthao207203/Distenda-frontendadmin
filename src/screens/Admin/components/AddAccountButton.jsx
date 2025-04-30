@@ -11,9 +11,9 @@ function AddAccountButton({ role }) {
   return (
     <div className="flex justify-end items-center w-full">
       <button
-        disabled={!role?.role?.RolePermissions?.includes("admin_create")}
-        className={`flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium text-white rounded-lg min-w-[240px] ${
-          role?.role?.RolePermissions?.includes("course_edit")
+        disabled={!role?.RolePermissions?.includes("admin_create")}
+        className={`flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium text-white rounded-lg min-w-[15rem] ${
+          role?.RolePermissions?.includes("admin_create")
             ? "bg-[#6C8299] hover:bg-[#55657a]"
             : "bg-[#CDD5DF] cursor-not-allowed"
         }`}

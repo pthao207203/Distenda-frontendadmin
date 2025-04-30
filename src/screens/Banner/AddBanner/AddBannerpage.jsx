@@ -22,7 +22,6 @@ function BannerForm() {
 
   const editorRef = useRef(null);
 
-  const [imageSrc, setImageSrc] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
 
   const uploadImageInputRef = useRef(null);
@@ -31,11 +30,7 @@ function BannerForm() {
   const { role } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
-    if (
-      role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("banner_create")
-    ) {
+    if (role && !role.RolePermissions?.includes("banner_create")) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/banner");
     }
@@ -45,7 +40,6 @@ function BannerForm() {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setImageSrc(imageURL);
       setSelectedFileName(file); // Lưu tên tệp đã chọn
       setIsUploaded(true);
 
@@ -226,8 +220,7 @@ function BannerForm() {
             loading="lazy"
             src={data?.BannerPicture ? data.BannerPicture : ""}
             alt=""
-            className={`flex mt-2 w-full lg:min-h-[12.5rem] min-h-[7.5rem] max-h-[20rem] max-md:max-w-full object-contain ${!isUploaded ? "bg-[#EBF1F9]" : ""}
-        `}
+            className={`flex mt-2 w-full lg:min-h-[12.5rem] min-h-[7.5rem] max-h-[20rem] max-md:max-w-full object-contain ${!isUploaded ? "bg-[#EBF1F9]" : ""}`}
           />
           <div className="flex flex-col mt-2 max-w-full">
             <label

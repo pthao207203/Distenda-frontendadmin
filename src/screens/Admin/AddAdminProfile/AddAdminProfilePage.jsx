@@ -24,11 +24,7 @@ export const UserProfile = () => {
   const { role } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
-    if (
-      role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("course_create")
-    ) {
+    if (role && !role.RolePermissions?.includes("admin_create")) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/admin");
     }
@@ -65,7 +61,7 @@ export const UserProfile = () => {
   // console.log(roles)
 
   return (
-    <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white min-h-screen basis-0 max-md:px-5 max-md:max-w-full">
+    <main className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] min-h-[4.375rem] max-md:min-h-[3rem]">
       {/* Nút hành động */}
       <div className="flex gap-3 justify-end items-center w-full">
         <ActionButton
@@ -78,11 +74,11 @@ export const UserProfile = () => {
       </div>
 
       {/* Thông tin cá nhân */}
-      <section className="flex flex-col mt-10 w-full">
-        <h1 className="font-semibold text-neutral-900 text-2xl mb-6">
+      <section className="flex flex-col mt-[2.5rem] w-full">
+        <h1 className="font-semibold text-[#171717] text-2xl mb-[1.5rem]">
           Thông tin cá nhân
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[1.5rem]">
           {[
             { label: "Họ và tên", field: "AdminFullName" },
             { label: "Gmail", field: "AdminEmail" },
@@ -101,13 +97,13 @@ export const UserProfile = () => {
         </div>
 
         {/* Chức vụ */}
-        <div className="flex flex-col mt-8">
-          <h2 className="text-xl font-semibold mb-2">Chức vụ</h2>
+        <div className="flex flex-col mt-[2rem]">
+          <h2 className="text-xl font-semibold mb-[0.5rem]">Chức vụ</h2>
           <select
             value={personalInfo.AdminRole_id} // Truyền giá trị AdminRole_id vào value của select
             onChange={handleChange} // Khi thay đổi giá trị, sẽ gọi handleChange để cập nhật AdminRole_id
             id="AdminRole_id" // Cập nhật id của select để phân biệt
-            className="w-[280px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+            className="w-[17.5rem] px-4 py-3 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
           >
             {roles.map((role) => (
               <option key={role._id} value={role._id} disabled={role.disabled}>

@@ -12,7 +12,7 @@ export default function CourseTableRow({ course, index }) {
   };
   return (
     <div
-      className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[70px] cursor-pointer"
+      className="flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#131313] min-h-[3.75rem] cursor-pointer"
       onClick={onClick}
     >
       {/* STT */}
@@ -46,7 +46,7 @@ export default function CourseTableRow({ course, index }) {
       {/* Trạng thái */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center">
         <div
-          className={`self-center shrink w-[90%] max-w-full px-4 py-2 justify-center items-center inline-flex ${statusClass} min-h-[40px] rounded-[99px]`}
+          className={`self-center shrink w-[90%] px-3 py-2 justify-center items-center inline-flex ${statusClass} min-h-[2.5rem] rounded-[6.25rem]`}
         >
           <div className="text-center text-xl font-medium truncate">
             {statusText}

@@ -33,10 +33,10 @@ function UserProfile() {
   }
   console.log("User Detail => ", data);
   return (
-    <div className="flex flex-col flex-1 justify-start items-center shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
+    <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
       {data && <UserHeader data={data} role={role} />}
       {data && <PersonalInfo data={data} />}
-      <section className="flex flex-col pb-16 mt-3 w-full text-neutral-900 max-md:max-w-full">
+      <section className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
         <CourseTableHeader />
         {data &&
           data.UserCourse &&

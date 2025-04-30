@@ -12,11 +12,10 @@ const Main = () => {
     <div className="flex overflow-hidden flex-col justify-start leading-none bg-white w-screen h-screen">
       <Header />
       <div className="flex flex-wrap grow justify-center items-center ">
-      <Outlet />
+        <Outlet />
       </div>
     </div>
   );
 };
 
-
-export default Main
+export default Main;

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import { bannerHistoryController } from "../../../controllers/history.controller";
 
 function formatDate(dateStr) {
@@ -28,8 +26,6 @@ const getActionStyle = (action) => {
 
 export default function BannerHistory({ onClose }) {
   const [isOpen, setIsOpen] = React.useState(true); // Trạng thái popup
-  const [histories, setHistories] = React.useState([]);
-  const navigate = useNavigate();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -47,9 +43,9 @@ export default function BannerHistory({ onClose }) {
     fetchData();
   }, []);
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  if (loading) {
+    return "Đang tải...";
+  }
   console.log("Course History => ", data);
 
   // Hàm đóng popup
@@ -121,7 +117,11 @@ export default function BannerHistory({ onClose }) {
                 <h4 className="font-medium md:text-[1.125rem] text-[1rem] text-black">
                   {name}, {bannerName} ({time})
                 </h4>
-                <span className={`${color} font-medium md:text-[1.125rem] text-[1rem]`}>{text}</span>
+                <span
+                  className={`${color} font-medium md:text-[1.125rem] text-[1rem]`}
+                >
+                  {text}
+                </span>
               </div>
             );
           })}

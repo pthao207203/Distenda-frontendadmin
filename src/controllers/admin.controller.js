@@ -36,37 +36,27 @@ export async function adminCreatePostController(personalInfo) {
   }
 }
 
-export async function adminDetailController(AdminID, setLoading) {
+export async function adminDetailController(AdminID) {
   try {
-    setLoading(true); // Đang tải
     const result = await adminDetailService(AdminID); // Gọi API
-    // console.log("result users ", result);
-    setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 
-export async function adminUpdatePostController(setLoading, AdminID, data) {
+export async function adminUpdatePostController(AdminID, data) {
   try {
-    setLoading(true)
     const result = await adminUpdatePostService(AdminID, data); // Gọi API
-    console.log("result admin ", result);
-    setLoading(false)
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
   }
 }
 
-export async function adminDeleteController(setLoading, AdminID, data) {
+export async function adminDeleteController(AdminID, data) {
   try {
-    setLoading(true)
     const result = await adminDeleteService(AdminID, data); // Gọi API
-    // console.log("result admin ", result);
-    setLoading(false)
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi

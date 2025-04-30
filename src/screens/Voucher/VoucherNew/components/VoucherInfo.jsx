@@ -56,21 +56,45 @@ const VoucherInfo = () => {
   return (
     <section>
       <div className="flex flex-wrap gap-2.5 items-center w-full">
-        <ActionButton label="Lưu" bgColor="bg-[#6C8299]" onClick={() => handleAction("save")} />
-        <ActionButton label="Hủy" bgColor="bg-[#DF322B]" onClick={() => handleAction("cancel")} />
+        <ActionButton
+          label="Lưu"
+          bgColor="bg-[#6C8299]"
+          onClick={() => handleAction("save")}
+        />
+        <ActionButton
+          label="Hủy"
+          bgColor="bg-[#DF322B]"
+          onClick={() => handleAction("cancel")}
+        />
       </div>
 
       <div className="mt-10 w-full text-xl">
         <h3 className="font-semibold text-neutral-900">Thông tin voucher</h3>
         <div className="mt-6 font-medium">
           <div className="flex flex-wrap gap-[8rem] items-start w-full">
-            <FormField label="Mã Voucher" value={voucher?.voucherCode} onChange={(val) => handleChange("voucherCode", val)} />
-            <FormField label="Giảm giá (%)" value={voucher?.discountPercentage} onChange={(val) => handleChange("discountPercentage", val)} />
+            <FormField
+              label="Mã Voucher"
+              value={voucher?.voucherCode}
+              onChange={(val) => handleChange("voucherCode", val)}
+            />
+            <FormField
+              label="Giảm giá (%)"
+              value={voucher?.discountPercentage}
+              onChange={(val) => handleChange("discountPercentage", val)}
+            />
           </div>
 
           <div className="flex flex-wrap gap-[8rem] items-start mt-6 w-full">
-            <FormField label="Tối thiểu" value={voucher?.minAmount} onChange={(val) => handleChange("minAmount", val)} />
-            <FormField label="Giới hạn" value={voucher?.discountAmount} onChange={(val) => handleChange("discountAmount", val)} />
+            <FormField
+              label="Tối thiểu"
+              value={voucher?.minAmount}
+              onChange={(val) => handleChange("minAmount", val)}
+            />
+            <FormField
+              label="Giới hạn"
+              value={voucher?.discountAmount}
+              onChange={(val) => handleChange("discountAmount", val)}
+            />
           </div>
         </div>
       </div>

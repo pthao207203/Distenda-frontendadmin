@@ -16,9 +16,9 @@ function DashboardPage() {
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("vaof")
+      setLoading(true);
       const result = await dashboardController(setLoading);
-      // console.log(result)
+      setLoading(false);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
