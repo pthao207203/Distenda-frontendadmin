@@ -4,7 +4,6 @@ import { voucherCreatePostController } from "../../../../controllers/voucher.con
 import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../../components/PopupSuccess";
 import { PopupError } from "../../../../components/PopupError";
-import Loading from "../../../../components/Loading";
 
 const VoucherInfo = () => {
   const navigate = useNavigate();

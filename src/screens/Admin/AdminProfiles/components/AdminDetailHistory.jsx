@@ -28,23 +28,19 @@ const getActionStyle = (action) => {
 export default function AdminDetailHistory({ onClose }) {
   const [isOpen, setIsOpen] = useState(true); // Trạng thái popup
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
   const { AdminID } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
-        setLoading(true);
-        const result = await adminDetailHistoryController(setLoading, AdminID);
+        const result = await adminDetailHistoryController(AdminID);
         // console.log(result)
         if (result) {
           setData(result); // Lưu dữ liệu nếu hợp lệ
         }
       } catch (error) {
         console.error("Error fetching lesson history:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     }
 
     fetchData();

@@ -35,9 +35,9 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
   }, [setLoading, setHeaderHeight]);
 
 
-  if (loading) {
-    return <div>Đang tải...</div>;
-  }
+  // if (loading) {
+  //   return <div>Đang tải...</div>;
+  // }
   // useEffect(() => {
   //   const updateHeight = () => {
   //     if (headerRef.current) {
