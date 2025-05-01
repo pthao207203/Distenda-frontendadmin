@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Lấy VoucherID từ URL
 import VoucherInfoUpdate from "./components/VoucherInfoUpdate"; // Component cập nhật voucher
-import LinkedCourses from "./components/LinkedCourse"; // Các khóa học liên kết
 import { voucherDetailService } from "./../../../services/voucher.service.js"; // Dịch vụ lấy dữ liệu voucher chi tiết
 
 function VoucherDetail() {
