@@ -130,7 +130,7 @@ function BannerForm() {
         <title>Thêm banner</title>
       </Helmet>
       {loadingPopup && <PopupLoading />}
-      <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* Form banner */}
         <form className="flex flex-col mx-auto w-full text-[1.25rem] max-md:text-[1rem] font-medium leading-none bg-white min-h-[983px] max-md:px-5 max-md:pb-24 max-md:mt-1.5 max-md:max-w-full">
           <div className="flex justify-between items-center max-md:max-w-full">

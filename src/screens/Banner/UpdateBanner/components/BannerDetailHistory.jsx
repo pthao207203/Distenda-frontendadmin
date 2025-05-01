@@ -79,7 +79,7 @@ export default function BannerDetailHistory({ onClose }) {
     return "Đang tải...";
   }
   return (
-    <main className="relative flex overflow-hidden flex-col justify-start items-center  md:p-[2.5rem] p-[1.5rem] text-[1.5rem] font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full max-h-[85%] max-md:p-5">
+    <main className="relative flex overflow-hidden flex-col justify-start items-center md:p-[2.5rem] p-[1.5rem] text-[1.5rem] font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full max-h-[85%] max-md:p-5">
       {/* Nút đóng popup */}
       <img
         loading="lazy"

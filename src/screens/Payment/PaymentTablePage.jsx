@@ -6,11 +6,20 @@ import TableHeader from "./components/TableHeader";
 import SearchBar from "../../layouts/private/SearchBar";
 import { payController } from "../../controllers/pay.controller";
 import Loading from "../../components/Loading";
+import PaginationControl from "./components/PaginationControl";
 import moment from "moment";
 
 function PaymentTable() {
   const [allPayments, setAllPayments] = useState([]);
   const [filteredPayments, setFilteredPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalPage = Math.ceil(filteredPayments.length / itemsPerPage);
+  const paginatedPayments = filteredPayments.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Sử dụng hook điều hướng
@@ -53,6 +62,7 @@ function PaymentTable() {
     });
 
     setFilteredPayments(filtered);
+    setCurrentPage(1); // Reset về trang đầu tiên khi tìm kiếm
   };
 
   if (loading) {
@@ -72,23 +82,29 @@ function PaymentTable() {
       <Helmet>
         <title>Hóa đơn</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 justify-center items-center shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <SearchBar onSearch={handleSearch} />
-        <div className="flex flex-col mt-6 w-full text-neutral-900 max-md:max-w-full">
+        <div className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
           <div className="text-right max-md:max-w-full">
             Tổng số hóa đơn: {totalPayment}
           </div>
         </div>
-        <div className="flex flex-col pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
+        <div className="flex flex-col mt-[1.5rem] w-full text-[#171717] max-md:max-w-full">
           <TableHeader />
-          {filteredPayments.length > 0 ? (
-            filteredPayments.map((pay, index) => (
+          {paginatedPayments.length > 0 ? (
+            paginatedPayments.map((pay, index) => (
               <PaymentRow key={index} pay={pay} onRowClick={handleRowClick} />
             ))
           ) : (
-            <p className="mt-4 text-center">Không tìm thấy hóa đơn nào.</p>
+            <p className="mt-[1rem] text-center">Không tìm thấy hóa đơn nào.</p>
           )}
         </div>
+        {totalPage > 1 && (
+          <PaginationControl
+            currentPage={currentPage}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </div>
     </>
   );

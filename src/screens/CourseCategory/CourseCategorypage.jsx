@@ -47,7 +47,7 @@ function CourseTable() {
           <title>Thêm banner</title>
         </Helmet>
         {loadingPopup && <PopupLoading />}
-        <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
+        <div className="flex flex-col flex-1 shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
           <SearchBar />
           <CourseHeader />
           <div className="flex flex-col pb-16 mt-6 w-full max-md:max-w-full">

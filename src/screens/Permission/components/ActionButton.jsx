@@ -83,9 +83,9 @@ export default function ActionButtons({
   };
 
   return (
-    <div className="flex flex-col items-start md:ml-[5px]">
+    <div className="flex flex-col items-start md:ml-[0.5rem]">
       {/* Các nút hành động */}
-      <div className="flex gap-2.5 items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
+      <div className="flex gap-[0.5rem] items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
         <button
           disabled={!role?.RolePermissions?.includes("role_delete")}
           className={`flex gap-3 justify-center items-center px-3 py-3 whitespace-nowrap rounded-lg min-h-[46px] ${
@@ -101,7 +101,7 @@ export default function ActionButtons({
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[85px]">Xóa</span>
+          <span className="gap-[0.25rem] self-stretch my-auto ">Xóa</span>
         </button>
         <button
           disabled={!role?.RolePermissions?.includes("role_create")}
@@ -159,13 +159,13 @@ export default function ActionButtons({
               </p>
               <div className="mt-4 flex gap-3 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
                 <button
-                  className="w-[150px] h-[60px] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
+                  className="w-[9.375rem] h-[60px] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
                   onClick={confirmAction}
                 >
                   Có
                 </button>
                 <button
-                  className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
+                  className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
                   onClick={closePopup}
                 >
                   Không
@@ -193,13 +193,13 @@ export default function ActionButtons({
               />
               <div className="mt-6 flex gap-4 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
                 <button
-                  className="w-[150px] h-[60px] bg-[#6C8299] text-white rounded-lg hover:bg-slate-600"
+                  className="w-[9.375rem] h-[60px] bg-[#6C8299] text-white rounded-lg hover:bg-slate-600"
                   onClick={handleConfirmAddRole}
                 >
                   Thêm
                 </button>
                 <button
-                  className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg hover:bg-gray-400"
+                  className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg hover:bg-gray-400"
                   onClick={handleCloseAddRolePopup}
                 >
                   Hủy
@@ -224,7 +224,7 @@ export default function ActionButtons({
                 Cập nhật thành công!
               </p>
               <button
-                className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center font-semibold text-2xl hover:bg-gray-400 mt-4"
+                className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center font-semibold text-2xl hover:bg-gray-400 mt-4"
                 onClick={closeSuccessPopup}
               >
                 Thoát

@@ -128,14 +128,12 @@ const ActionButton = ({ label, bgColor, icon, onClick }) => {
 
 const VoucherDetails = ({ voucherData, setVoucherData }) => {
   return (
-    <div className="mt-10 w-full text-xl max-md:max-w-full">
-      <h3 className="font-semibold text-neutral-900 max-md:max-w-full">Thông tin voucher</h3>
-      <div className="mt-8 w-full font-medium leading-none max-md:max-w-full">
-        <div className="flex flex-wrap gap-10 items-start w-full max-md:max-w-full">
+    <div className="flex flex-col leading-none min-w-[15rem] max-w-[25rem] w-full mt-10">
+      <h3 className="text-neutral-900 text-opacity-50 font-semibold">Thông tin voucher</h3>
+      <div className="flex flex-col leading-none mt-8">
+        <div className="flex flex-col gap-[2.5rem] w-full max-md:grid-cols-1">
           <FormField label="Mã Voucher" name="voucherCode" value={voucherData.voucherCode} setVoucherData={setVoucherData} />
           <FormField label="Giảm giá (%)" name="discountPercentage" value={voucherData.discountPercentage} setVoucherData={setVoucherData} />
-        </div>
-        <div className="flex flex-wrap gap-10 items-start mt-8 w-full max-md:max-w-full">
           <FormField label="Tối thiểu" name="minAmount" value={voucherData.minAmount} setVoucherData={setVoucherData} />
           <FormField label="Giới hạn" name="discountAmount" value={voucherData.discountAmount} setVoucherData={setVoucherData} />
         </div>
@@ -145,30 +143,28 @@ const VoucherDetails = ({ voucherData, setVoucherData }) => {
 };
 
 const FormField = ({
-    label,
-    name,
-    value,
-    setVoucherData
-  }) => {
-    const handleChange = (e) => {
-      const newValue = e.target.value;
-      setVoucherData(prev => ({
-        ...prev,
-        [name]: newValue
-      }));
-    };
+  label,
+  name,
+  value,
+  setVoucherData
+}) => {
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setVoucherData(prev => ({
+      ...prev,
+      [name]: newValue
+    }));
+  };
 
   return (
-    <div className="flex-1 shrink basis-0 min-h-[91px] min-w-60 max-md:max-w-full">
-      <label className="text-[#13131380] max-md:max-w-full">{label}</label>
-      <div className="flex-1 shrink gap-1.5 self-stretch p-2.5 mt-3 whitespace-nowrap rounded-lg border border-3 basis-0 border-[#6C8299] border-opacity-80 size-full w-[30rem] h-[4.25rem] text-[#131313] max-md:max-w-full">
-        <input
-          type="text"
-          value={value}
-          onChange={handleChange}
-          className="w-full h-full outline-none border-none text-[#131313]"
-        />
-      </div>
+    <div className="flex flex-col leading-none min-w-[15rem] max-w-[25rem] w-full">
+      <label className="text-neutral-900 text-opacity-50">{label}</label>
+      <input
+        type="text"
+        value={value}
+        onChange={handleChange}
+        className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
+      />
     </div>
   );
 };

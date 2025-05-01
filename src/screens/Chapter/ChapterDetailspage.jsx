@@ -81,15 +81,15 @@ function CourseLesson() {
       <Helmet>
         <title>{data?.LessonName ? data.LessonName : "Chi tiết chương"}</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem] min-h-screen font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* <DeleteButton data={data} /> */}
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
-          <div className="text-xl font-semibold text-neutral-900 max-md:max-w-full">
+          <div className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900 max-md:max-w-full">
             Thông tin cơ bản
           </div>
-          <div className="flex flex-wrap gap-10 items-start mt-6 w-full max-md:max-w-full">
-            <div className="flex flex-wrap gap-10 font-semibold min-w-[240px] w-full">
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+          <div className="flex flex-wrap gap-2 items-start mt-6 w-full max-md:max-w-full">
+            <div className="grid grid-cols-2 gap-4 font-semibold w-full">
+              <div className="flex flex-col justify-center max-md:max-w-full ">
                 <label
                   htmlFor="LessonName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -100,9 +100,9 @@ function CourseLesson() {
                   {data.LessonName}
                 </span>
               </div>
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+              <div className="flex flex-col justify-center max-md:max-w-full ">
                 <div className="flex gap-3 items-center">
-                  <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+                  <div className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                     Lần cuối cập nhật
                   </div>
                   <button
@@ -128,17 +128,17 @@ function CourseLesson() {
             {/* <StatusBadge /> */}
           </div>
         </div>
-        <div className="flex z-0 flex-wrap gap-6 items-center mt-10 w-full text-xl max-md:max-w-full">
+        <div className="flex z-0 flex-wrap gap-3 items-center mt-4 w-full md:text-[1.25rem] text-[1rem] max-md:max-w-full">
           <div className="self-stretch my-auto font-semibold text-neutral-900">
             Bài tập
           </div>
           <EditButton onClick={onClickExercise} role={role} />
         </div>
-        <div className="flex z-0 flex-col mt-10 w-full text-xl text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-8 w-full md:text-[1.25rem] text-[1rem]  text-neutral-900 max-md:max-w-full">
           <div className="flex flex-wrap gap-6 items-start w-full max-md:max-w-full">
             <div className="font-semibold">Danh sách bài học</div>
             <div className="flex-1 shrink font-medium leading-none text-right basis-0 max-md:max-w-full">
-              Tong so bai hoc: {data?.video?.length}
+              Tổng số bài học: {data?.video?.length}
             </div>
           </div>
           <div className="flex flex-col pb-16 mt-6 w-full font-medium leading-none max-md:max-w-full">

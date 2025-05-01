@@ -1,13 +1,13 @@
 export default function TableHeader({ onClickVideo, role }) {
   return (
-    <div className="flex overflow-hidden w-full rounded-t-3xl bg-slate-500 min-h-[70px] max-md:max-w-full">
-      <div className="flex basis-1/4 min-w-0 min-h-[70px] shrink gap-3 justify-center items-center px-3  bg-[#EBF1F9]">
+    <div className="flex overflow-hidden w-full rounded-t-3xl bg-slate-500 min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:max-w-full">
+      <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] shrink gap-3 justify-center items-center px-3  bg-[#EBF1F9]">
         <div className="gap-2.5 text-center self-stretch my-auto">STT</div>
       </div>
-      <div className="flex basis-1/4 min-w-0 min-h-[70px] shrink gap-3 justify-center items-center px-3  text-white">
+      <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] shrink gap-3 justify-center items-center px-3  text-white">
         <div className="gap-2.5 text-center self-stretch my-auto">Tên bài</div>
       </div>
-      <div className="flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3  bg-[#EBF1F9] ">
+      <div className="flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] gap-3 justify-center items-center px-3  bg-[#EBF1F9] ">
         <div className="gap-2.5 text-center self-stretch my-auto">
           Lần cuối cập nhật
         </div>
@@ -20,7 +20,7 @@ export default function TableHeader({ onClickVideo, role }) {
           )
         }
         onClick={onClickVideo}
-        className={`flex basis-1/4 min-w-0 min-h-[70px] gap-3 justify-center items-center px-3  text-white ${
+        className={`flex basis-1/4 min-w-0 min-h-[3.75rem] max-md:min-h-[2.75rem] gap-3 justify-center items-center px-3  text-white ${
           role?.RolePermissions?.includes("course_edit") ||
           role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"

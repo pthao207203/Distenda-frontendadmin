@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const CourseRow = ({ id, index, course }) => {
-    const navigate = useNavigate();
     const [isHidden, setIsHidden] = useState(false);
 
-    const { category, name, sold, price, profit, status } = course;
+    const { category, name, sold, price, status } = course;
 
     // const handleEdit = () => {
     //     navigate(`/course/edit/${id}`);
@@ -18,12 +16,12 @@ const CourseRow = ({ id, index, course }) => {
     const getStatusStyles = (status) => {
         if (status === "active") {
             return {
-                bgColor: "bg-lime-300",
+                bgColor: "bg-[#D1F669]",
                 text: "Hoạt động",
             };
         } else if (status === "paused") {
             return {
-                bgColor: "bg-amber-300",
+                bgColor: "bg-[#FFD75B]",
                 text: "Tạm dừng",
             };
         }

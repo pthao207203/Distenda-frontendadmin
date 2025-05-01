@@ -133,23 +133,9 @@ export default function CourseContent() {
         <main className="flex overflow-hidden flex-col bg-[#EBF1F9]">
           {/* <CourseHeader /> */}
           {/* <NavigationBreadcrumb /> */}
-          <section className="flex overflow-hidden flex-col px-16 pt-8 w-full bg-white max-md:px-5 min-h-screen max-md:max-w-full">
+          <section className="flex overflow-hidden flex-col p-[4rem] w-full bg-white max-md:px-5 min-h-screen max-md:max-w-full">
             <div className="flex flex-col pb-16 w-full max-md:max-w-full">
-              <div className="flex flex-wrap gap-10 items-end w-full font-medium leading-none max-md:max-w-full">
-                <div className="flex flex-col flex-1 shrink justify-center text-xl basis-0 min-w-[240px] max-md:max-w-full">
-                  <label
-                    htmlFor="VideoName"
-                    className="text-neutral-900 text-opacity-50 max-md:max-w-full"
-                  >
-                    Tên bài <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    id="VideoName"
-                    type="text"
-                    value={data?.VideoName}
-                    className="flex-1 shrink gap-2.5 self-stretch px-3 py-3 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full"
-                  />
-                </div>
+              <div className="flex gap-2.5 items-end justify-end md:text-[1.25rem] text-[1rem] mb-4 text-white min-w-[240px]">
                 <div className="flex gap-2.5 items-end text-xl text-white min-w-[240px]">
                   <button
                     onClick={() => handlePopup("edit")}
@@ -179,6 +165,20 @@ export default function CourseContent() {
                     />
                     <span className="gap-2.5 self-stretch my-auto">Xóa</span>
                   </button>
+                </div>
+                <div className="flex flex-col flex-1 shrink justify-center text-xl basis-0 min-w-[240px] max-md:max-w-full">
+                  <label
+                    htmlFor="VideoName"
+                    className="text-neutral-900 text-opacity-50 max-md:max-w-full"
+                  >
+                    Tên bài <span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    id="VideoName"
+                    type="text"
+                    value={data?.VideoName}
+                    className="flex-1 shrink gap-2.5 self-stretch px-3 py-3 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full"
+                  />
                 </div>
               </div>
               {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">

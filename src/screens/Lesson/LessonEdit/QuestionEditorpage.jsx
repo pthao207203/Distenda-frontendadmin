@@ -159,12 +159,12 @@ function QuestionEditor() {
           <title>Thêm banner</title>
         </Helmet>
         {loadingPopup && <PopupLoading />}
-        <div className="flex flex-col px-16 pt-16 pb-40 bg-white text-xl font-medium max-md:px-5 max-md:pb-24">
+        <div className="flex flex-col px-16 pt-16 pb-40 bg-white md:text-[1.25rem] text-[1rem]  font-medium max-md:px-5 max-md:pb-24">
           {/* Header: Buttons */}
-          <div className="flex gap-4 items-center mb-6">
+          <div className="flex gap-3 max-md:gap-2 items-center mb-6">
             <button
               onClick={() => handlePopup("update")}
-              className="flex gap-2.5 justify-center items-center px-8 py-3 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500"
+              className="flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500"
             >
               <img
                 loading="lazy"
@@ -176,7 +176,7 @@ function QuestionEditor() {
             </button>
             <button
               onClick={() => handlePopup("delete")}
-              className="flex gap-2.5 justify-center items-center px-8 py-3 bg-[#CDD5DF] rounded-lg hover:bg-gray-400"
+              className="flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 bg-[#CDD5DF] rounded-lg hover:bg-gray-400"
             >
               <span className="font-medium">Hủy</span>
             </button>

@@ -56,7 +56,7 @@ export default function DeleteButton({ data }) {
   } else
     return (
       <>
-        <div className="flex absolute z-10 gap-2.5 items-start self-start text-xl pt-20 font-medium leading-none text-white right-[67px] top-[67px]">
+        <div className="flex absolute z-10 gap-2.5 items-start self-start md:text-[1.25rem] text-[1rem]  pt-20 font-medium leading-none text-white right-[67px] top-[67px]">
           {/* <button
             className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px]"
             onClick={() => handlePopup("update")}
