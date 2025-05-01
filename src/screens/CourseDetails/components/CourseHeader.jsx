@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { courseUpdatePostController } from "../../../controllers/course.controller";
+import {
+  courseUpdatePostController,
+  courseDeleteController,
+} from "../../../controllers/course.controller";
 
 import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
@@ -21,7 +24,7 @@ export function CourseHeader({ data, handleSubmit, role }) {
     } else if (actionType === "delete") {
       setPopupContent(
         <>
-          Bạn muốn xóa người dùng này?
+          Bạn muốn xóa khóa học này?
           <br />
           Khóa học sẽ không thể khôi phục sau khi xóa.
         </>
@@ -37,7 +40,6 @@ export function CourseHeader({ data, handleSubmit, role }) {
 
   const confirmAction = async () => {
     setPopupVisible(false);
-    //
     if (action === "update") {
       setLoading(true);
       const newData = await handleSubmit();
@@ -53,16 +55,18 @@ export function CourseHeader({ data, handleSubmit, role }) {
       } else {
         setErrorPopupVisible(true);
       }
+    } else if (action === "delete") {
+      await courseDeleteController(data._id);
     }
   };
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false);
-    // window.location.reload();
+    window.location.reload();
   };
   const closeErrorPopup = () => {
-    setErrorPopupVisible(false); // Ẩn popup thành công
-    // window.location.reload();
+    setErrorPopupVisible(false);
+    window.location.reload();
   };
 
   if (loading) {
@@ -74,8 +78,10 @@ export function CourseHeader({ data, handleSubmit, role }) {
       {/* Nút Cập nhật */}
       <button
         disabled={
-          !role?.RolePermissions?.includes("course_edit") ||
-          !role?.RolePermissions?.includes("course_only")
+          !(
+            role?.RolePermissions?.includes("course_edit") ||
+            role?.RolePermissions?.includes("course_only")
+          )
         }
         className={`flex gap-2 justify-center items-center  md:p-3 max-md:p-2 rounded-lg bg-[#6C8299] ${
           role?.RolePermissions?.includes("course_edit") ||

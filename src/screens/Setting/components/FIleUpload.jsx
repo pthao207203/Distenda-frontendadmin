@@ -2,7 +2,7 @@ import * as React from "react";
 
 export function FileUpload({ id, label, imageUrl, buttonText = "Chọn tệp", uploadImagePreviewRef, handleImageChange, uploadImageInputRef }) {
   return (
-    <div className="flex flex-col min-w-[240px] max-md:max-w-full">
+    <div className="flex flex-col min-w-[15rem] max-md:max-w-full">
       <div className="text-neutral-900 text-opacity-50 max-md:max-w-full">
         {label}
       </div>
@@ -11,11 +11,11 @@ export function FileUpload({ id, label, imageUrl, buttonText = "Chọn tệp", u
           loading="lazy"
           src={imageUrl}
           alt={`${label} preview`}
-          className="object-contain self-stretch my-auto aspect-[5.88] min-w-[240px] w-[399px] rounded-lg bg-[#CFCFCF]"
+          className="object-contain self-stretch my-auto aspect-[5.88] min-w-[15rem] w-[25rem] rounded-lg bg-[#CFCFCF]"
           ref={uploadImagePreviewRef}
         />
         <button
-          className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[46px]"
+          className="flex gap-[0.25rem] justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem]"
         >
           <img
             loading="lazy"

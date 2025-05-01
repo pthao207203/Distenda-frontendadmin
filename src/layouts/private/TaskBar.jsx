@@ -35,14 +35,14 @@ function TaskBar({ handleTaskBarToggle }) {
     handleTaskBarToggle();
     navigate("/admin-account"); // Điều hướng đến trang profile
   };
-  const handleBanne = () => {
+  const handleMessage = () => {
     handleTaskBarToggle();
-    navigate("/banner"); // Điều hướng đến trang Banner
+    navigate("/message"); // Điều hướng đến trang Banner
   };
   const menuItems = [
     { text: "Tài khoản", onClick: handleProfileNavigation },
-    { text: "Banner", onClick: handleBanne },
-    { text: "Đăng xuất", onClick: handleLogout },
+    { text: "Tin nhắn", onClick: handleMessage },
+    { text: "Đăng xuất", onClick: handleLogout }
   ];
 
   return (
