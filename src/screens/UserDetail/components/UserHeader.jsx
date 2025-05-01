@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import BlockUserModal from "./BlockUserModal";
-import Loading from "../../../components/Loading";
 import {
   userUnblockController,
   userBlockController,
 } from "../../../controllers/user.controller";
 
-function UserHeader({ data, role }) {
-  // State để kiểm soát hiển thị popup và trạng thái chặn người dùng
-  const [loading, setLoading] = useState(false);
+function UserHeader({ data, role, setLoadingPopup }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(!data?.UserStatus); // Trạng thái chặn người dùng
 
@@ -24,7 +21,7 @@ function UserHeader({ data, role }) {
 
   // Hàm xử lý khi xác nhận chặn người dùng
   const handleBlockUser = async () => {
-    const result = await userBlockController(setLoading, data._id);
+    const result = await userBlockController(setLoadingPopup, data._id);
     if (result.code === 200) {
       setIsBlocked(true); // Chuyển trạng thái thành "đã chặn"
       setIsPopupVisible(false); // Đóng popup
@@ -34,16 +31,12 @@ function UserHeader({ data, role }) {
   // Hàm xử lý khi xác nhận bỏ chặn người dùng
   const handleUnblockUser = async () => {
     // Gọi API đổi trạng thái
-    const result = await userUnblockController(setLoading, data._id);
+    const result = await userUnblockController(setLoadingPopup, data._id);
     if (result.code === 200) {
       setIsBlocked(false); // Chuyển trạng thái thành "không bị chặn"
       setIsPopupVisible(false); // Đóng popup
     }
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="flex flex-wrap gap-3 items-center w-full font-medium max-md:max-w-full">

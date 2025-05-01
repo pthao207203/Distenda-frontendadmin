@@ -9,6 +9,8 @@ import moment from "moment";
 import Loading from "../../../components/Loading";
 import BannerDetailHistory from "./components/BannerDetailHistory";
 import { useRole } from "../../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../../components/PopupLoading";
 
 function BannerForm() {
   const [data, setData] = useState({
@@ -20,6 +22,7 @@ function BannerForm() {
 
   const [course, setCourse] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
 
   const editorRef = useRef(null);
 
@@ -123,6 +126,10 @@ function BannerForm() {
 
   return (
     <>
+      <Helmet>
+        <title>Thêm banner</title>
+      </Helmet>
+      {loadingPopup && <PopupLoading />}
       <div className="flex flex-col flex-1 shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* Form banner */}
         <form className="flex flex-col mx-auto w-full text-[1.25rem] max-md:text-[1rem] font-medium leading-none bg-white min-h-[983px] max-md:px-5 max-md:pb-24 max-md:mt-1.5 max-md:max-w-full">
@@ -159,12 +166,14 @@ function BannerForm() {
                 text="Cập nhật"
                 variant="gray"
                 handleSubmit={handleSubmit}
+                setLoadingPopup={setLoadingPopup}
               />
               <ActionButton
                 icon="https://cdn.builder.io/api/v1/image/assets/TEMP/42648122efa6f387983f11efeb38ca614809d3a449f7a41f54d965ae2b480b89?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
                 text="Xóa"
                 variant="red"
                 handleSubmit={handleSubmit}
+                setLoadingPopup={setLoadingPopup}
               />
             </div>
           </div>
@@ -263,23 +272,24 @@ function BannerForm() {
                 loading="lazy"
                 src={data?.BannerPicture ? data.BannerPicture : ""}
                 alt="Profile avatar"
-                className={`flex mt-2 w-full  lg:min-h-[12.5rem] min-h-[7.5rem] max-h-[20rem] max-md:max-w-full object-contain ${!data.BannerPicture ? "bg-[#EBF1F9]" : ""}
+                className={`flex mt-2 w-full  lg:min-h-[12.5rem] min-h-[7.5rem] max-h-[20rem] max-md:max-w-full object-contain ${
+                  !data.BannerPicture ? "bg-[#EBF1F9]" : ""
+                }
         `}
               />
               <div className="flex flex-col mt-2 max-w-full">
-                  {/* <div className="gap-2.5 self-stretch my-auto">Chọn tệp</div> */}
-                  <label
-                    htmlFor="BannerPicture"
-                    className="flex gap-3 justify-center cursor-pointer items-center self-start p-[0.75rem] text-white rounded-lg bg-[#6C8299]"
-                  >
-                    <img
-                      loading="lazy"
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b516c63e31267ce6e114c8d3b4292335012bee5e99d5deb37cc823ac993268f?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
-                      alt=""
-                      className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
-                    />
-                    Chọn tệp
-                 
+                {/* <div className="gap-2.5 self-stretch my-auto">Chọn tệp</div> */}
+                <label
+                  htmlFor="BannerPicture"
+                  className="flex gap-3 justify-center cursor-pointer items-center self-start p-[0.75rem] text-white rounded-lg bg-[#6C8299]"
+                >
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b516c63e31267ce6e114c8d3b4292335012bee5e99d5deb37cc823ac993268f?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
+                    alt=""
+                    className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                  />
+                  Chọn tệp
                   <input
                     type="file"
                     className="gap-2.5 self-stretch my-auto form-control-file hidden" // Ẩn input file
@@ -289,7 +299,7 @@ function BannerForm() {
                     ref={uploadImageInputRef}
                     onChange={handleImageChange}
                   />
-                 </label>
+                </label>
                 {/* <div className="mt-2 text-slate-500">
                   Không có tệp nào được chọn.
                 </div> */}

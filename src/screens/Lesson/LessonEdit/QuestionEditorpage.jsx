@@ -11,6 +11,8 @@ import { PopupConfirmCancel } from "../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import { useRole } from "../../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../../components/PopupLoading";
 
 function QuestionEditor() {
   const { role } = useRole();
@@ -29,6 +31,7 @@ function QuestionEditor() {
   const { LessonID } = useParams();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
   const editorRef = useRef();
 
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -53,16 +56,14 @@ function QuestionEditor() {
 
   const handlePopup = async (actionType) => {
     if (actionType === "update") {
-      const result = await exerciseUpdatePostController(
-        setLoading,
-        LessonID,
-        data
-      );
+      setLoadingPopup(true);
+      const result = await exerciseUpdatePostController(LessonID, data);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
+      setLoadingPopup(false);
     } else if (actionType === "cancel") {
       setPopupContent(
         <>
@@ -154,6 +155,10 @@ function QuestionEditor() {
   } else
     return (
       <>
+        <Helmet>
+          <title>Thêm banner</title>
+        </Helmet>
+        {loadingPopup && <PopupLoading />}
         <div className="flex flex-col px-16 pt-16 pb-40 bg-white md:text-[1.25rem] text-[1rem]  font-medium max-md:px-5 max-md:pb-24">
           {/* Header: Buttons */}
           <div className="flex gap-3 max-md:gap-2 items-center mb-6">

@@ -7,7 +7,7 @@ import SearchBar from "../../layouts/private/SearchBar";
 import { payController } from "../../controllers/pay.controller";
 import Loading from "../../components/Loading";
 import PaginationControl from "./components/PaginationControl";
-
+import moment from "moment";
 
 function PaymentTable() {
   const [allPayments, setAllPayments] = useState([]);
@@ -20,7 +20,6 @@ function PaymentTable() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Sử dụng hook điều hướng
@@ -101,15 +100,12 @@ function PaymentTable() {
           )}
         </div>
         {totalPage > 1 && (
-  <PaginationControl
-    currentPage={currentPage}
-    onPageChange={(page) => setCurrentPage(page)}
-  />
-)}
-
-
+          <PaginationControl
+            currentPage={currentPage}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </div>
-      
     </>
   );
 }
