@@ -55,7 +55,7 @@ const VoucherInfo = () => {
 
   return (
     <section>
-      <div className="flex flex-wrap gap-2.5 items-center w-full">
+      <div className="flex gap-[0.5rem] items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
         <ActionButton
           label="Lưu"
           bgColor="bg-[#6C8299]"
@@ -68,10 +68,10 @@ const VoucherInfo = () => {
         />
       </div>
 
-      <div className="mt-10 w-full text-xl">
-        <h3 className="font-semibold text-neutral-900">Thông tin voucher</h3>
-        <div className="mt-6 font-medium">
-          <div className="flex flex-wrap gap-[8rem] items-start w-full">
+      <div className="flex flex-col mt-[2.5rem] w-full text-xl max-md:max-w-full">
+        <h3 className="font-semibold text-[#171717] max-md:max-w-full">Thông tin voucher</h3>
+        <div className="flex flex-col mt-[1.5rem] w-full font-medium leading-none max-md:max-w-full">
+          <div className="flex flex-wrap gap-[4rem] items-start w-full">
             <FormField
               label="Mã Voucher"
               value={voucher?.voucherCode}
@@ -84,7 +84,7 @@ const VoucherInfo = () => {
             />
           </div>
 
-          <div className="flex flex-wrap gap-[8rem] items-start mt-6 w-full">
+          <div className="flex flex-wrap gap-[4rem] items-start mt-6 w-full">
             <FormField
               label="Tối thiểu"
               value={voucher?.minAmount}
@@ -127,7 +127,7 @@ const ActionButton = ({ label, bgColor, onClick }) => {
       onClick={() => {
         onClick && onClick();
       }}
-      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl font-medium text-white rounded-lg ${bgColor} min-h-[46px]`}
+      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto whitespace-nowrap rounded-lg min-h-[3rem] max-md:min-h-[2rem] ${bgColor}`}
     >
       <span className="gap-2.5 self-stretch my-auto">{label}</span>
     </button>
@@ -136,7 +136,7 @@ const ActionButton = ({ label, bgColor, onClick }) => {
 
 const FormField = ({ label, value, onChange }) => {
   return (
-    <div className="flex-1 min-w-60 max-w-[44rem]">
+    <div className="flex-1 min-w-[15rem] max-w-[40rem]">
       <label className="text-[#13131380]">{label}</label>
       <div className="p-2.5 mt-3 rounded-lg border border-[#6C8299] border-opacity-80 w-full h-[4.25rem]">
         <input

@@ -1,6 +1,6 @@
 export function ContactInput({ id, label, value, type = "text", handleChange }) {
   return (
-    <div className="flex flex-col leading-none min-h-[91px] min-w-[240px] max-w-[550px] w-full">
+    <div className="flex flex-col leading-none min-w-[15rem] max-w-[25rem] w-full">
       <label className="text-neutral-900 text-opacity-50" htmlFor={`input-${id}`}>
         {label}
       </label>
@@ -9,7 +9,7 @@ export function ContactInput({ id, label, value, type = "text", handleChange }) 
         type={type}
         value={value || ""} // Xử lý giá trị null
         onChange={handleChange}
-        className="flex-1 shrink gap-2.5 self-stretch p-2.5 mt-2 whitespace-nowrap rounded-lg border border-solid border-slate-500 border-opacity-80 size-full text-neutral-900"
+        className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
       />
     </div>
   );

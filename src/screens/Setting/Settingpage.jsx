@@ -238,7 +238,7 @@ export default function Settingpage() {
       <Helmet>
         <title>Thông tin web</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
           <div className="flex justify-end items-center w-full">
             <button
@@ -259,7 +259,7 @@ export default function Settingpage() {
               <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
             </button>
           </div>
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Cài đặt chung
           </div>
           <div className="flex flex-col mt-6 w-full font-medium leading-none max-md:max-w-full">
@@ -275,10 +275,10 @@ export default function Settingpage() {
                 type="text"
                 value={data?.WebsiteName}
                 onChange={handleChange}
-                className="flex-1 shrink gap-2.5 self-stretch p-2.5 mt-2 whitespace-nowrap rounded-lg border border-solid border-slate-500 border-opacity-80 size-full text-neutral-900"
+                className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
               />
             </div>
-            <div className="flex flex-wrap gap-3 justify-between items-start mt-8 w-full max-md:max-w-full">
+            <div className="flex flex-wrap gap-3 justify-between items-start mt-[0.5rem] w-full max-md:max-w-full">
               <FileUpload
                 label="Logo Admin"
                 id="WebsiteLogoAdmin"
@@ -299,8 +299,8 @@ export default function Settingpage() {
                 imageUrl={imageUrls["WebsiteLogoUser"]}
               />
 
-              <div className="flex flex-col min-w-[240px] max-md:max-w-full">
-                <div className="text-neutral-900 text-opacity-50 max-md:max-w-full">
+              <div className="flex flex-col min-w-[15rem] max-md:max-w-full">
+                <div className="text-[#171717] text-opacity-50 max-md:max-w-full">
                   Icon Web
                 </div>
                 <div className="flex flex-wrap gap-4 items-center mt-2 w-full text-white max-md:max-w-full">
@@ -331,16 +331,13 @@ export default function Settingpage() {
                     />
                   </button>
                 </div>
-                {/* <div className="mt-2 text-slate-500 text-opacity-80 max-md:max-w-full">
-        Không có tệp nào được chọn
-      </div> */}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex z-0 flex-col mt-10 w-full font-medium max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-[2.5rem] w-full font-medium max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Thông tin liên hệ
           </div>
           <div className="flex flex-wrap gap-2 justify-between items-start mt-6 w-full max-md:max-w-full">
@@ -382,8 +379,8 @@ export default function Settingpage() {
             ))}
         </div>
 
-        <div className="flex z-0 flex-col mt-10 w-full font-medium text-neutral-900 text-opacity-50 max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-[2.5rem] w-full font-medium text-[#171717] text-opacity-50 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             Về chúng tôi
           </div>
           {textAreas.slice(0, 2).map((area, index) => (
@@ -403,8 +400,8 @@ export default function Settingpage() {
           ))}
         </div>
 
-        <div className="flex z-0 flex-col pb-16 mt-10 w-full font-medium text-neutral-900 text-opacity-50 max-md:max-w-full">
-          <div className="font-semibold text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col pb-16 mt-10 w-full font-medium text-[#171717] text-opacity-50 max-md:max-w-full">
+          <div className="font-semibold text-[#171717] max-md:max-w-full">
             RESOURCE
           </div>
           {textAreas.slice(2).map((area, index) => (

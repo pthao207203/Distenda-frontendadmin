@@ -311,7 +311,7 @@ function AdminDetailPage() {
         />
       </div>
       {isHistoryVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-[2.5rem] overflow-hidden">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-[] overflow-hidden">
           <AdminDetailHistory onClose={handleCloseHistoryRequest} />
         </div>
       )}
