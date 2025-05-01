@@ -9,10 +9,12 @@ import {
 import moment from "moment";
 import uploadImage from "../../../components/UploadImage";
 import Loading from "../../../components/Loading";
+import { PopupLoading } from "../../../components/PopupLoading";
 
 function ProfileCard() {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
 
   // Hàm mở popup
   const openPopup = () => {
@@ -27,6 +29,7 @@ function ProfileCard() {
   // Hàm xử lý xác nhận cập nhật
   const handleConfirmUpdate = async () => {
     setIsPopupVisible(false); // Ẩn popup xác nhận
+    setLoadingPopup(true);
     let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
     console.log("selectedFileName", selectedFileName);
@@ -42,6 +45,7 @@ function ProfileCard() {
     console.log("Data sent to ActionButton:", updatedData);
     setData(updatedData);
     await updateUserInfo(updatedData); // Gọi hàm cập nhật
+    setLoadingPopup(false);
     setSuccessPopupVisible(true);
     console.log("Cập nhật thông tin thành công!");
   };
@@ -142,18 +146,18 @@ function ProfileCard() {
       return updatedData;
     });
   };
+  console.log("My account => ", data);
+  console.log("My account field => ", userFields);
 
   if (loading) {
     return <Loading />;
   }
-  console.log("My account => ", data);
-  console.log("My account field => ", userFields);
-
   return (
     <>
       <Helmet>
         <title>Tài khoản</title>
       </Helmet>
+      {loadingPopup && <PopupLoading />}
       <main className="flex flex-col flex-1 shrink p-16 max-md:p-8 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
         {/* Header */}
         <AccountHeader

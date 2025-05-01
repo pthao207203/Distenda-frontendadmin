@@ -5,8 +5,8 @@ import CourseTableRow from "./components/CourseTableRow";
 import TableHeader from "./components/TableHeader";
 import { dashboardController } from "../../controllers/home.controller";
 import { Link } from "react-router-dom";
-import Loading from "../../components/Loading";
 import { Chart as ChartJS, registerables } from "chart.js";
+import Loading from "../../components/Loading";
 
 function DashboardPage() {
   const [data, setData] = useState();
@@ -17,7 +17,7 @@ function DashboardPage() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const result = await dashboardController(setLoading);
+      const result = await dashboardController();
       setLoading(false);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
@@ -117,12 +117,8 @@ function DashboardPage() {
       chart?.destroy();
       polarAreaChart?.destroy();
     };
-
   }, [data]); // Chạy lại khi dữ liệu thay đổi
 
-  if (loading) {
-    return <Loading />;
-  }
   console.log("dashboard => ", data);
 
   const stats = [
@@ -184,6 +180,9 @@ function DashboardPage() {
   // console.log("data?.totalIncomeAgo", data?.totalIncomeAgo)
   console.log(chartRefDoughnut.current); // Kiểm tra xem chartRefDoughnut có giá trị hợp lệ không
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <Helmet>

@@ -5,7 +5,12 @@ import {
   rolesUpdateController,
 } from "../../../controllers/role.controller";
 
-export default function ActionButtons({ selectedRoles, permissions, role }) {
+export default function ActionButtons({
+  selectedRoles,
+  permissions,
+  role,
+  setLoadingPopup,
+}) {
   const [popupContent, setPopupContent] = useState(null); // Trạng thái quản lý nội dung popup
   const [isPopupVisible, setPopupVisible] = useState(false); // Trạng thái hiển thị popup xác nhận
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
@@ -36,12 +41,13 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
     try {
       let response;
       if (action === "delete") {
-        // Gọi API xóa
-        // console.log("selectedRoles", selectedRoles)
+        setLoadingPopup(true);
         response = await rolesDeleteController(selectedRoles);
+        setLoadingPopup(false);
       } else if (action === "update") {
-        // Gọi API cập nhật
+        setLoadingPopup(true);
         response = await rolesUpdateController(permissions);
+        setLoadingPopup(false);
       }
 
       if (!response.ok) {

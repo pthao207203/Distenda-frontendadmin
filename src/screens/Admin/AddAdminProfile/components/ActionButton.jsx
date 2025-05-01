@@ -6,7 +6,13 @@ import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../../components/PopupSuccess";
 import { PopupError } from "../../../../components/PopupError";
 
-export const ActionButton = ({ icon, label, variant, personalInfo }) => {
+export const ActionButton = ({
+  icon,
+  label,
+  variant,
+  personalInfo,
+  setLoadingPopup,
+}) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false); // Trạng thái hiển thị popup
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
@@ -14,6 +20,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   const handleClick = async () => {
     if (label === "Lưu") {
+      setLoadingPopup(true);
       console.log("User profile data:", personalInfo); // In ra dữ liệu người dùng
       // Gọi hàm fetch data khi submit
       const result = await adminCreatePostController(personalInfo);
@@ -23,7 +30,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
       } else {
         setErrorPopupVisible(false);
       }
-      // navigate("/admin"); // Điều hướng đến trang AdminPage
+      setLoadingPopup(false);
     } else if (label === "Hủy") {
       setIsPopupVisible(true); // Hiển thị popup nếu là nút Hủy
     }

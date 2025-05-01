@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { categoryCreatePostController } from "../../../controllers/category.controller";
 
-function CategoryPopup({ onClose, data }) {
+function CategoryPopup({ onClose, data, setLoadingPopup }) {
   const [categoryName, setCategoryName] = useState("");
   const [category, setCategory] = useState(data);
   const [categoryParent_id, setCategoryParent_id] = useState("");
@@ -22,7 +22,7 @@ function CategoryPopup({ onClose, data }) {
   const handleAddClick = async () => {
     console.log("Danh mục mới:", categoryName);
     // console.log("id:", courseID);
-
+    setLoadingPopup(true);
     const result = await categoryCreatePostController(
       categoryName,
       categoryParent_id
@@ -34,6 +34,7 @@ function CategoryPopup({ onClose, data }) {
     } else {
       setError("Không thể thêm chương mới!");
     }
+    setLoadingPopup(false);
   };
 
   const handleChange = (e) => {
