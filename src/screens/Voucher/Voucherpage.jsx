@@ -83,15 +83,15 @@ function VoucherList() {
             <Helmet>
                 <title>Quản lý voucher</title>
             </Helmet>
-            <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-height-screen max-md:px-5 max-md:max-w-full">
+            <div className="flex flex-col flex-1 justify-center items-center shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
                 <SearchBar onSearch={handleSearch} />
-                <div className="flex flex-col pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
-                    <div className="text-right max-md:max-w-full">
+                <div className="flex flex-col mt-6 w-full text-[#171717] max-md:max-w-full">
+                    <div className="text-right mb-3 max-md:max-w-full">
                         Tổng số voucher: {filteredVouchers.length}
                     </div>
                     <TableHeader />
                     {error ? (
-                        <div className="text-red-600">{error}</div>
+                        <div className="text-[#dc2626]">{error}</div>
                     ) : (
                         filteredVouchers.length > 0 ? (
                             filteredVouchers.map((voucher, index) => (
@@ -104,7 +104,7 @@ function VoucherList() {
                                 />
                             ))
                         ) : (
-                            <p className="mt-4 text-center">Không tìm thấy voucher nào.</p>
+                            <p className="mt-[1rem] text-center">Không tìm thấy voucher nào.</p>
                         )
                     )}
                 </div>

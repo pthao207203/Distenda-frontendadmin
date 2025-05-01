@@ -79,7 +79,7 @@ function ActionButton({ icon, text, variant, handleSubmit }) {
   return (
     <>
       <button
-        className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${bgColor} min-h-[46px]`}
+        className={`flex gap-2 justify-center items-center px-[1.5rem] py-[0.75rem] rounded-lg min-h-[3rem] max-md:max-h-[1.875rem] ${bgColor}`}
         onClick={handleClick}
       >
         <img

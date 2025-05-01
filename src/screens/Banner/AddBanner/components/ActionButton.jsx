@@ -59,11 +59,11 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
   }
 
   const baseClasses =
-    "flex gap-3 justify-center items-center px-8 py-3 rounded-lg min-h-[46px] max-md:px-5";
+    "flex gap-2 justify-center items-center px-[1.5rem] py-[0.75rem] rounded-lg min-h-[3rem] max-md:max-h-[1.875rem]";
   const variantClasses =
     variant === "primary"
       ? "text-white bg-[#6C8299] hover:bg-slate-600"
-      : "bg-[#CDD5DF] text-[#14375F] hover:bg-slate-400";
+      : "bg-[#CDD5DF] text-[#14375F] hover:bg-slate-400 px-[1rem]";
 
   return (
     <>
@@ -83,7 +83,7 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
       <PopupConfirmCancel
         isVisible={isPopupVisible}
         content="Bạn có chắc chắn muốn hủy những thay đổi không?"
-        confirm="Huỷ"
+        confirm="Có"
         onConfirm={handlePopupConfirm}
         onCancel={handlePopupClose}
       />

@@ -33,11 +33,7 @@ function BannerForm() {
   const { role } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
-    if (
-      role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("banner_edit")
-    ) {
+    if (role && !role.RolePermissions?.includes("banner_edit")) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/banner");
     }
@@ -127,11 +123,11 @@ function BannerForm() {
 
   return (
     <>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* Form banner */}
-        <form className="flex flex-col px-16 pt-16 pb-60 mx-auto w-full text-xl font-medium leading-none bg-white min-h-[983px] max-md:px-5 max-md:pb-24 max-md:mt-1.5 max-md:max-w-full">
+        <form className="flex flex-col mx-auto w-full text-[1.25rem] max-md:text-[1rem] font-medium leading-none bg-white min-h-[983px] max-md:px-5 max-md:pb-24 max-md:mt-1.5 max-md:max-w-full">
           <div className="flex justify-between items-center max-md:max-w-full">
-            <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+            <div className="flex flex-col justify-center max-md:max-w-full">
               <div className="flex gap-3 items-center">
                 <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
                   Lần cuối cập nhật
@@ -189,7 +185,7 @@ function BannerForm() {
             >
               Chọn khoá học
             </label>
-            <div className="flex relative gap-2.5 items-start px-2.5 py-6 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
+            <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
               <select
                 id="BannerCourse"
                 value={data.BannerCourse}
@@ -224,7 +220,7 @@ function BannerForm() {
                 value={data.BannerDescription} // Giá trị hiện tại
                 onEditorChange={handleChange} // Hàm xử lý khi nội dung thay đổi
                 init={{
-                  height: 500,
+                  height: 300,
                   menubar: false,
                   plugins: [
                     "advlist",
@@ -267,14 +263,14 @@ function BannerForm() {
                 loading="lazy"
                 src={data?.BannerPicture ? data.BannerPicture : ""}
                 alt="Profile avatar"
-                className="flex mt-2 w-full bg-[#EBF1F9] max-h-[300px] min-h-[200px] max-md:max-w-full object-contain"
+                className={`flex mt-2 w-full  lg:min-h-[12.5rem] min-h-[7.5rem] max-h-[20rem] max-md:max-w-full object-contain ${!data.BannerPicture ? "bg-[#EBF1F9]" : ""}
+        `}
               />
-              <div className="flex flex-col mt-2 max-w-full w-[569px]">
-                <button type="button" tabIndex={0}>
+              <div className="flex flex-col mt-2 max-w-full">
                   {/* <div className="gap-2.5 self-stretch my-auto">Chọn tệp</div> */}
                   <label
                     htmlFor="BannerPicture"
-                    className="flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[46px] w-[166px]"
+                    className="flex gap-3 justify-center cursor-pointer items-center self-start p-[0.75rem] text-white rounded-lg bg-[#6C8299]"
                   >
                     <img
                       loading="lazy"
@@ -283,7 +279,7 @@ function BannerForm() {
                       className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
                     />
                     Chọn tệp
-                  </label>
+                 
                   <input
                     type="file"
                     className="gap-2.5 self-stretch my-auto form-control-file hidden" // Ẩn input file
@@ -293,10 +289,10 @@ function BannerForm() {
                     ref={uploadImageInputRef}
                     onChange={handleImageChange}
                   />
-                </button>
-                <div className="mt-2 text-slate-500">
+                 </label>
+                {/* <div className="mt-2 text-slate-500">
                   Không có tệp nào được chọn.
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

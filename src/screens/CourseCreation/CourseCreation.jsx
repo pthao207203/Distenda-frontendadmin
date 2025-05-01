@@ -6,14 +6,13 @@ import { useRole } from "../../layouts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 function CourseCreationPage() {
-  const { role } = useRole();
+  const { role, user } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
     if (
       role &&
-      role.role &&
-      !role.role.RolePermissions?.includes("course_create") &&
-      !role?.role?.RolePermissions?.includes("course_only")
+      !role?.RolePermissions?.includes("course_create") &&
+      !role?.RolePermissions?.includes("course_only")
     ) {
       console.log("Không có quyền, chuyển về trang chủ");
       navigate("/courses");
@@ -23,7 +22,7 @@ function CourseCreationPage() {
     <div className="flex overflow-hidden flex-col bg-[#EBF1F9]">
       {/* <Header /> */}
       {/* <NavigationBar /> */}
-      <CourseForm />
+      <CourseForm role={role} user={user} />
     </div>
   );
 }

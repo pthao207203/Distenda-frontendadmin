@@ -6,7 +6,7 @@ function FormField({ label, value, id, hasDropdown, dropdownIcon, onChange }) {
       <label htmlFor={id} className="text-neutral-900 text-opacity-50 max-md:max-w-full">
         {label}
       </label>
-      <div className="flex relative gap-2.5 items-start px-2.5 py-6 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
+      <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
         <input
           type="text"
           id={id}

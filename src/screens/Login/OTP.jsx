@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { loginConfirmController } from "../../controllers/auth.controller.js";
 
@@ -23,13 +24,26 @@ function OTP({ email, result }) {
 
     try {
       // Gọi API xử lý
-      await loginConfirmController(formData, setSuccess, setError, navigate);
+      const result = await loginConfirmController(
+        formData,
+        setSuccess,
+        setError
+      );
+      setTimeout(() => {
+        navigate("/"); // Điều hướng tới trang chủ
+      }, 3000);
+      Cookies.set("token", result.token, {
+        expires: 7, // số ngày hết hạn (ở đây là 7 ngày)
+        path: "/", // cookie có hiệu lực toàn site
+        sameSite: "Lax", // tăng bảo mật, tránh CSRF
+      });
     } catch (err) {
       setError("Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {
       setIsLoading(false); // Kết thúc trạng thái loading
     }
   };
+
   return (
     <div className="flex z-0 flex-col w-full max-md:max-w-full">
       <div className="flex flex-col w-full leading-none max-md:max-w-full">
@@ -106,7 +120,7 @@ function OTP({ email, result }) {
 
         <button
           type="submit"
-          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[58px] text-white max-md:max-w-full ${
+          className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

@@ -37,7 +37,6 @@ import VoucherList from './screens/Voucher/Voucherpage';
 import VoucherDetail from './screens/Voucher/VoucherDetail/VoucherDetail';
 import Message from './screens/Message/Message';
 
-import { RoleProvider } from "./layouts/AppContext";
 import VoucherNew from './screens/Voucher/VoucherNew/VoucherNew';
 
 
@@ -54,15 +53,12 @@ function App() {
     }
   };
   useEffect(() => {
-    console.log("vaof")
     // Giả sử bạn lấy link favicon từ API hoặc database
     const fetchFavicon = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/auth/setting`, {
         method: 'GET',
       });
-      console.log("response", response)
       const data = await response.json();
-      console.log("data", data)
       updateFavicon(data.WebsiteIcon); // Cập nhật favicon từ API
     };
 
@@ -76,13 +72,7 @@ function App() {
         <Route element={<Layout />}>
 
           <Route element={<AdminRoutes />}>
-            <Route
-              element={
-                <RoleProvider>
-                  <MainAdmin />
-                </RoleProvider>
-              }
-            >
+            <Route element={<MainAdmin />}>
               <Route path='/' element={<Dashboard />} />
               <Route path='/admin-account' element={<AdminAccount />} />
               <Route path='/banner' element={<Banner />} />

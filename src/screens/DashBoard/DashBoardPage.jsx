@@ -16,9 +16,9 @@ function DashboardPage() {
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("vaof")
+      setLoading(true);
       const result = await dashboardController(setLoading);
-      // console.log(result)
+      setLoading(false);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
@@ -30,6 +30,7 @@ function DashboardPage() {
   ChartJS.register(...registerables);
 
   useEffect(() => {
+    let chart, polarAreaChart;
     // Biểu đồ lợi nhuận (Line chart with multi-axis)
     if (data && chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
@@ -78,8 +79,7 @@ function DashboardPage() {
         },
       };
 
-      // eslint-disable-next-line no-unused-vars
-      const chart = new ChartJS(ctx, config);
+      chart = new ChartJS(ctx, config);
     }
 
     // Biểu đồ Tỉ lệ chuyển đổi (Polar Area Chart) - Dữ liệu tĩnh
@@ -110,9 +110,14 @@ function DashboardPage() {
           },
         },
       };
-      // eslint-disable-next-line no-unused-vars
-      const polarAreaChart = new ChartJS(ctx, config); // Tạo biểu đồ Polar Area
+      polarAreaChart = new ChartJS(ctx, config); // Tạo biểu đồ Polar Area
     }
+
+    return () => {
+      chart?.destroy();
+      polarAreaChart?.destroy();
+    };
+
   }, [data]); // Chạy lại khi dữ liệu thay đổi
 
   if (loading) {

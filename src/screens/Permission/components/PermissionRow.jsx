@@ -72,7 +72,7 @@ export default function PermissionRow({
       {checkboxStates.map((isChecked, index) => (
         <div
           key={index}
-          className="flex overflow-hidden flex-1 shrink gap-2.5 justify-center items-center p-1 basis-4 h-[50px] bg-white min-w-[120px]"
+          className="flex basis-1/5 min-w-0 justify-center items-center p-3"
         >
           <div className="flex justify-center items-center w-full relative">
             {/* Checkbox chính */}

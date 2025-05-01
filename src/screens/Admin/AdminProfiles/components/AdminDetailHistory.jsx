@@ -28,23 +28,19 @@ const getActionStyle = (action) => {
 export default function AdminDetailHistory({ onClose }) {
   const [isOpen, setIsOpen] = useState(true); // Trạng thái popup
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
   const { AdminID } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
-        setLoading(true);
-        const result = await adminDetailHistoryController(setLoading, AdminID);
+        const result = await adminDetailHistoryController(AdminID);
         // console.log(result)
         if (result) {
           setData(result); // Lưu dữ liệu nếu hợp lệ
         }
       } catch (error) {
         console.error("Error fetching lesson history:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     }
 
     fetchData();
@@ -71,10 +67,6 @@ export default function AdminDetailHistory({ onClose }) {
       actionText.includes(keyword)
     );
   });
-
-  if (loading) {
-    return "Đang tải...";
-  }
 
   return (
     <main className="relative flex overflow-hidden flex-col justify-start items-center p-10 text-2xl font-medium leading-6 text-white rounded-[1.125rem] bg-white max-md:max-w-[90%] max-w-[60%] w-full min-h-[347px] max-md:p-5">

@@ -51,15 +51,15 @@ export default function CourseContent() {
                 <button
                   disabled={
                     !(
-                      role?.role?.RolePermissions?.includes("course_edit") ||
-                      role?.role?.RolePermissions?.includes("course_only")
+                      role?.RolePermissions?.includes("course_edit") ||
+                      role?.RolePermissions?.includes("course_only")
                     )
                   }
                   onClick={onClick}
                   type="submit"
                   className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
-                    role?.role?.RolePermissions?.includes("course_edit") ||
-                    role?.role?.RolePermissions?.includes("course_only")
+                    role?.RolePermissions?.includes("course_edit") ||
+                    role?.RolePermissions?.includes("course_only")
                       ? "bg-[#6C8299] hover:bg-[#55657a]"
                       : "bg-[#CDD5DF] cursor-not-allowed"
                   }`}
@@ -77,14 +77,14 @@ export default function CourseContent() {
                 <button
                   disabled={
                     !(
-                      role?.role?.RolePermissions?.includes("course_delete") ||
-                      role?.role?.RolePermissions?.includes("course_only")
+                      role?.RolePermissions?.includes("course_delete") ||
+                      role?.RolePermissions?.includes("course_only")
                     )
                   }
                   type="button"
                   className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg ${
-                    role?.role?.RolePermissions?.includes("course_delete") ||
-                    role?.role?.RolePermissions?.includes("course_only")
+                    role?.RolePermissions?.includes("course_delete") ||
+                    role?.RolePermissions?.includes("course_only")
                       ? "bg-[#DF322B] hover:bg-[#902723]"
                       : "bg-[#ffd1d1] cursor-not-allowed"
                   }`}

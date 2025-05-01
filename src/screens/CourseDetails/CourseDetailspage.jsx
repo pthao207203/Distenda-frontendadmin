@@ -52,8 +52,8 @@ function CourseDetails() {
       // console.log(result)
       if (result) {
         if (
-          !role?.role?.RolePermissions?.includes("course_view") &&
-          result.course.CourseIntructor.toString() !== result.user
+          !role?.RolePermissions?.includes("course_view") &&
+          result.course.CourseIntructor !== result.user
         ) {
           console.log("Không có quyền, chuyển về trang chủ");
           navigate("/courses");
@@ -77,7 +77,7 @@ function CourseDetails() {
   }, [role]);
   console.log(data);
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.CoursePicture;
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
       uploadedImageUrl = await uploadImage(selectedFileName);

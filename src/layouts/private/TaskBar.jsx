@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutController } from "../../controllers/auth.controller";
+import Cookies from "js-cookie";
 
 function TaskBarItem({ text, onClick }) {
   return (
-    <button className="flex items-center text-left first-letter:justify-start px-3 py-4 w-full"
+    <button
+      className="flex items-center text-left first-letter:justify-start px-3 py-4 w-full"
       onClick={onClick} // Gọi hàm onClick khi nhấn vào button
       tabIndex="0"
     >
@@ -19,9 +21,13 @@ function TaskBar({ handleTaskBarToggle }) {
     try {
       // Gọi API xử lý
       await logoutController(navigate);
+      Cookies.remove("token", {
+        path: "/",
+        sameSite: "Lax",
+      });
       alert("Đã đăng xuất thành công!");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   const navigate = useNavigate(); // Khởi tạo useNavigate
@@ -29,13 +35,13 @@ function TaskBar({ handleTaskBarToggle }) {
     handleTaskBarToggle();
     navigate("/admin-account"); // Điều hướng đến trang profile
   };
-  const handleBanne = () => {
+  const handleMessage = () => {
     handleTaskBarToggle();
-    navigate("/banner"); // Điều hướng đến trang Banner
+    navigate("/message"); // Điều hướng đến trang Banner
   };
   const menuItems = [
     { text: "Tài khoản", onClick: handleProfileNavigation },
-    { text: "Banner", onClick: handleBanne },
+    { text: "Tin nhắn", onClick: handleMessage },
     { text: "Đăng xuất", onClick: handleLogout }
   ];
 
@@ -44,12 +50,13 @@ function TaskBar({ handleTaskBarToggle }) {
       {menuItems.map((item, index) => (
         <div
           key={index}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "rgb(235, 241, 249)") // Hiệu ứng hover
+          onMouseEnter={
+            (e) => (e.currentTarget.style.background = "rgb(235, 241, 249)") // Hiệu ứng hover
           }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = "rgba(0, 0, 0, 0)") // Reset khi rời chuột
-          }>
+          onMouseLeave={
+            (e) => (e.currentTarget.style.background = "rgba(0, 0, 0, 0)") // Reset khi rời chuột
+          }
+        >
           <TaskBarItem text={item.text} onClick={item.onClick} />
         </div>
       ))}
