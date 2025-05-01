@@ -77,17 +77,17 @@ function CourseList() {
       <Helmet>
         <title>Khóa học</title>
       </Helmet>
-      <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <main className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem] min-h-[calc(100vh-2.5rem)] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
         <SearchBar onSearch={handleSearch} />
 
-        <section className="flex flex-wrap gap-3 items-start self-end mt-3 text-2xl text-white max-md:max-w-full">
+        <section className="flex gap-3 items-start self-end mt-3 text-[1.5rem] max-md:text-[1.125rem] text-white max-md:max-w-full">
           <ActionButton text="Danh mục" role={role} />
           <ActionButton text="Thêm khóa học" role={role} />
           <HistoryButton onClick={handleHistoryRequest} />
         </section>
 
         <section className="flex flex-col pb-16 mt-3 w-full text-neutral-900 max-md:max-w-full">
-          <div className="self-stretch text-right text-[#131313] text-xl font-medium leading-tight">
+          <div className="self-stretch text-right text-[#131313] md:text-[1.25rem] text-[1rem]  font-medium leading-tight">
             Tổng số khóa học: {filteredCourses.length}
           </div>
           <CourseTableHeader />

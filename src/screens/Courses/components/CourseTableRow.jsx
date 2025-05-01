@@ -15,38 +15,38 @@ function CourseTableRow(course) {
 
   return (
     <article
-      className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[70px] cursor-pointer hover:bg-gray-100 transition-colors"
+      className="flex overflow-hidden flex-wrap mt-3 w-full bg-white min-h-[3.75rem] max-md:min-h-[2.75rem] cursor-pointer hover:bg-gray-100 transition-colors"
       onClick={handleRowClick} // Thêm sự kiện onClick
     >
       {/* Tên khóa học */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium px-3 truncate">
+        <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium px-3 truncate">
           {course?.CourseName}
         </span>
       </div>
 
       {/* Tên giảng viên*/}
       <div className="flex basis-1/6 min-w-0 p-3 justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{course?.intructorFullName || "Không có"}</span>
+        <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium truncate">{course?.intructorFullName || "Không có"}</span>
       </div>
 
       {/* Số lượng đã bán */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium truncate">
           {course?.CourseBought}
         </span>
       </div>
 
       {/* Giá */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium truncate">
           {course?.CoursePrice * ((100 - course.CourseDiscount) / 100)}
         </span>
       </div>
 
       {/* Lợi nhuận */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium truncate">
           {course?.CourseProfit * course?.CourseBought}
         </span>
       </div>
@@ -56,7 +56,7 @@ function CourseTableRow(course) {
         <div
           className={`self-center shrink w-[90%] max-w-full px-4 py-2 rounded-[99px] border-2 justify-center items-center inline-flex ${statusClass} text-center`}
         >
-          <span className="text-[#131313] text-center text-xl font-medium truncate">
+          <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium truncate">
             {statusText}
           </span>
         </div>

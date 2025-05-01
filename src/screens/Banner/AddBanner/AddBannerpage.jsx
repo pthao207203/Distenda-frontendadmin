@@ -107,7 +107,7 @@ function BannerForm() {
   };
 
   return (
-    <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
+    <div className="flex flex-col flex-1 shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-5 max-md:max-w-full">
       {/* Thanh điều hướng */}
       {/* <nav className="flex flex-wrap items-center px-5 w-full text-[1.125rem] max-md:text-[1rem] font-semibold leading-none bg-white text-neutral-900 max-md:max-w-full"> */}
         {/* Các thành phần trong thanh điều hướng */}

@@ -127,10 +127,38 @@ export default function CourseContent() {
       <main className="flex overflow-hidden flex-col bg-[#EBF1F9]">
         {/* <CourseHeader /> */}
         {/* <NavigationBreadcrumb /> */}
-        <section className="flex overflow-hidden flex-col px-16 pt-8 w-full bg-white max-md:px-5 min-h-screen max-md:max-w-full">
+        <section className="flex overflow-hidden flex-col p-[4rem] w-full bg-white max-md:px-5 min-h-screen max-md:max-w-full">
           <div className="flex flex-col pb-16 w-full max-md:max-w-full">
+            <div className="flex gap-2.5 items-end justify-end md:text-[1.25rem] text-[1rem] mb-4 text-white min-w-[240px]">
+              <button
+                onClick={() => handlePopup("edit")}
+                type="button"
+                className="flex gap-3 justify-center items-center md:p-3 max-md:p-2 rounded-lg bg-[#6C8299]"
+              >
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/e9c84cc0d21b5241ee40d83334bf9289f4fc6a242a7bb8a736e90effdbd86720?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
+                  alt=""
+                  className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
+                />
+                <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
+              </button>
+              <button
+                onClick={() => handlePopup("cancel")}
+                type="button"
+                className="flex gap-3 justify-center items-center md:p-3 max-md:p-2 bg-[#DF322B] rounded-lg"
+              >
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/42648122efa6f387983f11efeb38ca614809d3a449f7a41f54d965ae2b480b89?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
+                  alt=""
+                  className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
+                />
+                <span className="gap-2.5 self-stretch my-auto">Xóa</span>
+              </button>
+            </div>
             <div className="flex flex-wrap gap-10 items-end w-full font-medium leading-none max-md:max-w-full">
-              <div className="flex flex-col flex-1 shrink justify-center text-xl basis-0 min-w-[240px] max-md:max-w-full">
+              <div className="flex flex-col flex-1 shrink justify-center md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] max-md:max-w-full">
                 <label
                   htmlFor="VideoName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -141,39 +169,11 @@ export default function CourseContent() {
                   id="VideoName"
                   type="text"
                   value={data?.VideoName}
-                  className="flex-1 shrink gap-2.5 self-stretch px-3 py-3 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full"
+                  className="flex-1 mt-2 shrink gap-2.5 self-stretch px-3 py-3 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[3.75rem] max-md:min-h-[2.75rem] text-neutral-900 max-md:max-w-full"
                 />
               </div>
-              <div className="flex gap-2.5 items-end text-xl text-white min-w-[240px]">
-                <button
-                  onClick={() => handlePopup("edit")}
-                  type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299]"
-                >
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/e9c84cc0d21b5241ee40d83334bf9289f4fc6a242a7bb8a736e90effdbd86720?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
-                    alt=""
-                    className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
-                  />
-                  <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
-                </button>
-                <button
-                  onClick={() => handlePopup("cancel")}
-                  type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 bg-[#DF322B] rounded-lg"
-                >
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/42648122efa6f387983f11efeb38ca614809d3a449f7a41f54d965ae2b480b89?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
-                    alt=""
-                    className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
-                  />
-                  <span className="gap-2.5 self-stretch my-auto">Xóa</span>
-                </button>
-              </div>
             </div>
-            {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+            {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label htmlFor="VideoUrl" className="text-neutral-900 text-opacity-50 max-md:max-w-full">
                 Link video <span className="text-red-600">*</span>
               </label>
@@ -186,7 +186,7 @@ export default function CourseContent() {
                 aria-required="true"
               />
             </div> */}
-            <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+            <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label
                 htmlFor="VideoUrl"
                 className="text-neutral-900 text-opacity-50 max-md:max-w-full"

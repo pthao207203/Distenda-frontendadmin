@@ -9,7 +9,7 @@ export default function ActionButton({
   return (
     <button
       onClick={onClick}
-      className={`flex gap-3 justify-center items-center px-3 py-3 ${bgColor} rounded-lg min-h-[46px] text-white`}
+      className={`flex gap-3 justify-center items-center md:p-3 max-md:p-2 ${bgColor} rounded-lg min-h-[2.5rem] text-white`}
     >
       <img
         loading="lazy"

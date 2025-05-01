@@ -23,7 +23,7 @@ function LessonPopup({ onClose, courseID }) {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
       <div className="flex flex-col justify-center px-10 py-16 bg-white rounded-3xl w-[600px] font-medium">
         <div className="flex flex-col items-center w-full text-center">
-          <p className="text-xl font-semibold text-neutral-900 mb-4">
+          <p className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900 mb-4">
             Nhập tên chương
           </p>
           <input

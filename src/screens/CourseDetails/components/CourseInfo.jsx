@@ -22,22 +22,18 @@ export function CourseInfo({
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="flex flex-col mt-10 w-full max-md:max-w-full min-w-[240px]">
-      <div className="text-xl font-semibold text-neutral-900 max-md:max-w-full">
+    <div className="flex flex-col mt-10 w-full max-md:max-w-full">
+      <div className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900 max-md:max-w-full">
         Thông tin cơ bản
       </div>
-      <div className="flex flex-wrap gap-10 items-start mt-6 w-full max-md:max-w-full">
-        {/* {basicInfo.map((info, index) => (
-          <BasicInfoItem key={index} label={info.label} value={info.value} />
-        ))} */}
-        <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+      <div className="flex flex-col justify-center max-md:max-w-full mt-6">
           <label
             htmlFor="CourseName"
             className="text-neutral-900 text-opacity-50 max-md:max-w-full"
           >
             Tên khoá học
           </label>
-          <div className="flex relative gap-2.5 items-start px-2.5 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
+          <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
             <input
               disabled={
                 !role?.RolePermissions?.includes("course_edit") &&
@@ -51,21 +47,26 @@ export function CourseInfo({
             />
           </div>
         </div>
-        <div className="flex flex-col min-w-[240px] w-[400px]">
+      <div className="grid grid-cols-2 max-md:grid-cols-1 gap-10 items-start mt-6 w-full max-md:max-w-full">
+        {/* {basicInfo.map((info, index) => (
+          <BasicInfoItem key={index} label={info.label} value={info.value} />
+        ))} */}
+        
+        <div className="flex flex-col ">
           <label
             htmlFor="CourseCatogory"
             className="text-neutral-900 text-opacity-50 max-md:max-w-full"
           >
             Danh mục
           </label>
-          <div className="flex relativen min-w-[240px] w-[400px] gap-2.5 items-start px-2.5 py-3 mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
+          <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
             <select
               disabled={
                 !role?.RolePermissions?.includes("course_edit") &&
                 !role?.RolePermissions?.includes("course_only")
               }
               id="CourseCatogory"
-              value={data?.CourseCatogory}
+              value={data?.CourseCatogory || ""}
               onChange={(e) => handleInputChange(e)} // Kích hoạt hàm onChange khi chọn
               className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
             >
@@ -76,7 +77,6 @@ export function CourseInfo({
                     key={index}
                     value={option._id}
                     disabled={option.disabled}
-                    selected={option._id === data.category._id}
                   >
                     {option.CategoryName}
                   </option>
@@ -84,21 +84,21 @@ export function CourseInfo({
             </select>
           </div>
         </div>
-        <div className="flex flex-col min-w-[240px] w-[400px]">
+        <div className="flex flex-col ">
           <label
             htmlFor="CourseIntructor"
             className="text-neutral-900 text-opacity-50 max-md:max-w-full"
           >
             Giảng viên
           </label>
-          <div className="flex relativen w-full gap-2.5 items-start px-2.5 py-3 mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
+          <div className="flex relativen w-full gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
             <select
               disabled={
                 !role?.RolePermissions?.includes("course_edit") &&
                 !role?.RolePermissions?.includes("course_only")
               }
               id="CourseIntructor"
-              value={data?.CourseIntructor}
+              value={data?.CourseIntructor || ""}
               onChange={(e) => handleInputChange(e)} // Kích hoạt hàm onChange khi chọn
               className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
             >
@@ -109,7 +109,6 @@ export function CourseInfo({
                     key={index}
                     value={option._id}
                     disabled={option.disabled}
-                    selected={option._id === data.intructor?._id}
                   >
                     {option.AdminFullName}
                   </option>
@@ -118,7 +117,8 @@ export function CourseInfo({
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-10 items-start mt-6 w-full text-xl font-medium leading-none max-md:max-w-full">
+      <div className="grid grid-cols-2 max-md:grid-cols-1 gap-10 items-start mt-6 w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none max-md:max-w-full">
+      <div className="flex justify-between gap-5 items-center w-full max-md:max-w-full">
         <StatItem
           disabled={
             !role?.RolePermissions?.includes("course_edit") &&
@@ -141,8 +141,10 @@ export function CourseInfo({
           type="input"
           handleInputChange={handleInputChange}
         />
+        </div>
+        <div className="grid grid-cols-2 justify-between gap-5 items-center w-full max-md:max-w-full">
         <div
-          className={`flex flex-col grow shrink "h-[91px]" min-w-[240px] w-[240px]`}
+          className={`flex flex-col grow shrink self-center`}
         >
           <div className="text-neutral-900 text-opacity-50">Trạng thái</div>
           {data?.CourseStatus === 1 ? (
@@ -152,9 +154,9 @@ export function CourseInfo({
                 !role?.RolePermissions?.includes("course_only")
               }
               onClick={handleToggle}
-              className="flex mt-3 gap-3 justify-center items-center px-3 py-[20px] min-w-[300px] bg-lime-300 min-h-[40px] rounded-[99px]"
+              className="flex mt-3 gap-3 justify-center items-center px-3 mb-3 bg-[#D1F669]  rounded-[99px]"
             >
-              <div className="gap-2.5 self-stretch my-auto">Đang hoạt động</div>
+              <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem] bg-[#D1F669] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">Đang hoạt động</div>
             </button>
           ) : (
             <button
@@ -163,25 +165,26 @@ export function CourseInfo({
                 !role?.RolePermissions?.includes("course_only")
               }
               onClick={handleToggle}
-              className="flex mt-3 gap-3 justify-center items-center px-3.5 py-[20px] min-w-[300px] bg-[#FFD75B] min-h-[40px] rounded-[99px]"
+              className="flex mt-6 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]"
             >
-              <div className="gap-2.5 self-stretch my-auto">Tạm dừng</div>
+              <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem]  bg-[#FFD75B] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">Tạm dừng</div>
             </button>
           )}
         </div>
 
         <div
-          className={`flex flex-col grow shrink "h-[91px]" min-w-[240px] w-[237px]`}
+          className={`flex flex-col grow shrink`}
         >
           <div className="text-neutral-900 text-opacity-50">Đánh giá</div>
-          <div className="flex mt-3 gap-3 justify-center items-center px-3 py-[20px] min-w-[300px] bg-amber-300 min-h-[40px] rounded-[99px]">
-            <div className="gap-2.5 self-stretch my-auto">{voteAve}</div>
+          <div className="flex mt-3 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]">
+            <div className="justify-center items-center text-center w-full px-[0.75rem] py-[0.75rem] bg-[#FFD75B]  rounded-[99px] my-auto">{voteAve}</div>
           </div>
+        </div>
         </div>
       </div>
       <button
         onClick={() => setShowMore(!showMore)} // Toggle hiển thị thêm
-        className="flex gap-3 justify-center items-center self-start px-3 py-3 mt-6 text-xl font-medium leading-none text-white rounded-lg bg-[#6C8299] min-h-[46px]"
+        className="flex gap-3 justify-center items-center self-start px-3 py-[1rem] max-md:py-[0.75rem] mt-6 md:text-[1.25rem] text-[1rem]  font-medium leading-none text-white rounded-lg bg-[#6C8299] min-h-[46px]"
       >
         <img
           loading="lazy"
@@ -246,7 +249,7 @@ function StatItem({ disabled, id, label, value, type, handleInputChange }) {
             type="text"
             value={value}
             onChange={handleInputChange}
-            className="w-full mt-3 px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 h-[63px] focus:ring-blue-500"
+            className="w-full mt-3 px-3 py-[1rem] max-md:py-[0.75rem] border border-gray-300 rounded-lg focus:outline-none focus:ring-2  focus:ring-blue-500"
           />
         );
       default:
@@ -260,11 +263,11 @@ function StatItem({ disabled, id, label, value, type, handleInputChange }) {
 
   return (
     <div
-      className={`flex flex-col grow shrink ${
-        type === "input" ? "min-h-[91px]" : "h-[91px]"
-      } min-w-[240px] ${type === "rating" ? "w-[131px]" : "w-[240px]"}`}
+      className="flex flex-col grow shrink"
     >
-      <div className="text-neutral-900 text-opacity-50">{label}</div>
+      <label htmlFor={id} className="text-neutral-900 text-opacity-50">
+        {label}
+      </label>
       {renderValue()}
     </div>
   );
@@ -273,7 +276,9 @@ function StatItem({ disabled, id, label, value, type, handleInputChange }) {
 function EditableDetail({ disabled, id, title, value, onChange, editorRef }) {
   return (
     <div className="mt-6">
-      <h3 className="text-xl font-semibold text-neutral-900">{title}</h3>
+      <h3 className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900">
+        {title}
+      </h3>
       <Editor
         disabled={disabled}
         id={id}
@@ -282,7 +287,7 @@ function EditableDetail({ disabled, id, title, value, onChange, editorRef }) {
         value={value} // Giá trị hiện tại
         onEditorChange={(content, editor) => onChange(editor)} // Hàm xử lý khi nội dung thay đổi
         init={{
-          height: 400, // Chiều cao của editor
+          height: 250, // Chiều cao của editor
           menubar: false, // Ẩn thanh menu
           plugins: [
             "advlist",

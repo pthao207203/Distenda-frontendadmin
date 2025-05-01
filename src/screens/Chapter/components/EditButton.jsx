@@ -9,7 +9,7 @@ export default function EditButton({ onClick, role }) {
           )
         }
         onClick={onClick}
-        className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[46px] ${
+        className={`flex gap-3 justify-center items-center self-stretch md:p-3 max-md:p-2 my-auto rounded-lg ${
           role?.RolePermissions?.includes("course_edit") ||
           role?.RolePermissions?.includes("course_only")
             ? "bg-[#6C8299] hover:bg-[#55657a]"

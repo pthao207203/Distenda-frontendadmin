@@ -13,34 +13,34 @@ function CourseTableHeader() {
   };
 
   return (
-    <div className="flex shrink overflow-hidden w-full rounded-t-3xl mt-3 bg-[#6C8299] min-h-[70px] max-md:max-w-full">
+    <div className="flex shrink overflow-hidden w-full rounded-t-3xl mt-3 bg-[#6C8299] min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:max-w-full">
       {/* Mã khóa học */}
-      <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
+      <div className="flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center bg-[#EBF1F9]">
         <span className="text-center">Tên khóa học</span>
       </div>
 
       {/* Tên khóa */}
-      <div className="flex basis-1/6 min-w-0 justify-center items-center text-white">
+      <div className="flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center text-white">
         <span className="text-center">Giảng viên</span>
       </div>
 
       {/* Đã bán */}
-      <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
+      <div className="flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center bg-[#EBF1F9]">
         <span className="text-center">Đã bán</span>
       </div>
 
       {/* Giá */}
-      <div className="flex basis-1/6 min-w-0 justify-center items-center text-white">
+      <div className="flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center text-white">
         <span className="text-center">Giá</span>
       </div>
 
       {/* Lợi nhuận */}
-      <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
+      <div className="flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center bg-[#EBF1F9]">
         <span className="text-center">Lợi nhuận</span>
       </div>
 
       {/* Dropdown Trạng thái */}
-      <div className="relative flex basis-1/6 min-w-0 justify-center items-center text-white">
+      <div className="relative flex basis-1/6 min-w-0 px-[0.25rem] justify-center items-center text-white">
         {/* Nút dropdown */}
         <button
           className="flex items-center gap-2 text-center"
