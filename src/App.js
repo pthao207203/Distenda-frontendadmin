@@ -53,15 +53,12 @@ function App() {
     }
   };
   useEffect(() => {
-    console.log("vaof")
     // Giả sử bạn lấy link favicon từ API hoặc database
     const fetchFavicon = async () => {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/auth/setting`, {
         method: 'GET',
       });
-      // console.log("response", response)
       const data = await response.json();
-      // console.log("data", data)
       updateFavicon(data.WebsiteIcon); // Cập nhật favicon từ API
     };
 

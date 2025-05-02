@@ -6,7 +6,7 @@ import { useRole } from "../../layouts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 function CourseCreationPage() {
-  const { role } = useRole();
+  const { role, user } = useRole();
   const navigate = useNavigate();
   useEffect(() => {
     if (
@@ -22,7 +22,7 @@ function CourseCreationPage() {
     <div className="flex overflow-hidden flex-col bg-[#EBF1F9]">
       {/* <Header /> */}
       {/* <NavigationBar /> */}
-      <CourseForm />
+      <CourseForm role={role} user={user} />
     </div>
   );
 }

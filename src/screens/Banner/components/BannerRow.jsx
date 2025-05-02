@@ -42,9 +42,9 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
       <div className="flex basis-1/4 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem] min-h-[3.75rem] max-md:min-h-[2.75rem]  max-md:max-w-full">
         {/* Nút Sửa */}
         <button
-          disabled={!role?.role?.RolePermissions?.includes("banner_edit")}
+          disabled={!role?.RolePermissions?.includes("banner_edit")}
           className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem] rounded-[99px] ${
-            role?.role?.RolePermissions?.includes("banner_edit")
+            role?.RolePermissions?.includes("banner_edit")
               ? "bg-[#D1F669] hover:bg-[#a3e635]"
               : "bg-[#f0ffc7] cursor-not-allowed"
           }`}
@@ -57,11 +57,11 @@ function BannerRow({ id, index, name, linkedCourse, role }) {
 
         {/* Nút Ẩn/Bỏ Ẩn */}
         <button
-          disabled={!role?.role?.RolePermissions?.includes("banner_edit")}
+          disabled={!role?.RolePermissions?.includes("banner_edit")}
           className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem]  ${
             isHidden ? "bg-gray-300" : "bg-[#FFD75B]"
           } basis-0 rounded-[99px] ${
-            role?.role?.RolePermissions?.includes("banner_edit")
+            role?.RolePermissions?.includes("banner_edit")
               ? isHidden
                 ? "bg-[#d1d5db] hover:bg-[#a7b4c8"
                 : "bg-[#FFD75B] hover:bg-[#ffd042]"

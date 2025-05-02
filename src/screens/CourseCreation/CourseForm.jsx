@@ -12,7 +12,7 @@ import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import Loading from "../../components/Loading";
 
-function CourseForm() {
+function CourseForm({ role, user }) {
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
   const [data, setData] = useState({});
@@ -51,13 +51,21 @@ function CourseForm() {
       setLoading(false);
       // console.log(result)
       if (result) {
+        if (role?.RolePermissions?.includes("course_create")) {
+          setIntructor((prevRoles) => [
+            { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
+            ...result.intructors,
+          ]);
+        } else {
+          setIntructor((prevRoles) => [
+            { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
+            { _id: user._id, AdminFullName: user.AdminFullName },
+          ]);
+        }
+
         setCategory((prevRoles) => [
           { _id: "", CategoryName: "Chọn danh mục", disabled: true },
           ...result.categories,
-        ]);
-        setIntructor((prevRoles) => [
-          { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
-          ...result.intructors,
         ]);
       }
     }

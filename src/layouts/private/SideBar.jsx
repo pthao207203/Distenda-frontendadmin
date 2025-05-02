@@ -57,7 +57,7 @@ export default function SideBar({ headerHeight }) {
           label: "Tin nhắn",
         },
         (role?.RolePermissions?.includes("course_view") ||
-          role?.role?.RolePermissions?.includes("course_only")) && {
+          role?.RolePermissions?.includes("course_only")) && {
           link: "/courses",
           icon: "/icons/document.svg",
           label: "Khóa học",
