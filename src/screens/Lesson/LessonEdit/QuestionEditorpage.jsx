@@ -156,7 +156,7 @@ function QuestionEditor() {
     return (
       <>
         <Helmet>
-          <title>Thêm banner</title>
+          <title>Thêm bài tập</title>
         </Helmet>
         {loadingPopup && <PopupLoading />}
         <div className="flex flex-col px-16 pt-16 pb-40 bg-white md:text-[1.25rem] text-[1rem]  font-medium max-md:px-5 max-md:pb-24">

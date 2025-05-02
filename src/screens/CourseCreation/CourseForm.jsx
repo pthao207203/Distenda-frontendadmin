@@ -44,9 +44,7 @@ function CourseForm({ role, user, setLoadingPopup, setLoading }) {
   useEffect(() => {
     async function fetchData() {
       // console.log("vaof")
-      setLoading(true);
       const result = await courseCreateController(setLoading);
-      setLoading(false);
       // console.log(result)
       if (result) {
         if (role?.RolePermissions?.includes("course_create")) {
@@ -57,7 +55,7 @@ function CourseForm({ role, user, setLoadingPopup, setLoading }) {
         } else {
           setIntructor((prevRoles) => [
             { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
-            { _id: user._id, AdminFullName: user.AdminFullName },
+            { _id: user?._id, AdminFullName: user?.AdminFullName },
           ]);
         }
 
@@ -70,7 +68,7 @@ function CourseForm({ role, user, setLoadingPopup, setLoading }) {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [role]);
 
   const handleSubmit = async () => {
     setLoadingPopup(true);
