@@ -10,8 +10,8 @@ export default function PermissionHeader({ roles, setSelectedRoles }) {
     );
   };
   return (
-    <div className="flex w-full basic-4 justify-between basic-4 items-center text-[20px] font-bold leading-none bg-[#EBF1F9] min-h-[70px] text-neutral-900 max-md:min-w-[600px]">
-      <div className="flex flex-1 justify-center items-center max-md:px-[4px] bg-[#6C8299] basic-full text-white max-md:min-h-[90px] min-h-[70px] min-w-[120px]">
+    <div className="flex overflow-hidden w-full mt-[1.25rem] bg-[#EBF1F9] min-h-[3.75rem] max-md:min-h-[2.75rem]">
+      <div className="flex basis-1/5 min-w-0 justify-center items-center text-white bg-[#6C8299]">
         <div className="gap-2.5 self-stretch my-auto">Quyền</div>
       </div>
       {roles.map((role, index) => {
@@ -30,9 +30,9 @@ export default function PermissionHeader({ roles, setSelectedRoles }) {
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/ce9d43b270ae41158192dec03af70a1a/6be2a4d09c558667270ec256fe0af0140bf78c959a9235fca9e3ef9efb4b3cad?apiKey=7a79403a23cb489f853e4845c47ede19&"
               alt={`${role.RoleName} icon`}
-              className="object-contain shrink-0 self-stretch my-auto aspect-square w-[30px]"
+              className="object-contain shrink-0 self-stretch my-auto aspect-square w-[2rem]"
             />
-            <div className="gap-2.5 self-stretch my-auto">{role.RoleName}</div>
+            <div className="gap-2.5 self-stretch my-auto truncate">{role.RoleName}</div>
           </div>
         );
       })}

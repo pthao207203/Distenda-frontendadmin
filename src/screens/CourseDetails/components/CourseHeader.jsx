@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { courseUpdatePostController } from "../../../controllers/course.controller";
+import {
+  courseUpdatePostController,
+  courseDeleteController,
+} from "../../../controllers/course.controller";
 
 import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
@@ -37,7 +40,6 @@ export function CourseHeader({ data, handleSubmit, role }) {
 
   const confirmAction = async () => {
     setPopupVisible(false);
-    //
     if (action === "update") {
       setLoading(true);
       const newData = await handleSubmit();
@@ -53,6 +55,8 @@ export function CourseHeader({ data, handleSubmit, role }) {
       } else {
         setErrorPopupVisible(true);
       }
+    } else if (action === "delete") {
+      await courseDeleteController(data._id);
     }
   };
 

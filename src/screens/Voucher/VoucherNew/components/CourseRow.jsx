@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const CourseRow = ({ id, index, course }) => {
-    const navigate = useNavigate();
     const [isHidden, setIsHidden] = useState(false);
 
-    const { category, name, sold, price, profit, status } = course;
+    const { category, name, sold, price, status } = course;
 
     // const handleEdit = () => {
     //     navigate(`/course/edit/${id}`);

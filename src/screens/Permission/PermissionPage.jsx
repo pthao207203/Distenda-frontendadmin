@@ -128,43 +128,40 @@ export default function PermissionTable() {
       <Helmet>
         <title>Phân quyền</title>
       </Helmet>
-      <div className="flex flex-col flex-1 px-16 py-5 bg-white basis-0 max-md:px-[5px]  w-full max-md:min-w-[600px]">
+      <div className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <ActionButtons
           selectedRoles={selectedRoles}
           permissions={formattedPermissions}
           role={role}
         />
 
-        <div className="mt-6">
-          <PermissionHeader roles={roles} setSelectedRoles={setSelectedRoles} />
-
-          {permissionGroups.map((group, index) => (
-            <div
-              key={index}
-              className="mt-4 justify-between w-full items-center "
-            >
-              <div className="text-xl font-semibold leading-none text-[#14375F]">
-                {group.title}
-              </div>
-              <div className="flex flex-col justify-center mt-2 w-full max-md:w-screen">
-                {group.permissions.map((permission, pIndex) => (
-                  <>
-                    {permission !== "" && (
-                      <PermissionRow
-                        key={pIndex}
-                        index={pIndex}
-                        permission={permission}
-                        isFirst={pIndex === 0}
-                        roles={Object.values(roles)}
-                        onPermissionChange={handlePermissionChange}
-                      />
-                    )}
-                  </>
-                ))}
-              </div>
+        <PermissionHeader roles={roles} setSelectedRoles={setSelectedRoles} />
+        {permissionGroups.map((group, index) => (
+          <div
+            key={index}
+            className="flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#171717] min-h-[3.75rem] cursor-pointer"
+          >
+            <div className="text-xl font-semibold leading-none text-[#14375F]">
+              {group.title}
             </div>
-          ))}
-        </div>
+            <div className="flex flex-col justify-center w-full max-md:w-screen">
+              {group.permissions.map((permission, pIndex) => (
+                <>
+                  {permission !== "" && (
+                    <PermissionRow
+                      key={pIndex}
+                      index={pIndex}
+                      permission={permission}
+                      isFirst={pIndex === 0}
+                      roles={Object.values(roles)}
+                      onPermissionChange={handlePermissionChange}
+                    />
+                  )}
+                </>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

@@ -7,8 +7,8 @@ export default function SideBar({ headerHeight }) {
   const [isOpen, setIsOpen] = useState(false); // Quản lý trạng thái mở/đóng sidebar
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024); // Kiểm tra xem có phải desktop hay không
   const location = useLocation(); // Lấy đường dẫn hiện tại
-  const { role } = useRole();
-  console.log(role);
+  const { role, user } = useRole();
+  console.log("user", role);
 
   const [data, setData] = useState();
 
@@ -127,11 +127,7 @@ export default function SideBar({ headerHeight }) {
         <div className="flex gap-4 justify-start items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
           <img
             loading="lazy"
-            src={
-              data?.setting?.user?.AdminAvatar
-                ? data.setting.user.AdminAvatar
-                : "/profile.svg"
-            }
+            src={user?.AdminFullName ? user.AdminAvatar : "/profile.svg"}
             alt="Profile"
             className="rounded-full object-cover  w-[3rem] h-[3rem] max-md:w-[2.5rem] max-md:h-[2.5rem]"
           />
@@ -140,12 +136,10 @@ export default function SideBar({ headerHeight }) {
               className="mb-1 font-semibold shrink"
               style={{ fontSize: "1.5rem", color: "black" }}
             >
-              {data?.setting?.user?.AdminFullName?.split(" ")
-                .slice(-2)
-                .join(" ")}
+              {user?.AdminFullName?.split(" ").slice(-2).join(" ")}
             </h4>
             <h4 className="font-medium md:text-[1.125rem] text-[1rem] text-black">
-              {data?.role?.RoleName || "Không có vai trò"}
+              {role?.RoleName || "Không có vai trò"}
             </h4>
           </div>
         </div>
