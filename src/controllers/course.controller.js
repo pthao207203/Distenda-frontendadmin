@@ -1,5 +1,16 @@
 import { coursesService, courseDetailService, courseUpdatePostService, courseCreateService, courseCreatePostService, courseDeleteService } from '../services/course.service';
 
+export async function courseGetAllController() {
+  try {
+    const result = await coursesService(); // Gọi API lấy danh sách khoá học
+    console.log("✅ courseGetAllController result:", result);
+    return result;
+  } catch (err) {
+    console.error("❌ courseGetAllController error:", err);
+    return null;
+  }
+}
+
 export async function coursesController(setLoading) {
   try {
     setLoading(true); // Đang tải

@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { voucherCreatePostController } from "../../../../controllers/voucher.controller.js";
+import { courseGetAllController } from "../../../../controllers/course.controller.js";
 import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../../components/PopupSuccess";
 import { PopupError } from "../../../../components/PopupError";
 
 const VoucherInfo = () => {
   const navigate = useNavigate();
-  const [voucher, setVoucher] = useState();
+  const [voucher, setVoucher] = useState({});
+  const [course, setCourse] = useState([]);
+
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+
+  useEffect(() => {
+    async function fetchCourses() {
+      const result = await courseGetAllController();
+      if (result) {
+        setCourse([
+          { _id: "", CourseName: "Chọn khoá học", disabled: true },
+          ...result,
+        ]);
+      }
+    }
+    fetchCourses();
+  }, []);
 
   const handleChange = (field, value) => {
     setVoucher((prev) => ({
@@ -22,11 +38,24 @@ const VoucherInfo = () => {
 
   const handleAction = async (action) => {
     if (action === "save") {
-      const result = await voucherCreatePostController(voucher);
-      if (result?.code === 200) {
-        setSuccessPopupVisible(true);
-        navigate("/voucher", { state: { newVoucher: result.voucher } }); // Chuyển hướng và gửi voucher mới
-      } else {
+      const payload = {
+        voucherCode: voucher?.voucherCode,
+        discountPercentage: Number(voucher?.discountPercentage),
+        minAmount: Number(voucher?.minAmount),
+        discountAmount: Number(voucher?.discountAmount),
+        courseId: voucher?.VoucherCourse,
+      };
+
+      try {
+        const result = await voucherCreatePostController(payload);
+        if (result?.code === 200) {
+          setSuccessPopupVisible(true);
+          navigate("/voucher", { state: { newVoucher: result.voucher } });
+        } else {
+          setErrorPopupVisible(true);
+        }
+      } catch (err) {
+        console.error("❌ API Error:", err);
         setErrorPopupVisible(true);
       }
     } else if (action === "cancel") {
@@ -70,6 +99,7 @@ const VoucherInfo = () => {
 
       <div className="flex flex-col mt-[2.5rem] w-full text-xl max-md:max-w-full">
         <h3 className="font-semibold text-[#171717] max-md:max-w-full">Thông tin voucher</h3>
+
         <div className="flex flex-col mt-[1.5rem] w-full font-medium leading-none max-md:max-w-full">
           <div className="flex flex-wrap gap-[4rem] items-start w-full">
             <FormField
@@ -95,6 +125,34 @@ const VoucherInfo = () => {
               value={voucher?.discountAmount}
               onChange={(val) => handleChange("discountAmount", val)}
             />
+          </div>
+
+          {/* Chọn khoá học */}
+          <div className="flex flex-col mt-6 w-full max-md:max-w-full">
+            <label
+              htmlFor="VoucherCourse"
+              className="text-[#13131380] pb-2"
+            >
+              Khoá học
+            </label>
+            <div className="flex items-start px-2.5 py-4 mt-2 w-full rounded-lg border border-slate-500 border-opacity-80 text-[#131313]">
+              <select
+                id="VoucherCourse"
+                value={voucher?.VoucherCourse || ""}
+                onChange={(e) => handleChange("VoucherCourse", e.target.value)}
+                className="flex-1 bg-transparent border-none outline-none"
+              >
+                {course.map((option, index) => (
+                  <option
+                    key={index}
+                    value={option._id}
+                    disabled={option.disabled}
+                  >
+                    {option.CourseName}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>
