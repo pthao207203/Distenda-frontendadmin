@@ -1,111 +1,130 @@
-import { vouchersService, voucherCreateService, voucherCreatePostService, voucherUpdateService, voucherUpdatePostService, voucherDeleteService } from '../services/voucher.service';
-import axios from 'axios';
+import {
+  vouchersService,
+  voucherCreateService,
+  voucherCreatePostService,
+  voucherUpdateService,
+  voucherUpdatePostService,
+  voucherDeleteService,
+} from "../services/voucher.service";
+import axios from "axios";
 
 // Lấy chi tiết voucher theo ID
 export const getVoucherDetail = async (setLoading, id) => {
   try {
-    const res = await axios.get(`/admin/voucher/detail/${id}`);  // Đảm bảo đường dẫn đúng
+    const res = await axios.get(`/admin/voucher/detail/${id}`);
     return res.data;
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi getVoucherDetail:", err);
     return null;
   } finally {
     setLoading(false);
   }
 };
 
-// Cập nhật voucher theo ID
+// Cập nhật voucher theo ID (POST)
 export const updateVoucherPost = async (setLoading, id, data) => {
   try {
     setLoading(true);
-    const res = await axios.post(`/admin/voucher/edit/${id}`, data);  // Cập nhật đúng URL
+    const sanitizedData = {
+      ...data,
+      courseIds: Array.isArray(data.courseIds)
+        ? data.courseIds.map((id) => String(id))
+        : [],
+    };
+    const res = await axios.post(`/admin/voucher/edit/${id}`, sanitizedData);
     return res.data;
   } catch (err) {
-    console.error(err);
-    return { code: 500 };  // Trả về mã lỗi 500 nếu có lỗi
+    console.error("Lỗi updateVoucherPost:", err);
+    return { code: 500 };
   } finally {
     setLoading(false);
   }
 };
 
-// Lấy tất cả vouchers
+// Lấy danh sách voucher
 export async function vouchersController(setLoading) {
   try {
     setLoading(true);
-    const result = await vouchersService();  // Gọi API để lấy dữ liệu
-    console.log("API response:", result);
-
-    // Lọc bỏ voucher bị xóa
-    const activeVouchers = result.filter(voucher => {
-      return voucher.status === 1 && !voucher.isDeleted;
-    });
-
-    console.log("Danh sách voucher hợp lệ:", activeVouchers);
+    const result = await vouchersService();
+    const activeVouchers = result.filter(
+      (voucher) => voucher.status === 1 && voucher.VoucherDeleted !== 0
+    );
     setLoading(false);
     return activeVouchers;
   } catch (err) {
-    console.error("Lỗi khi gọi API:", err);
+    console.error("Lỗi vouchersController:", err);
     setLoading(false);
-    return [];  // Trả về mảng rỗng nếu lỗi
+    return [];
   }
 }
 
-
-// Tạo voucher
+// Lấy dữ liệu tạo voucher
 export async function voucherCreateController(setLoading) {
   try {
     setLoading(true);
-    const result = await voucherCreateService();  // Gọi API tạo voucher
-    console.log("result voucher ", result);
+    const result = await voucherCreateService();
     setLoading(false);
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi voucherCreateController:", err);
     setLoading(false);
   }
 }
 
-// Tạo voucher qua POST
+// Gửi POST tạo mới voucher
 export async function voucherCreatePostController(data) {
   try {
-    console.log("Dữ liệu gửi lên:", data);  // In dữ liệu gửi lên
-    const result = await voucherCreatePostService(data);  // Gọi API tạo voucher
-    console.log("Phản hồi từ API tạo voucher:", result);
+    const sanitizedData = {
+      ...data,
+      courseIds: Array.isArray(data.courseIds)
+        ? data.courseIds.map((id) => String(id))
+        : [],
+    };
+    console.log("Gửi dữ liệu tạo voucher:", sanitizedData);
+    const result = await voucherCreatePostService(sanitizedData);
+    console.log("Kết quả tạo:", result);
     return result;
   } catch (err) {
-    console.error("Lỗi khi gọi API tạo voucher:", err);
+    console.error("Lỗi tạo voucher:", err);
+    return { code: 500, error: err.message };
   }
 }
 
-// Cập nhật voucher
+// Lấy thông tin voucher để cập nhật
 export async function voucherUpdateController(setLoading, id) {
   try {
     setLoading(true);
-    const result = await voucherUpdateService(id);  // Gọi API để cập nhật voucher
+    const result = await voucherUpdateService(id);
     setLoading(false);
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi voucherUpdateController:", err);
     setLoading(false);
   }
 }
 
-// Cập nhật voucher qua POST
+// POST cập nhật voucher
 export async function voucherUpdatePostController(id, data) {
   try {
-    const result = await voucherUpdatePostService(id, data);  // Gọi API cập nhật voucher
+    const sanitizedData = {
+      ...data,
+      courseIds: Array.isArray(data.courseIds)
+        ? data.courseIds.map((id) => String(id))
+        : [],
+    };
+    const result = await voucherUpdatePostService(id, sanitizedData);
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi khi cập nhật voucher:", err);
   }
 }
 
-// Xóa voucher
-export async function voucherDeleteController(id, data) {
+// Xóa voucher (POST cập nhật trạng thái)
+export async function voucherDeleteController(id, data = { status: 0 }) {
   try {
-    const result = await voucherDeleteService(id, data);  // Gọi API xóa voucher
+    const result = await voucherDeleteService(id, data);
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Lỗi xóa voucher:", err);
   }
 }
