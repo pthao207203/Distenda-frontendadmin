@@ -22,7 +22,7 @@ export function RoleProvider({ children }) {
 
     fetchData();
   }, []);
-
+  console.log("role", role?.RolePermissions);
   // Trả về RoleContext.Provider với các giá trị cần thiết
   return (
     <RoleContext.Provider value={{ role, setRole, user, setUser, loading }}>
