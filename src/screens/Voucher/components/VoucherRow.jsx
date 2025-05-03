@@ -58,7 +58,7 @@ const VoucherRow = ({ id, index, voucher, isDeleted = false }) => {
 
 // Component Cell tái sử dụng
 const Cell = ({ bg = "", content }) => (
-  <div className={`flex basis-1/6 min-w-0  min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center p-3 items-center ${bg}`}>
+  <div className={`flex basis-1/6 min-w-0 cursor-pointer min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center p-3 items-center ${bg}`}>
     <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
       {content}
     </span>
