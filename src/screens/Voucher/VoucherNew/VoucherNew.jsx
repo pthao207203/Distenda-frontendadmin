@@ -1,6 +1,5 @@
 import * as React from "react";
 import VoucherInfo from "./components/VoucherInfo";
-// import LinkedCourses from "./components/LinkedCourse";
 
 function VoucherNew() {
   return (

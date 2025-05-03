@@ -1,77 +1,114 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PopupConfirm } from "../../../../components/PopupConfirm";
 import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
-import { voucherUpdatePostService, voucherDeleteService } from "../../../../services/voucher.service";
+import {
+  voucherUpdatePostService,
+  voucherDeleteService,
+  voucherDetailService,
+} from "../../../../services/voucher.service";
+import { courseGetAllController } from "../../../../controllers/course.controller";
 
-const VoucherInfoUpdate = ({
-    voucher
-  }) => {
-    const navigate = useNavigate();
-    const [popupType, setPopupType] = useState(null);
-    const [voucherData, setVoucherData] = useState({
-      voucherCode: voucher.voucherCode,
-      discountPercentage: voucher.discountPercentage,
-      minAmount: voucher.minAmount,
-      discountAmount: voucher.discountAmount,
-    });
+const VoucherInfoUpdate = ({ voucher }) => {
+  const navigate = useNavigate();
+  const [popupType, setPopupType] = useState(null);
+  const [voucherData, setVoucherData] = useState({
+    voucherCode: voucher.voucherCode || "",
+    discountPercentage: voucher.discountPercentage || "",
+    minAmount: voucher.minAmount || "",
+    discountAmount: voucher.discountAmount || "",
+    courseIds:
+      voucher.courseIds?.map((c) => (typeof c === "object" ? c._id : c)) || [],
+  });
 
-    const [loading, setLoading] = useState(false);
+  const [courseList, setCourseList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const handlePopup = (type) => {
-      setPopupType(type);
-    };
+  useEffect(() => {
+    async function fetchCourses() {
+      const result = await courseGetAllController();
+      if (result) setCourseList(result);
+    }
+    fetchCourses();
+  }, []);
 
-    const handleClosePopup = () => {
-      setPopupType(null);
-    };
+  const handlePopup = (type) => setPopupType(type);
+  const handleClosePopup = () => setPopupType(null);
 
-    const handleConfirm = async () => {
-      handleClosePopup();
-
-      if (popupType === "update") {
-        setLoading(true);
-        try {
-          const res = await voucherUpdatePostService(voucher._id, voucherData);
-          setLoading(false);
-          if (res.success) {
-            alert("Cập nhật voucher thành công!");
-          }
-        } catch (error) {
-          setLoading(false);
-          alert("Lỗi khi kết nối server!");
+  const handleConfirm = async () => {
+    handleClosePopup();
+    if (popupType === "update") {
+      setLoading(true);
+      try {
+        const res = await voucherUpdatePostService(voucher._id, {
+          ...voucherData,
+          courseIds: voucherData.courseIds.map((c) =>
+            typeof c === "object" ? c._id : c
+          ),
+        });
+        if (res.code === 200) {
+          alert("Cập nhật thành công!");
+          const updated = await voucherDetailService(voucher._id);
+          setVoucherData({
+            voucherCode: updated.voucherCode || "",
+            discountPercentage: updated.discountPercentage || "",
+            minAmount: updated.minAmount || "",
+            discountAmount: updated.discountAmount || "",
+            courseIds: updated.courseIds || [],
+          });
         }
+      } catch (err) {
+        alert("Lỗi cập nhật!");
+      } finally {
+        setLoading(false);
       }
+    }
 
-      if (popupType === "cancel") {
-        setLoading(true);
-        try {
-          const res = await voucherDeleteService(voucher._id);
-          setLoading(false);
-          if (res.code === 200) {
-            // Navigate to the voucher list page
-            navigate("/voucher", { state: { deletedVoucherId: voucher._id } });
-          }
-        } catch (error) {
-          setLoading(false);
-          alert("Lỗi khi kết nối server khi xóa!");
+    if (popupType === "cancel") {
+      setLoading(true);
+      try {
+        const res = await voucherDeleteService(voucher._id);
+        if (res.code === 200) {
+          navigate("/voucher");
         }
+      } catch (err) {
+        alert("Lỗi khi xoá!");
+      } finally {
+        setLoading(false);
       }
-    };
+    }
+  };
+
+  const handleSelectCourse = (e) => {
+    const selectedId = e.target.value;
+    if (
+      selectedId &&
+      !voucherData.courseIds.some(
+        (c) => (typeof c === "object" ? c._id : c) === selectedId
+      )
+    ) {
+      const courseObj = courseList.find((c) => c._id === selectedId);
+      if (courseObj) {
+        setVoucherData((prev) => ({
+          ...prev,
+          courseIds: [...prev.courseIds, courseObj],
+        }));
+      }
+    }
+  };
+
+  const handleRemoveCourse = (id) => {
+    setVoucherData((prev) => ({
+      ...prev,
+      courseIds: prev.courseIds.filter(
+        (c) => (typeof c === "object" ? c._id : c) !== id
+      ),
+    }));
+  };
 
   return (
     <section>
-      <div className="flex flex-wrap gap-2.5 items-center w-full max-md:max-w-full">
-        <div className="flex-1 shrink self-stretch my-auto basis-6 min-w-60 max-md:max-w-full">
-          <div className="flex flex-wrap gap-3 items-start w-full text-[1.125rem] max-md:text-[1rem] font-semibold text-[#13131380] max-md:max-w-full">
-            <p>Lần cuối cập nhật</p>
-            <span className="flex shrink-0 w-6 h-6" />
-          </div>
-          <p className="mt-4 text-[1.25rem] max-md:text-[1rem] font-medium text-neutral-900 max-md:max-w-full">
-            {voucher.lastUpdated}
-          </p>
-        </div>
-
+      <div className="flex gap-2 justify-end text-[1.25rem] max-md:text-[1rem] font-semibold text-white">
         <ActionButton
           label="Cập nhật"
           bgColor="bg-[#6C8299]"
@@ -86,28 +123,123 @@ const VoucherInfoUpdate = ({
         />
       </div>
 
-      <VoucherDetails voucherData={voucherData} setVoucherData={setVoucherData} />
+      <div className="flex flex-col mt-10 w-full text-[1.25rem] max-md:text-[1rem]">
+        <h3 className="font-semibold text-[#171717]">Thông tin voucher</h3>
 
-      {popupType === "update" && (
-        <PopupConfirm
-          isVisible={true}
-          content={loading ? "Đang cập nhật..." : "Bạn có chắc chắn muốn cập nhật voucher này?"}
-          onClose={handleClosePopup}
-          onConfirm={handleConfirm}
-        />
-      )}
+        <div className="flex flex-wrap gap-8 mt-6">
+          <FormField
+            label="Mã Voucher"
+            value={voucherData.voucherCode}
+            onChange={(val) =>
+              setVoucherData((prev) => ({ ...prev, voucherCode: val }))
+            }
+          />
+          <FormField
+            label="Giảm giá (%)"
+            value={voucherData.discountPercentage}
+            onChange={(val) =>
+              setVoucherData((prev) => ({
+                ...prev,
+                discountPercentage: val,
+              }))
+            }
+          />
+        </div>
+        <div className="flex flex-wrap gap-8 mt-6">
+          <FormField
+            label="Tối thiểu"
+            value={voucherData.minAmount}
+            onChange={(val) =>
+              setVoucherData((prev) => ({ ...prev, minAmount: val }))
+            }
+          />
+          <FormField
+            label="Giới hạn"
+            value={voucherData.discountAmount}
+            onChange={(val) =>
+              setVoucherData((prev) => ({ ...prev, discountAmount: val }))
+            }
+          />
+        </div>
 
-      {popupType === "cancel" && (
-        <PopupConfirmCancel
-          isVisible={true}
-          content={loading ? "Đang xóa..." : "Bạn có chắc chắn muốn xóa voucher này?"}
-          onClose={handleClosePopup}
-          onConfirm={handleConfirm}
-        />
-      )}
+        <div className="flex flex-col mt-6">
+          <label className="text-[#13131380] pb-2">Khoá học</label>
+          <select
+            onChange={handleSelectCourse}
+            value=""
+            className="px-4 py-3 border border-slate-500 rounded-lg"
+          >
+            <option value="" disabled>
+              Chọn khoá học
+            </option>
+            {courseList.map((course) => (
+              <option key={course._id} value={course._id}>
+                {course.CourseName}
+              </option>
+            ))}
+          </select>
+
+          <div className="flex-1 min-w-[15rem] max-w-[40rem] gap-[1.25rem] mt-4 flex flex-wrap">
+            {voucherData.courseIds.map((c, idx) => {
+              const course =
+                typeof c === "object"
+                  ? c
+                  : courseList.find((cs) => cs._id === c);
+              return (
+                <div
+                  key={idx}
+                  className="flex items-start justify-between gap-2 px-3 py-2 bg-[#6C8299] rounded-[1.25rem] shadow-md"
+                >
+                  <span className="text-[1.125rem] max-md:text-[1rem] text-white truncate">
+                    {course?.CourseName || "Không tìm thấy"}
+                  </span>
+                  <button
+                    onClick={() => handleRemoveCourse(course._id)}
+                    className="text-white font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <PopupConfirm
+        isVisible={popupType === "update"}
+        content={
+          loading ? "Đang cập nhật..." : "Bạn có muốn cập nhật voucher này?"
+        }
+        onClose={handleClosePopup}
+        onConfirm={handleConfirm}
+      />
+
+      <PopupConfirmCancel
+        isVisible={popupType === "cancel"}
+        content="Bạn có chắc chắn muốn xoá voucher này?"
+        onClose={handleClosePopup}
+        confirm="Xóa"
+        onConfirm={handleConfirm}
+        onCancel={handleClosePopup}
+      />
     </section>
   );
 };
+
+const FormField = ({ label, value, onChange }) => (
+  <div className="flex-1 min-w-[15rem] max-w-[40rem]">
+    <label className="text-[#13131380]">{label}</label>
+    <div className="mt-2">
+      <input
+        type="text"
+        value={value || ""}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full px-4 py-2 border rounded-lg bg-transparent outline-none"
+      />
+    </div>
+  </div>
+);
 
 const ActionButton = ({ label, bgColor, icon, onClick }) => {
   return (
@@ -123,49 +255,6 @@ const ActionButton = ({ label, bgColor, icon, onClick }) => {
       />
       <span className="gap-2.5 self-stretch my-auto">{label}</span>
     </button>
-  );
-};
-
-const VoucherDetails = ({ voucherData, setVoucherData }) => {
-  return (
-    <div className="flex flex-col leading-none min-w-[15rem] max-w-[25rem] w-full mt-10">
-      <h3 className="text-neutral-900 text-opacity-50 font-semibold">Thông tin voucher</h3>
-      <div className="flex flex-col leading-none mt-8">
-        <div className="flex flex-col gap-[2.5rem] w-full max-md:grid-cols-1">
-          <FormField label="Mã Voucher" name="voucherCode" value={voucherData.voucherCode} setVoucherData={setVoucherData} />
-          <FormField label="Giảm giá (%)" name="discountPercentage" value={voucherData.discountPercentage} setVoucherData={setVoucherData} />
-          <FormField label="Tối thiểu" name="minAmount" value={voucherData.minAmount} setVoucherData={setVoucherData} />
-          <FormField label="Giới hạn" name="discountAmount" value={voucherData.discountAmount} setVoucherData={setVoucherData} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FormField = ({
-  label,
-  name,
-  value,
-  setVoucherData
-}) => {
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setVoucherData(prev => ({
-      ...prev,
-      [name]: newValue
-    }));
-  };
-
-  return (
-    <div className="flex flex-col leading-none min-w-[15rem] max-w-[25rem] w-full">
-      <label className="text-neutral-900 text-opacity-50">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
-      />
-    </div>
   );
 };
 
