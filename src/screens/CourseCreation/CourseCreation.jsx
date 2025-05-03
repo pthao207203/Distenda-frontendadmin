@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import Header from './Header';
 // import NavigationBar from "./NavigationBar";
 import CourseForm from "./CourseForm";
 import { useRole } from "../../layouts/AppContext";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../components/PopupLoading";
+import Loading from "../../components/Loading";
 
 function CourseCreationPage() {
   const { role, user } = useRole();
+  const [loadingPopup, setLoadingPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (
@@ -18,12 +23,28 @@ function CourseCreationPage() {
       navigate("/courses");
     }
   }, [navigate, role]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="flex overflow-hidden flex-col bg-[#EBF1F9]">
-      {/* <Header /> */}
-      {/* <NavigationBar /> */}
-      <CourseForm role={role} user={user} />
-    </div>
+    <>
+      <Helmet>
+        <title>Thêm khoá học</title>
+      </Helmet>
+      {loadingPopup && <PopupLoading />}
+      <div className="flex overflow-hidden flex-col bg-[#EBF1F9]">
+        {/* <Header /> */}
+        {/* <NavigationBar /> */}
+        <CourseForm
+          role={role}
+          user={user}
+          setLoadingPopup={setLoadingPopup}
+          setLoading={setLoading}
+        />
+      </div>
+    </>
   );
 }
 

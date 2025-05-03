@@ -16,6 +16,8 @@ import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
 import AdminDetailHistory from "./components/AdminDetailHistory";
 import { useRole } from "../../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../../components/PopupLoading";
 
 function AdminDetailPage() {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ function AdminDetailPage() {
   console.log("ID from URL: ", AdminID);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
   const [roles, setRoles] = useState([]); // Mảng roles duy nhất
   const [action, setAction] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -58,6 +61,7 @@ function AdminDetailPage() {
   }
 
   const handleSubmit = async () => {
+    setLoadingPopup(true);
     let uploadedImageUrl = data.AdminAvatar;
     // Upload ảnh nếu người dùng đã chọn
     console.log("selectedFileName", selectedFileName);
@@ -72,6 +76,7 @@ function AdminDetailPage() {
 
     console.log("Data sent to ActionButton:", updatedData);
     setData(updatedData);
+    setLoadingPopup(false);
     return updatedData;
   };
 
@@ -118,25 +123,25 @@ function AdminDetailPage() {
     setPopupVisible(false);
     //
     if (action === "update") {
-      setLoading(true);
+      setLoadingPopup(true);
       const newData = await handleSubmit();
       console.log("newData", newData);
       const result = await adminUpdatePostController(data._id, newData);
-      setLoading(false);
+      setLoadingPopup(false);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
     } else {
-      setLoading(true);
+      setLoadingPopup(true);
       const result = await adminDeleteController(data._id);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
-      setLoading(false);
+      setLoadingPopup(false);
     }
   };
 
@@ -173,6 +178,10 @@ function AdminDetailPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Thêm banner</title>
+      </Helmet>
+      {loadingPopup && <PopupLoading />}
       <div className="flex overflow-hidden flex-col p-[4rem] bg-white min-h-screen max-md:px-[1.25rem]">
         <div className="flex flex-wrap gap-[2.5rem] items-start w-full max-md:max-w-full">
           {/* Thông tin giảng viên */}
@@ -191,13 +200,13 @@ function AdminDetailPage() {
               <div className="text-2xl font-semibold text-[#171717]">
                 {data?.AdminFullName ? data?.AdminFullName : "Null"}
               </div>
-              <div className="mt-3 text-lg font-medium text-[#171717] text-opacity-50">
+              <div className="mt-3 text-[1.125rem] max-md:text-[1rem] font-medium text-[#171717] text-opacity-50">
                 {data?.AdminEmail ? data.AdminEmail : "Null"}
               </div>
             </div>
           </div>
           {/* Nút hành động */}
-          <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[15rem]">
+          <div className="flex gap-2.5 items-center text-[1.25rem] max-md:text-[1rem] font-medium leading-none text-white min-w-[15rem]">
             <button
               disabled={!role?.RolePermissions?.includes("admin_edit")}
               className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
@@ -245,7 +254,7 @@ function AdminDetailPage() {
         />
 
         {/* Tiêu đề Khóa học */}
-        <div className="flex flex-col mt-[2.5rem] w-full text-xl text-[#171717] max-md:max-w-full">
+        <div className="flex flex-col mt-[2.5rem] w-full text-[1.25rem] max-md:text-[1rem] text-[#171717] max-md:max-w-full">
           <div className="flex flex-wrap gap-[1.5rem] items-start w-full max-md:max-w-full">
             <div className="font-semibold">Khóa học giảng viên</div>
             <div className="flex-1 shrink font-medium leading-none text-right basis-0 max-md:max-w-full">

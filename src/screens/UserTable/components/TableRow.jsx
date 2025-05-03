@@ -28,22 +28,22 @@ function TableRow(user) {
     >
       {/* Tên người dùng */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{user.UserFullName}</span>
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">{user.UserFullName}</span>
       </div>
 
       {/* Thời gian tham gia  */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{moment(user.createdAt).format("DD/MM/YYYY hh:mm:ss")}</span>
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">{moment(user.createdAt).format("DD/MM/YYYY hh:mm:ss")}</span>
       </div>
 
       {/* Chi tiêu */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{user.UserMoney}</span>
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">{user.UserMoney}</span>
       </div>
 
       {/* Lần cuối cập nhật */}
       <div className="flex basis-1/5 min-w-0 justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">{moment(user.createdAt).format("DD/MM/YYYY hh:mm:ss")}</span>
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">{moment(user.createdAt).format("DD/MM/YYYY hh:mm:ss")}</span>
       </div>
 
       {/* Trạng thái */}
@@ -53,7 +53,7 @@ function TableRow(user) {
             user.UserStatus
           )} min-h-[2.5rem] rounded-[6.25rem]`}
         >
-          <span className="text-center text-xl font-medium truncate">{getStatusText(user.UserStatus)}</span>
+          <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">{getStatusText(user.UserStatus)}</span>
         </div>
       </div>
     </Link>

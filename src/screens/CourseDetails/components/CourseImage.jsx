@@ -69,7 +69,7 @@ export function CourseImage({
           />
           <div className="flex flex-col self-stretch my-auto ">
             <div className="flex gap-3 items-center">
-              <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+              <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                 Lần cuối cập nhật
               </div>
               <button
@@ -101,7 +101,7 @@ export function CourseImage({
 function DateInfo({ label, date }) {
   return (
     <div className="flex flex-col self-stretch my-auto ">
-      <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+      <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
         {label}
       </div>
       <div className="mt-4 md:text-[1.25rem] text-[1rem]  font-medium text-neutral-900">{date}</div>

@@ -12,10 +12,10 @@ function PersonalInfo({data}) {
 
   return (
     <div className="flex flex-col mt-[2.5rem] w-full max-md:max-w-full">
-      <div className="text-xl font-semibold text-[#171717] max-md:max-w-full">
+      <div className="text-[1.25rem] max-md:text-[1rem] font-semibold text-[#171717] max-md:max-w-full">
         Thông tin cá nhân
       </div>
-      <div className="flex flex-col mt-[1.5rem] w-full text-lg max-md:max-w-full">
+      <div className="flex flex-col mt-[1.5rem] w-full text-[1.125rem] max-md:text-[1rem] max-md:max-w-full">
         <div className="flex flex-wrap gap-[0.5rem] items-start w-full max-md:max-w-full">
           {personalDetails.slice(0, 3).map((detail, index) => (
             <div key={index} className="flex flex-col min-w-[15rem] w-[16.875rem]">

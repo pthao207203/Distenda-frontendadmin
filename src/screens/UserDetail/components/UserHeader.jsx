@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import BlockUserModal from "./BlockUserModal";
-import Loading from "../../../components/Loading";
 import {
   userUnblockController,
   userBlockController,
 } from "../../../controllers/user.controller";
 
-function UserHeader({ data, role }) {
-  // State để kiểm soát hiển thị popup và trạng thái chặn người dùng
-  const [loading, setLoading] = useState(false);
+function UserHeader({ data, role, setLoadingPopup }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(!data?.UserStatus); // Trạng thái chặn người dùng
 
@@ -24,7 +21,7 @@ function UserHeader({ data, role }) {
 
   // Hàm xử lý khi xác nhận chặn người dùng
   const handleBlockUser = async () => {
-    const result = await userBlockController(setLoading, data._id);
+    const result = await userBlockController(setLoadingPopup, data._id);
     if (result.code === 200) {
       setIsBlocked(true); // Chuyển trạng thái thành "đã chặn"
       setIsPopupVisible(false); // Đóng popup
@@ -34,16 +31,12 @@ function UserHeader({ data, role }) {
   // Hàm xử lý khi xác nhận bỏ chặn người dùng
   const handleUnblockUser = async () => {
     // Gọi API đổi trạng thái
-    const result = await userUnblockController(setLoading, data._id);
+    const result = await userUnblockController(setLoadingPopup, data._id);
     if (result.code === 200) {
       setIsBlocked(false); // Chuyển trạng thái thành "không bị chặn"
       setIsPopupVisible(false); // Đóng popup
     }
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="flex flex-wrap gap-3 items-center w-full font-medium max-md:max-w-full">
@@ -57,7 +50,7 @@ function UserHeader({ data, role }) {
         alt="User profile avatar"
         className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[9rem]"
       />
-      <div className="flex flex-col flex-1 shrink items-start self-stretch my-auto text-lg basis-[1.5rem] min-w-[15rem] max-md:max-w-full">
+      <div className="flex flex-col flex-1 shrink items-start self-stretch my-auto text-[1.125rem] max-md:text-[1rem] basis-[1.5rem] min-w-[15rem] max-md:max-w-full">
         <div className="flex flex-col">
           <div className="text-2xl font-semibold text-[#171717]">
             {data.UserFullName}
@@ -80,7 +73,7 @@ function UserHeader({ data, role }) {
       {isBlocked ? (
         <button
           disabled={!role?.RolePermissions?.includes("user_edit")}
-          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap rounded-lg min-h-[2rem] ${
+          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-[1.25rem] max-md:text-[1rem] leading-none text-white whitespace-nowrap rounded-lg min-h-[2rem] ${
             role?.RolePermissions?.includes("user_edit")
               ? "bg-[#6C8299] hover:bg-[#55657a]"
               : "bg-[#CDD5DF] cursor-not-allowed"
@@ -98,7 +91,7 @@ function UserHeader({ data, role }) {
       ) : (
         <button
           disabled={!role?.RolePermissions?.includes("user_edit")}
-          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl leading-none text-white whitespace-nowrap rounded-lg min-h-[46px] ${
+          className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-[1.25rem] max-md:text-[1rem] leading-none text-white whitespace-nowrap rounded-lg min-h-[46px] ${
             role?.RolePermissions?.includes("user_edit")
               ? "bg-[#DF322B] hover:bg-[#902723]"
               : "bg-[#ffd1d1] cursor-not-allowed"

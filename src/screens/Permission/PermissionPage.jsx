@@ -6,6 +6,7 @@ import ActionButtons from "./components/ActionButton";
 import { rolesController } from "../../controllers/role.controller";
 import Loading from "../../components/Loading";
 import { useRole } from "../../layouts/AppContext";
+import { PopupLoading } from "../../components/PopupLoading";
 
 export default function PermissionTable() {
   const permissionGroups = [
@@ -73,6 +74,7 @@ export default function PermissionTable() {
 
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const { role } = useRole();
@@ -128,11 +130,13 @@ export default function PermissionTable() {
       <Helmet>
         <title>Phân quyền</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
+      {loadingPopup && <PopupLoading />}
+      <div className="flex flex-col flex-1 shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 max-md:px-[5px]  w-full max-md:min-w-[600px]">
         <ActionButtons
           selectedRoles={selectedRoles}
           permissions={formattedPermissions}
           role={role}
+          setLoadingPopup={setLoadingPopup}
         />
 
         <PermissionHeader roles={roles} setSelectedRoles={setSelectedRoles} />
@@ -141,7 +145,7 @@ export default function PermissionTable() {
             key={index}
             className="flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#171717] min-h-[3.75rem] cursor-pointer"
           >
-            <div className="text-xl font-semibold leading-none text-[#14375F]">
+            <div className="text-[1.25rem] max-md:text-[1rem] font-semibold leading-none text-[#14375F]">
               {group.title}
             </div>
             <div className="flex flex-col justify-center w-full max-md:w-screen">

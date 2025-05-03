@@ -5,7 +5,12 @@ import {
   rolesUpdateController,
 } from "../../../controllers/role.controller";
 
-export default function ActionButtons({ selectedRoles, permissions, role }) {
+export default function ActionButtons({
+  selectedRoles,
+  permissions,
+  role,
+  setLoadingPopup,
+}) {
   const [popupContent, setPopupContent] = useState(null); // Trạng thái quản lý nội dung popup
   const [isPopupVisible, setPopupVisible] = useState(false); // Trạng thái hiển thị popup xác nhận
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
@@ -36,12 +41,13 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
     try {
       let response;
       if (action === "delete") {
-        // Gọi API xóa
-        // console.log("selectedRoles", selectedRoles)
+        setLoadingPopup(true);
         response = await rolesDeleteController(selectedRoles);
+        setLoadingPopup(false);
       } else if (action === "update") {
-        // Gọi API cập nhật
+        setLoadingPopup(true);
         response = await rolesUpdateController(permissions);
+        setLoadingPopup(false);
       }
 
       if (!response.ok) {
@@ -79,7 +85,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
   return (
     <div className="flex flex-col items-start md:ml-[0.5rem]">
       {/* Các nút hành động */}
-      <div className="flex gap-[0.5rem] items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
+      <div className="flex gap-[0.5rem] items-start self-end text-[1.25rem] max-md:text-[1rem] font-semibold leading-none text-white max-md:max-w-full">
         <button
           disabled={!role?.RolePermissions?.includes("role_delete")}
           className={`flex gap-3 justify-center items-center px-3 py-3 whitespace-nowrap rounded-lg min-h-[46px] ${
@@ -113,7 +119,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[204px]">
+          <span className="gap-2.5 self-stretch my-auto">
             Thêm chức vụ
           </span>
         </button>
@@ -132,7 +138,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[96px]">
+          <span className="gap-2.5 self-stretch my-auto">
             Cập nhật
           </span>
         </button>
@@ -148,7 +154,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
                 className="object-contain shrink-0 my-auto w-14 aspect-square"
                 alt="Icon"
               />
-              <p className="mt-6 text-xl text-neutral-900 font-semibold text-center">
+              <p className="mt-6 text-[1.25rem] max-md:text-[1rem] text-neutral-900 font-semibold text-center">
                 {popupContent}
               </p>
               <div className="mt-4 flex gap-3 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
@@ -175,14 +181,14 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
           <div className="flex flex-col justify-center px-10 py-16 bg-white rounded-3xl w-[600px] font-medium">
             <div className="flex flex-col items-center w-full text-center">
-              <p className="text-xl font-semibold text-neutral-900 mb-4">
+              <p className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 mb-4">
                 Nhập chức vụ
               </p>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#6C8299]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-[1.125rem] max-md:text-[1rem] focus:outline-none focus:ring-2 focus:ring-[#6C8299]"
                 placeholder="Nhập chức vụ"
               />
               <div className="mt-6 flex gap-4 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
@@ -214,7 +220,7 @@ export default function ActionButtons({ selectedRoles, permissions, role }) {
                 className="object-contain shrink-0 my-auto w-14 aspect-square"
                 alt="Success icon"
               />
-              <p className="mt-6 text-xl text-neutral-900 font-semibold text-center">
+              <p className="mt-6 text-[1.25rem] max-md:text-[1rem] text-neutral-900 font-semibold text-center">
                 Cập nhật thành công!
               </p>
               <button

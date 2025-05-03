@@ -63,11 +63,11 @@ const VoucherInfoUpdate = ({
     <section>
       <div className="flex flex-wrap gap-2.5 items-center w-full max-md:max-w-full">
         <div className="flex-1 shrink self-stretch my-auto basis-6 min-w-60 max-md:max-w-full">
-          <div className="flex flex-wrap gap-3 items-start w-full text-lg font-semibold text-[#13131380] max-md:max-w-full">
+          <div className="flex flex-wrap gap-3 items-start w-full text-[1.125rem] max-md:text-[1rem] font-semibold text-[#13131380] max-md:max-w-full">
             <p>Lần cuối cập nhật</p>
             <span className="flex shrink-0 w-6 h-6" />
           </div>
-          <p className="mt-4 text-xl font-medium text-neutral-900 max-md:max-w-full">
+          <p className="mt-4 text-[1.25rem] max-md:text-[1rem] font-medium text-neutral-900 max-md:max-w-full">
             {voucher.lastUpdated}
           </p>
         </div>
@@ -112,7 +112,7 @@ const VoucherInfoUpdate = ({
 const ActionButton = ({ label, bgColor, icon, onClick }) => {
   return (
     <button
-      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl font-medium leading-none text-white rounded-lg ${bgColor} min-h-[46px]`}
+      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-[1.25rem] max-md:text-[1rem] font-medium leading-none text-white rounded-lg ${bgColor} min-h-[46px]`}
       onClick={onClick}
     >
       <img

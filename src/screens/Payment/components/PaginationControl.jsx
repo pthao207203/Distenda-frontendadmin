@@ -27,7 +27,7 @@ function PaginationControl({ currentPage = 1, onPageChange }) {
         />
       </button>
 
-      <span className="text-2xl text-slate-600 max-md:text-2xl max-sm:text-xl" aria-current="page">
+      <span className="text-2xl text-slate-600 max-md:text-2xl max-sm:text-[1.25rem] max-md:text-[1rem]" aria-current="page">
         {currentPage}
       </span>
 

@@ -21,10 +21,10 @@ export default function LessonRow({ number, title, lastUpdated }) {
     {/* Hành động */}
     <div className="flex justify-center items-center gap-2 p-3 h-full bg-white basis-1/6">
       <button className="flex justify-center items-center px-4 py-2 bg-[#D1F669] rounded-[99px] hover:bg-[#C5E65F] transition-all">
-        <span className="text-[#131313] text-lg font-medium">Sửa</span>
+        <span className="text-[#131313] text-[1.125rem] max-md:text-[1rem] font-medium">Sửa</span>
       </button>
       <button className="flex justify-center items-center px-4 py-2 bg-[#FFD75B] rounded-[99px] hover:bg-[#FFC640] transition-all">
-        <span className="text-[#131313] text-lg font-medium">Ẩn</span>
+        <span className="text-[#131313] text-[1.125rem] max-md:text-[1rem] font-medium">Ẩn</span>
       </button>
     </div>
   </div>

@@ -7,15 +7,13 @@ import {
 import { PopupConfirm } from "../../../components/PopupConfirm";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
-import Loading from "../../../components/Loading";
 
-export function CourseHeader({ data, handleSubmit, role }) {
+export function CourseHeader({ data, handleSubmit, role, setLoadingPopup }) {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [action, setAction] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handlePopup = (actionType) => {
     setAction(actionType);
@@ -41,20 +39,16 @@ export function CourseHeader({ data, handleSubmit, role }) {
   const confirmAction = async () => {
     setPopupVisible(false);
     if (action === "update") {
-      setLoading(true);
+      setLoadingPopup(true);
       const newData = await handleSubmit();
-      setLoading(false);
       console.log("newData", newData);
-      const result = await courseUpdatePostController(
-        setLoading,
-        data._id,
-        newData
-      );
+      const result = await courseUpdatePostController(data._id, newData);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
+      setLoadingPopup(false);
     } else if (action === "delete") {
       await courseDeleteController(data._id);
     }
@@ -68,10 +62,6 @@ export function CourseHeader({ data, handleSubmit, role }) {
     setErrorPopupVisible(false);
     window.location.reload();
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="flex gap-2.5 items-end self-start md:text-[1.25rem] text-[1rem]  font-medium leading-none text-white">

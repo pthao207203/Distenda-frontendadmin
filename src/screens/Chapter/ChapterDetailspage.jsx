@@ -9,6 +9,7 @@ import { lessonDetailController } from "../../controllers/lesson.controller";
 import Loading from "../../components/Loading";
 import ChapterDetailHistory from "./components/ChapterDetailHistory";
 import { useRole } from "../../layouts/AppContext";
+import { Helmet } from "react-helmet";
 
 // const lessons = [
 //   { id: 1, name: "HTML cơ bản", lastUpdated: "29/11/2024 23:13" },
@@ -77,6 +78,9 @@ function CourseLesson() {
 
   return (
     <>
+      <Helmet>
+        <title>{data?.LessonName ? data.LessonName : "Chi tiết chương"}</title>
+      </Helmet>
       <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem] min-h-screen font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* <DeleteButton data={data} /> */}
         <div className="flex z-0 flex-col w-full max-md:max-w-full">

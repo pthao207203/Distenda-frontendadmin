@@ -30,7 +30,7 @@ function LessonPopup({ onClose, courseID }) {
             type="text"
             value={lessonName}
             onChange={(e) => setLessonName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-[1.125rem] max-md:text-[1rem] focus:outline-none focus:ring-2 focus:ring-slate-500"
             placeholder="Nhập tên danh mục"
           />
           {error && <p className="mt-4 text-red-500">{error}</p>}

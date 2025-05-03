@@ -28,7 +28,7 @@ export default function CourseDetails() {
           <div className="flex gap-10 items-center">
             {/* Tên chương */}
             <div className="flex flex-col font-semibold min-w-[240px] w-[270px]">
-              <div className="text-lg text-neutral-900 text-opacity-50">
+              <div className="text-[1.125rem] max-md:text-[1rem] text-neutral-900 text-opacity-50">
                 Tên chương
               </div>
               <div className="mt-4 md:text-[1.25rem] text-[1rem]  text-neutral-900 text-opacity-80">

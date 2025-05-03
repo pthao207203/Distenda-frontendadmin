@@ -14,10 +14,10 @@ function CustomerInfo({ data }) {
   }, []); // Chỉ chạy một lần khi component được mount
   return (
     <div className="flex flex-col w-full max-md:max-w-full">
-      <div className="text-xl font-semibold text-[#131313] max-md:max-w-full">
+      <div className="text-[1.25rem] max-md:text-[1rem] font-semibold text-[#131313] max-md:max-w-full">
         Chi tiết hóa đơn
       </div>
-      <div className="flex flex-col items-start mt-[1.5rem] w-full text-lg max-md:max-w-full">
+      <div className="flex flex-col items-start mt-[1.5rem] w-full text-[1.125rem] max-md:text-[1rem] max-md:max-w-full">
         <div className="flex gap-4 items-start">
           <div className="font-semibold text-[#131313] text-opacity-50">
             Họ và tên

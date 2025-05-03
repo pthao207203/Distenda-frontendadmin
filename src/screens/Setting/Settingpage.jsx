@@ -15,11 +15,13 @@ import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import Loading from "../../components/Loading";
 import { useRole } from "../../layouts/AppContext";
+import { PopupLoading } from "../../components/PopupLoading";
 
 export default function Settingpage() {
   const [data, setData] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
   const { role } = useRole();
 
   // const editorRef = useRef(null);
@@ -89,7 +91,7 @@ export default function Settingpage() {
   const handleSubmit = async () => {
     const updatedUrls = { ...data };
 
-    setLoading(true);
+    setLoadingPopup(true);
     for (const [id, file] of Object.entries(selectedFiles)) {
       const uploadedUrl = await uploadImage(file);
       console.log(`Uploaded Image for ${id}:`, uploadedUrl);
@@ -97,7 +99,7 @@ export default function Settingpage() {
     }
     const response = await settingPostController(updatedUrls);
 
-    setLoading(false);
+    setLoadingPopup(false);
     if (response.code === 200) {
       setSuccessPopupVisible(true);
       setData(response.updatedData);
@@ -206,39 +208,13 @@ export default function Settingpage() {
   }
   console.log("social => ", data);
 
-  // const socialLinks = [
-  //   {
-  //     id: "WebsiteFacebook",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/e02aeb2fb0a5596f245e0de6d4cedc110a0e1cf5e761b628a6a8a76fdbfb4941?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b",
-  //     url: "facebook.com",
-  //     value: data?.WebsiteFacebook
-  //   },
-  //   {
-  //     id: "WebsiteInstagram",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/364f76b00741a55a173b8ad0e5c1838609e0070fe7107da38b1bd1e110f332b5?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b",
-  //     url: "instagram.com",
-  //     value: data?.WebsiteInstagram
-  //   },
-  //   {
-  //     id: "WebsiteTiktok",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/e02aeb2fb0a5596f245e0de6d4cedc110a0e1cf5e761b628a6a8a76fdbfb4941?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b",
-  //     url: "tiktok.com",
-  //     value: data?.WebsiteTiktok
-  //   },
-  //   {
-  //     id: "WebsiteGithub",
-  //     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/364f76b00741a55a173b8ad0e5c1838609e0070fe7107da38b1bd1e110f332b5?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b",
-  //     url: "github.com",
-  //     value: data?.WebsiteGithub
-  //   },
-  // ];
-
   return (
     <>
       <Helmet>
         <title>Thông tin web</title>
       </Helmet>
-      <div className="flex flex-col flex-1 shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
+      {loadingPopup && <PopupLoading />}
+      <div className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
           <div className="flex justify-end items-center w-full">
             <button

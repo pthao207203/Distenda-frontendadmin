@@ -23,21 +23,21 @@ function AdminTable(admin) {
 
       {/* Tên */}
       <div className="flex basis-1/5 min-w-0 p-3 shrink justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
           {admin.AdminFullName}
         </span>
       </div>
 
       {/* Chức vụ */}
       <div className="flex basis-1/5 min-w-0 p-3 shrink justify-center items-center">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
           {admin?.role?.RoleName}
         </span>
       </div>
 
       {/* Thời gian tham gia */}
       <div className="flex basis-1/5 min-w-0 p-3 shrink justify-center items-center bg-[#EBF1F9]">
-        <span className="text-[#131313] text-center text-xl font-medium truncate">
+        <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
           {moment(admin.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")}
         </span>
       </div>
@@ -47,7 +47,7 @@ function AdminTable(admin) {
         <div
           className={`self-center shrink w-[90%] px-3 py-2 min-h-[2.5rem] rounded-[6.25rem] justify-center items-center inline-flex ${statusClass}`}
         >
-          <span className="text-[#131313] text-center text-xl font-medium truncate">
+          <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
             {statusText}
           </span>
         </div>

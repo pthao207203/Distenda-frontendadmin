@@ -10,6 +10,8 @@ import CourseDetailHistory from "./components/CourseDetailHistory";
 
 import Loading from "../../components/Loading";
 import { useRole } from "../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../components/PopupLoading";
 
 function CourseDetails() {
   const [data, setData] = useState({});
@@ -17,6 +19,7 @@ function CourseDetails() {
   const [category, setCategory] = useState();
   const [intructor, setIntructor] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
 
   const editorRef = useRef(null);
   const { role } = useRole();
@@ -144,8 +147,19 @@ function CourseDetails() {
   };
   return (
     <>
+      <Helmet>
+        <title>
+          {data?.CourseName ? data.CourseName : "Chi tiết khoá học"}
+        </title>
+      </Helmet>
+      {loadingPopup && <PopupLoading />}
       <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem]  font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
-        <CourseHeader data={data} handleSubmit={handleSubmit} role={role} />
+        <CourseHeader
+          data={data}
+          handleSubmit={handleSubmit}
+          role={role}
+          setLoadingPopup={setLoadingPopup}
+        />
         <CourseImage
           data={data}
           uploadImageInputRef={uploadImageInputRef}

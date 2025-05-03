@@ -63,7 +63,7 @@ function UserTable() {
       <Helmet>
         <title>Người dùng</title>
       </Helmet>
-      <div className="flex flex-col flex-1 justify-center items-center shrink p-[4rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
+      <div className="flex flex-col flex-1 justify-center items-center shrink p-[4rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] max-md:max-w-full">
         <SearchBar onSearch={handleSearch} />
         <div className="flex flex-col mt-6 w-full text-[#171717] max-md:max-w-full">
           <div className="text-right max-md:max-w-full">
