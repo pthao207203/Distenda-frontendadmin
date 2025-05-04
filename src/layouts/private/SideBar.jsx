@@ -44,6 +44,7 @@ export default function SideBar({ headerHeight }) {
 
   const [menuItems, setMenuItems] = useState([]);
   useEffect(() => {
+    console.log("role sidebar", role);
     setMenuItems(
       [
         role?.RolePermissions?.includes("dashboard_view") && {
@@ -99,7 +100,8 @@ export default function SideBar({ headerHeight }) {
         },
       ].filter((item) => item)
     );
-  }, [role]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   console.log("SideBar => ", data);
 

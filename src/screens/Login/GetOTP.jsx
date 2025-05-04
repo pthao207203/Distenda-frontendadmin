@@ -29,6 +29,7 @@ function GetOTP({ onNext, onSetEmail, setResult }) {
         const result = await loginController(formData, setSuccess, setError);
         console.log(result);
         setResult(result.message);
+        setIsLoading(false);
         if (result.code === 200) {
           onNext(); // Chỉ gọi hàm onNext nếu OTP hợp lệ và xử lý thành công
         }

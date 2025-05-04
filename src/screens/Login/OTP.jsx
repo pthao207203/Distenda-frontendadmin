@@ -4,13 +4,14 @@ import Cookies from "js-cookie";
 
 import { loginConfirmController } from "../../controllers/auth.controller.js";
 
-function OTP({ email, result, setLoadingPopup }) {
+function OTP({ email, result }) {
   const [formData, setFormData] = useState({
     AdminEmail: email,
     OTP: "",
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); //Xử lý loading button
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +20,7 @@ function OTP({ email, result, setLoadingPopup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Ngăn reload trang
-    setLoadingPopup(true); // Bắt đầu trạng thái loading
+    setIsLoading(true); // Bắt đầu trạng thái loading
 
     try {
       // Gọi API xử lý
@@ -39,7 +40,7 @@ function OTP({ email, result, setLoadingPopup }) {
     } catch (err) {
       setError("Đã xảy ra lỗi. Vui lòng thử lại.");
     } finally {
-      setLoadingPopup(false); // Kết thúc trạng thái loading
+      setIsLoading(false); // Kết thúc trạng thái loading
     }
   };
 
@@ -120,10 +121,10 @@ function OTP({ email, result, setLoadingPopup }) {
         <button
           type="submit"
           className={`flex flex-wrap gap-5 justify-center items-center rounded-lg mt-4 w-full text-[1.25rem] max-md:text-[1.125rem] font-normal bg-[#6C8299] min-h-[3.625rem] text-white max-md:max-w-full ${
-            setLoadingPopup ? "opacity-50 cursor-not-allowed" : ""
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          {setLoadingPopup ? "Đang xử lý..." : "Xác nhận"}
+          {isLoading ? "Đang xử lý..." : "Xác nhận"}
         </button>
         {error && <p className="mt-4 text-red-500">{error}</p>}
         {success && <p className="mt-4 text-[#6C8299]">{success}</p>}
