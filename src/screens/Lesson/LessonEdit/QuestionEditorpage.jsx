@@ -58,12 +58,12 @@ function QuestionEditor() {
     if (actionType === "update") {
       setLoadingPopup(true);
       const result = await exerciseUpdatePostController(LessonID, data);
+      setLoadingPopup(false);
       if (result.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
-      setLoadingPopup(false);
     } else if (actionType === "cancel") {
       setPopupContent(
         <>
