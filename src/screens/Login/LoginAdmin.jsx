@@ -4,20 +4,17 @@ import { Container, Row, Col } from "react-bootstrap";
 import GetOTP from "./GetOTP";
 import OTP from "./OTP";
 import { Helmet } from "react-helmet";
-import { PopupLoading } from "../../components/PopupLoading";
 
 function LoginAdmin() {
   const [currentForm, setCurrentForm] = useState("GetOTP"); // Quản lý form hiện tại
   const [email, setEmail] = useState("");
   const [result, setResult] = useState(false);
-  const [loadingPopup, setLoadingPopup] = useState(false);
   console.log("Current Form:", currentForm);
   return (
     <>
       <Helmet>
         <title>Đăng nhập</title>
       </Helmet>
-      {loadingPopup && <PopupLoading />}
       <Container fluid className="flex justify-center items-center my-5">
         <Row className="justify-center w-full">
           <Col
@@ -32,13 +29,7 @@ function LoginAdmin() {
                 setResult={setResult}
               />
             )}
-            {currentForm === "OTP" && (
-              <OTP
-                email={email}
-                result={result}
-                setLoadingPopup={setLoadingPopup}
-              />
-            )}
+            {currentForm === "OTP" && <OTP email={email} result={result} />}
           </Col>
         </Row>
       </Container>
