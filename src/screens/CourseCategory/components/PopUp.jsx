@@ -40,7 +40,7 @@ function CategoryPopup({ onClose, data, setLoadingPopup }) {
     if (result.code === 200) {
       console.log("Them thanh cong");
       onClose();
-      // window.location.reload();
+      window.location.reload();
     } else {
       setError("Không thể thêm chương mới!");
     }
