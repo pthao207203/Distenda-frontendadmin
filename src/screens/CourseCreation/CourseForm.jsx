@@ -70,7 +70,7 @@ function CourseForm({ role, user, setLoadingPopup }) {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [role]);
 
   const handleSubmit = async () => {
     setLoadingPopup(true);
