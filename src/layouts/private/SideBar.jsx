@@ -100,8 +100,7 @@ export default function SideBar({ headerHeight }) {
         },
       ].filter((item) => item)
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [role]);
 
   console.log("SideBar => ", data);
 
