@@ -47,7 +47,7 @@ const VoucherRow = ({ id, index, voucher, isDeleted = false }) => {
           className={`self-center shrink w-[90%] px-3 py-2 justify-center items-center inline-flex ${statusInfo.bgColor} min-h-[2.5rem] rounded-[6.25rem]`}
           onClick={toggleVisibility}
         >
-          <span className="text-center text-xl font-medium truncate">
+          <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
             {statusInfo.text}
           </span>
         </button>
@@ -58,8 +58,8 @@ const VoucherRow = ({ id, index, voucher, isDeleted = false }) => {
 
 // Component Cell tái sử dụng
 const Cell = ({ bg = "", content }) => (
-  <div className={`flex basis-1/6 min-w-0  min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center p-3 items-center ${bg}`}>
-    <span className="text-[#131313] text-center text-xl font-medium truncate">
+  <div className={`flex basis-1/6 min-w-0 cursor-pointer min-h-[3.75rem] max-md:min-h-[2.75rem] justify-center p-3 items-center ${bg}`}>
+    <span className="text-[#131313] text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
       {content}
     </span>
   </div>

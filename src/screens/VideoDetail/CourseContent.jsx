@@ -48,7 +48,7 @@ export default function CourseContent() {
         <Helmet>
           <title>{data?.VideoName ? data.VideoName : "Chi tiết bài học"}</title>
         </Helmet>
-        <section className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full overflow-hidden">
+        <section className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full overflow-hidden">
           <div className="flex flex-col pb-16 w-full max-md:max-w-full h-full gap-2.5">
             <form className="flex flex-wrap gap-10 justify-end items-end w-full font-medium leading-none max-md:max-w-full">
               <div className="flex gap-2.5 items-start md:text-[1.25rem] text-[1rem]  text-white">
@@ -115,9 +115,9 @@ export default function CourseContent() {
                   {data?.VideoName}
                 </div>
               </div>
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+              <div className="flex flex-col justify-center max-md:max-w-full">
                 <div className="flex gap-3 items-center">
-                  <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+                  <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                     Lần cuối cập nhật
                   </div>
                   <button

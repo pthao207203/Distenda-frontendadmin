@@ -14,7 +14,7 @@ function PaginationControl({ currentPage = 1, onPageChange }) {
 
 
   return (
-    <nav aria-label="Pagination" className="flex gap-6 justify-center items-center mx-auto max-w-none max-md:gap-5 max-md:max-w-[991px] max-sm:gap-4 max-sm:max-w-screen-sm">
+    <nav aria-label="Pagination" className="flex gap-6 justify-center mt-[0.5rem] items-center mx-auto max-w-none max-md:gap-5 max-md:max-w-[991px] max-sm:gap-4 max-sm:max-w-screen-sm">
       <button
         onClick={handlePrevPage}
         aria-label="Go to previous page"
@@ -27,7 +27,7 @@ function PaginationControl({ currentPage = 1, onPageChange }) {
         />
       </button>
 
-      <span className="text-2xl text-slate-600 max-md:text-2xl max-sm:text-xl" aria-current="page">
+      <span className="text-2xl text-slate-600 max-md:text-2xl max-sm:text-[1.25rem] max-md:text-[1rem]" aria-current="page">
         {currentPage}
       </span>
 

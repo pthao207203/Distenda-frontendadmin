@@ -136,7 +136,7 @@ export default function CourseContent() {
           <section className="flex overflow-hidden flex-col p-[4rem] w-full bg-white max-md:px-5 min-h-screen max-md:max-w-full">
             <div className="flex flex-col pb-16 w-full max-md:max-w-full">
               <div className="flex gap-2.5 items-end justify-end md:text-[1.25rem] text-[1rem] mb-4 text-white min-w-[240px]">
-                <div className="flex gap-2.5 items-end text-xl text-white min-w-[240px]">
+                <div className="flex gap-2.5 items-end text-[1.25rem] max-md:text-[1rem] text-white min-w-[240px]">
                   <button
                     onClick={() => handlePopup("edit")}
                     type="button"
@@ -166,7 +166,7 @@ export default function CourseContent() {
                     <span className="gap-2.5 self-stretch my-auto">Xóa</span>
                   </button>
                 </div>
-                <div className="flex flex-col flex-1 shrink justify-center text-xl basis-0 min-w-[240px] max-md:max-w-full">
+                <div className="flex flex-col flex-1 shrink justify-center text-[1.25rem] max-md:text-[1rem] basis-0 min-w-[240px] max-md:max-w-full">
                   <label
                     htmlFor="VideoName"
                     className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -181,7 +181,7 @@ export default function CourseContent() {
                   />
                 </div>
               </div>
-              {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+              {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-[1.25rem] max-md:text-[1rem] basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label htmlFor="VideoUrl" className="text-neutral-900 text-opacity-50 max-md:max-w-full">
                 Link video <span className="text-red-600">*</span>
               </label>
@@ -194,7 +194,7 @@ export default function CourseContent() {
                 aria-required="true"
               />
             </div> */}
-              <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+              <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-[1.25rem] max-md:text-[1rem] basis-0 min-w-[240px] w-full max-md:max-w-full">
                 <label
                   htmlFor="VideoUrl"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"

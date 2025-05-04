@@ -62,7 +62,7 @@ export default function PermissionRow({
       }`}
     >
       {/* Ô hiển thị thông tin permission */}
-      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-xl font-medium whitespace-nowrap bg-[#EBF1F9] text-neutral-900">
+      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-[1.25rem] max-md:text-[1rem] font-medium whitespace-nowrap bg-[#EBF1F9] text-neutral-900">
         <div className="gap-2.5 self-stretch my-auto ">
           {getPermission(index)}
         </div>

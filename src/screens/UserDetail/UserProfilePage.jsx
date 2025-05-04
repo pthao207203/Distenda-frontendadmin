@@ -42,7 +42,7 @@ function UserProfile() {
         <title>{data?.UserFullName ? data.UserFullName : "Người dùng"}</title>
       </Helmet>
       {loadingPopup && <PopupLoading />}
-      <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
+      <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
         {data && (
           <UserHeader
             data={data}

@@ -6,12 +6,12 @@ import { useRole } from "../../layouts/AppContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { PopupLoading } from "../../components/PopupLoading";
-import Loading from "../../components/Loading";
+// import Loading from "../../components/Loading";
 
 function CourseCreationPage() {
   const { role, user } = useRole();
   const [loadingPopup, setLoadingPopup] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (
@@ -24,9 +24,9 @@ function CourseCreationPage() {
     }
   }, [navigate, role]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <>
@@ -41,7 +41,7 @@ function CourseCreationPage() {
           role={role}
           user={user}
           setLoadingPopup={setLoadingPopup}
-          setLoading={setLoading}
+          // setLoading={setLoading}
         />
       </div>
     </>

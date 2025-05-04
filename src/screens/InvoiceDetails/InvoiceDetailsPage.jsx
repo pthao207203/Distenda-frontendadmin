@@ -37,7 +37,7 @@ function InvoiceDetails() {
       <Helmet>
         <title>Chi tiết hóa đơn</title>
       </Helmet>
-    <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
+    <div className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] min-h-[3.75rem] max-md:min-h-[2.75rem]">
       {data?.user && <CustomerInfo data={data} />}
       {data?.course && <OrderTable items={[data.course]} />}
     </div>

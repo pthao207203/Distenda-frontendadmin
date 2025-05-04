@@ -4,7 +4,7 @@ function FormField({ label, required, hasIcon }) {
   return (
     <div className="flex items-start mt-4 max-md:pr-5">
       <div className="flex flex-col self-end mt-3 mr-0 w-full max-md:max-w-full">
-        <label className="text-xl font-medium leading-none text-neutral-900 max-md:max-w-full">
+        <label className="text-[1.25rem] max-md:text-[1rem] font-medium leading-none text-neutral-900 max-md:max-w-full">
           {label} {required && <span className="text-red-600">*</span>}
         </label>
         <div className="flex gap-2.5 items-start px-2.5 py-5 mt-2 w-full rounded-lg border border-solid border-slate-500 min-h-[63px] max-md:max-w-full">

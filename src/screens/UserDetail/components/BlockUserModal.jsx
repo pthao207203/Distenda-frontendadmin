@@ -28,7 +28,7 @@ function BlockUserModal({ onConfirm, onCancel, isBlocked }) {
             alt=""
             className="object-contain aspect-square w-[4rem]"
           />
-          <div className="mt-[1.5rem] text-lg text-[#171717]">
+          <div className="mt-[1.5rem] text-[1.125rem] max-md:text-[1rem] text-[#171717]">
             {isBlocked
               ? "Bạn có chắc chắn muốn bỏ chặn người dùng này?"
               : "Bạn có chắc chắn muốn chặn người dùng này?"}

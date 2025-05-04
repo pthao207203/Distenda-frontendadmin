@@ -2,8 +2,8 @@ import * as React from "react";
 
 export function VideoSection({ video }) {
   return (
-    <div className="flex flex-col mt-11 w-full max-md:mt-10 max-md:max-w-full h-[1000px]">
-      <label className="md:text-[1.25rem] text-[1rem]  font-medium leading-none text-neutral-900 pb-3 text-opacity-50 max-md:max-w-full">
+    <div className="flex flex-col mt-8 w-full max-md:mt-6 max-md:max-w-full">
+      <label className="text-[1.25rem] max-md:text-[1rem]  font-medium leading-none text-neutral-900 pb-3 text-opacity-50 max-md:max-w-full">
         Video <span className="text-red-600">*</span>
       </label>
 

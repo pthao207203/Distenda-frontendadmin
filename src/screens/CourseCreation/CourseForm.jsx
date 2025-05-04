@@ -11,7 +11,7 @@ import {
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 
-function CourseForm({ role, user, setLoadingPopup, setLoading }) {
+function CourseForm({ role, user, setLoadingPopup }) {
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
   const [data, setData] = useState({});
@@ -44,7 +44,8 @@ function CourseForm({ role, user, setLoadingPopup, setLoading }) {
   useEffect(() => {
     async function fetchData() {
       // console.log("vaof")
-      const result = await courseCreateController(setLoading);
+      // setLoading(true); // Đang tải
+      const result = await courseCreateController();
       // console.log(result)
       if (result) {
         if (role?.RolePermissions?.includes("course_create")) {
@@ -64,11 +65,12 @@ function CourseForm({ role, user, setLoadingPopup, setLoading }) {
           ...result.categories,
         ]);
       }
+      // setLoading(false); // Tải xong
     }
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [role]);
+  }, []);
 
   const handleSubmit = async () => {
     setLoadingPopup(true);

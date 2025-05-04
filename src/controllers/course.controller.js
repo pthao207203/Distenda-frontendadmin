@@ -47,16 +47,16 @@ export async function courseUpdatePostController(CourseID, data) {
   }
 }
 
-export async function courseCreateController(setLoading) {
+export async function courseCreateController() {
   try {
-    setLoading(true); // Đang tải
+    // setLoading(true); // Đang tải
     const result = await courseCreateService(); // Gọi API
     console.log("result courses ", result);
-    setLoading(false); // Tải xong
+    // setLoading(false); // Tải xong
     return result;
   } catch (err) {
     console.error(err); // Ghi log lỗi
-    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
+    // setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
   }
 }
 

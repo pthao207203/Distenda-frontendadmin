@@ -46,7 +46,7 @@ function CategoryPopup({ onClose, data, setLoadingPopup }) {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
       <div className="flex flex-col justify-center px-10 py-16 bg-white rounded-3xl w-[600px] font-medium">
         <div className="flex flex-col items-center w-full text-center">
-          <p className="text-xl font-semibold text-neutral-900 mb-2">
+          <p className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 mb-2">
             Nhập danh mục cha
           </p>
           <div className="flex gap-2.5 my-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 h-[63px]">
@@ -70,14 +70,14 @@ function CategoryPopup({ onClose, data, setLoadingPopup }) {
                 ))}
             </select>
           </div>
-          <p className="text-xl font-semibold text-neutral-900 mb-2">
+          <p className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 mb-2">
             Nhập danh mục
           </p>
           <input
             type="text"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
-            className="w-full px-3 py-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+            className="w-full px-3 py-3 border border-gray-300 rounded-lg text-[1.125rem] max-md:text-[1rem] focus:outline-none focus:ring-2 focus:ring-slate-500"
             placeholder="Nhập tên danh mục"
           />
           {error && <p className="mt-4 text-red-500">{error}</p>}

@@ -84,7 +84,7 @@ const VoucherInfo = () => {
 
   return (
     <section>
-      <div className="flex gap-4 justify-end text-xl font-semibold text-white">
+      <div className="flex gap-[0.5rem] items-start self-end text-[1.25rem] max-md:text-[1rem] font-semibold leading-none text-white max-md:max-w-full">
         <ActionButton
           label="Lưu"
           bgColor="bg-[#6C8299]"
@@ -97,8 +97,8 @@ const VoucherInfo = () => {
         />
       </div>
 
-      <div className="flex flex-col mt-8 w-full text-xl">
-        <h3 className="font-semibold text-[#171717]">Thông tin voucher</h3>
+      <div className="flex flex-col mt-[2.5rem] w-full text-[1.25rem] max-md:text-[1rem] max-md:max-w-full">
+        <h3 className="font-semibold text-[#171717] max-md:max-w-full">Thông tin voucher</h3>
 
         <div className="flex flex-wrap gap-6 mt-6">
           <FormField

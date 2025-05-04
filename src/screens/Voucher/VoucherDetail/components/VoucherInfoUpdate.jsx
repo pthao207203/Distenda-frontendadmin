@@ -108,7 +108,7 @@ const VoucherInfoUpdate = ({ voucher }) => {
 
   return (
     <section>
-      <div className="flex gap-2 justify-end text-xl font-semibold text-white">
+      <div className="flex gap-2 justify-end text-[1.25rem] max-md:text-[1rem] font-semibold text-white">
         <ActionButton
           label="Cập nhật"
           bgColor="bg-[#6C8299]"
@@ -123,7 +123,7 @@ const VoucherInfoUpdate = ({ voucher }) => {
         />
       </div>
 
-      <div className="flex flex-col mt-10 w-full text-xl">
+      <div className="flex flex-col mt-10 w-full text-[1.25rem] max-md:text-[1rem]">
         <h3 className="font-semibold text-[#171717]">Thông tin voucher</h3>
 
         <div className="flex flex-wrap gap-8 mt-6">
@@ -190,7 +190,7 @@ const VoucherInfoUpdate = ({ voucher }) => {
                   key={idx}
                   className="flex items-start justify-between gap-2 px-3 py-2 bg-[#6C8299] rounded-[1.25rem] shadow-md"
                 >
-                  <span className="text-lg text-white truncate">
+                  <span className="text-[1.125rem] max-md:text-[1rem] text-white truncate">
                     {course?.CourseName || "Không tìm thấy"}
                   </span>
                   <button
@@ -244,7 +244,7 @@ const FormField = ({ label, value, onChange }) => (
 const ActionButton = ({ label, bgColor, icon, onClick }) => {
   return (
     <button
-      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-xl font-medium leading-none text-white rounded-lg ${bgColor} min-h-[46px]`}
+      className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto text-[1.25rem] max-md:text-[1rem] font-medium leading-none text-white rounded-lg ${bgColor} min-h-[46px]`}
       onClick={onClick}
     >
       <img

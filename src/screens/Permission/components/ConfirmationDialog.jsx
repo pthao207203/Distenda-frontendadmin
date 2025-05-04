@@ -16,7 +16,7 @@ export function ConfirmationDialog() {
           alt=""
           className="object-contain aspect-square w-[59px]"
         />
-        <div className="gap-3 mt-10 text-xl font-medium text-neutral-900">
+        <div className="gap-3 mt-10 text-[1.25rem] max-md:text-[1rem] font-medium text-neutral-900">
           Bạn có chắc chắn muốn cập nhật những thay đổi không?
         </div>
         <div className="flex gap-2.5 items-start mt-8 text-3xl whitespace-nowrap">

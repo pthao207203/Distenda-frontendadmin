@@ -9,7 +9,7 @@ const PersonalInfo = ({
   handleHistoryRequest,
 }) => {
   return (
-    <div className="flex flex-col mt-10 w-full text-xl max-md:max-w-full">
+    <div className="flex flex-col mt-10 w-full text-[1.25rem] max-md:text-[1rem] max-md:max-w-full">
       <div className="font-semibold text-[#171717] max-md:max-w-full">
         Thông tin cá nhân
       </div>

@@ -200,13 +200,13 @@ function AdminDetailPage() {
               <div className="text-2xl font-semibold text-[#171717]">
                 {data?.AdminFullName ? data?.AdminFullName : "Null"}
               </div>
-              <div className="mt-3 text-lg font-medium text-[#171717] text-opacity-50">
+              <div className="mt-3 text-[1.125rem] max-md:text-[1rem] font-medium text-[#171717] text-opacity-50">
                 {data?.AdminEmail ? data.AdminEmail : "Null"}
               </div>
             </div>
           </div>
           {/* Nút hành động */}
-          <div className="flex gap-2.5 items-center text-xl font-medium leading-none text-white min-w-[15rem]">
+          <div className="flex gap-2.5 items-center text-[1.25rem] max-md:text-[1rem] font-medium leading-none text-white min-w-[15rem]">
             <button
               disabled={!role?.RolePermissions?.includes("admin_edit")}
               className={`flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] ${
@@ -254,7 +254,7 @@ function AdminDetailPage() {
         />
 
         {/* Tiêu đề Khóa học */}
-        <div className="flex flex-col mt-[2.5rem] w-full text-xl text-[#171717] max-md:max-w-full">
+        <div className="flex flex-col mt-[2.5rem] w-full text-[1.25rem] max-md:text-[1rem] text-[#171717] max-md:max-w-full">
           <div className="flex flex-wrap gap-[1.5rem] items-start w-full max-md:max-w-full">
             <div className="font-semibold">Khóa học giảng viên</div>
             <div className="flex-1 shrink font-medium leading-none text-right basis-0 max-md:max-w-full">

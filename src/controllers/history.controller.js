@@ -1,4 +1,4 @@
-import { courseHistoryService, lessonHistoryService, videoHistoryService, videoDetailHistoryService, adminHistoryService, adminDetailHistoryService, bannerHistoryService, bannerDetailHistoryService } from '../services/history.service';
+import { courseHistoryService, lessonHistoryService, videoHistoryService, videoDetailHistoryService, adminHistoryService, adminDetailHistoryService, bannerHistoryService, bannerDetailHistoryService, voucherHistoryService } from '../services/history.service';
 
 // [GET] /admin/courses/history
 export async function courseHistoryController() {
@@ -89,6 +89,20 @@ export async function bannerDetailHistoryController(setLoading, BannerId) {
     setLoading(true); // Đang tải
     const result = await bannerDetailHistoryService(BannerId); // Gọi API
     console.log("banner detail history ", result);
+    setLoading(false); // Tải xong
+    return result;
+  } catch (err) {
+    console.error(err); // Ghi log lỗi
+    setLoading(false); // Tắt trạng thái tải ngay cả khi lỗi
+  }
+}
+
+// [GET] /admin/voucher/history
+export async function voucherHistoryController(setLoading) {
+  try {
+    setLoading(true); // Đang tải
+    const result = await voucherHistoryService(); // Gọi API
+    console.log("voucher history", result);
     setLoading(false); // Tải xong
     return result;
   } catch (err) {

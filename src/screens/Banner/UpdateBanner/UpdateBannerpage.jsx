@@ -136,7 +136,7 @@ function BannerForm() {
           <div className="flex justify-between items-center max-md:max-w-full">
             <div className="flex flex-col justify-center max-md:max-w-full">
               <div className="flex gap-3 items-center">
-                <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+                <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                   Lần cuối cập nhật
                 </div>
                 <button

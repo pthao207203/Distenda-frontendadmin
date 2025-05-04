@@ -156,7 +156,7 @@ export function CourseForm({ setLoading, setLoadingPopup }) {
               </button>
             </div>
           </div>
-          {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+          {/* <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-[1.25rem] max-md:text-[1rem] basis-0 min-w-[240px] w-full max-md:max-w-full">
               <label htmlFor="VideoUrl" className="text-neutral-900 text-opacity-50 max-md:max-w-full">
                 Link video <span className="text-red-600">*</span>
               </label>
@@ -169,7 +169,7 @@ export function CourseForm({ setLoading, setLoadingPopup }) {
                 aria-required="true"
               />
             </div> */}
-          <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-xl basis-0 min-w-[240px] w-full max-md:max-w-full">
+          <div className="flex flex-col flex-1 shrink pt-3 justify-center self-start text-[1.25rem] max-md:text-[1rem] basis-0 min-w-[240px] w-full max-md:max-w-full">
             <label
               htmlFor="VideoUrl"
               className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -215,7 +215,7 @@ export function CourseForm({ setLoading, setLoadingPopup }) {
               }}
             />
           </div>
-          <div className="flex flex-col mt-11 w-full text-xl max-md:mt-10 max-md:max-w-full">
+          <div className="flex flex-col mt-11 w-full text-[1.25rem] max-md:text-[1rem] max-md:mt-10 max-md:max-w-full">
             <label
               htmlFor="videoUpload"
               className="text-neutral-900 text-opacity-50 max-md:max-w-full"

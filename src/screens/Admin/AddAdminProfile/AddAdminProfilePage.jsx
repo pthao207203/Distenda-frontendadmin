@@ -69,7 +69,7 @@ export const UserProfile = () => {
         <title>Thêm quản trị viên</title>
       </Helmet>
       {loadingPopup && <PopupLoading />}
-      <main className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-xl font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] min-h-[4.375rem] max-md:min-h-[3rem]">
+      <main className="flex flex-col flex-1 justify-start items-center shrink p-[3rem] text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[15rem] max-md:px-[1.25rem] min-h-[4.375rem] max-md:min-h-[3rem]">
         {/* Nút hành động */}
         <div className="flex gap-3 justify-end items-center w-full">
           <ActionButton
@@ -107,7 +107,7 @@ export const UserProfile = () => {
 
           {/* Chức vụ */}
           <div className="flex flex-col mt-[2rem]">
-            <h2 className="text-xl font-semibold mb-[0.5rem]">Chức vụ</h2>
+            <h2 className="text-[1.25rem] max-md:text-[1rem] font-semibold mb-[0.5rem]">Chức vụ</h2>
             <select
               value={personalInfo.AdminRole_id} // Truyền giá trị AdminRole_id vào value của select
               onChange={handleChange} // Khi thay đổi giá trị, sẽ gọi handleChange để cập nhật AdminRole_id
