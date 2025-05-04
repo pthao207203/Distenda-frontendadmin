@@ -46,20 +46,22 @@ function TableRow({ categories, role }) {
                     : "bg-[#f0ffc7] cursor-not-allowed"
                 } flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem] rounded-[99px] text-neutral-900 transition-colors`}
               >
-                <div className="gap-2.5 self-stretch my-auto p-[0.5rem]">Sửa</div>
+                <div className="gap-2.5 self-stretch my-auto p-[0.5rem]">
+                  Sửa
+                </div>
               </button>
               {/* Button Xóa */}
               <button
-                disabled={
-                  !role?.RolePermissions?.includes("course_delete")
-                }
+                disabled={!role?.RolePermissions?.includes("course_delete")}
                 className={`flex basis-1/2 min-w-0 shrink gap-3 justify-center items-center px-[0.75rem]  text-white rounded-[99px] transition-colors ${
                   role?.RolePermissions?.includes("course_delete")
                     ? "bg-[#DF322B] hover:bg-[#902723]"
                     : "bg-[#ffd1d1] cursor-not-allowed"
                 }`}
               >
-                <div className="gap-2.5 self-stretch my-auto p-[0.5rem]">Xóa</div>
+                <div className="gap-2.5 self-stretch my-auto p-[0.5rem]">
+                  Xóa
+                </div>
               </button>
             </div>
           </div>,
@@ -73,7 +75,7 @@ function TableRow({ categories, role }) {
     );
   };
 
-  console.log("category", categories);
+  // console.log("category", categories);
   return <div>{renderCategories(categories)}</div>;
 }
 

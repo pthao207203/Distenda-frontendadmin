@@ -25,8 +25,8 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
   const headerRef = useRef(null);
   useEffect(() => {
     async function fetchData() {
-      const result = await headerController();
-      console.log("Header result:", result);
+      await headerController();
+      // console.log("Header result:", result);
       if (headerRef.current) {
         setHeaderHeight(headerRef.current.offsetHeight);
       }

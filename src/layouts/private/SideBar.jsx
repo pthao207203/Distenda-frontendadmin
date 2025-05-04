@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useRole } from "../AppContext";
-import { headerController } from "../../controllers/home.controller";
+// import { headerController } from "../../controllers/home.controller";
 
 export default function SideBar({ headerHeight }) {
   const [isOpen, setIsOpen] = useState(false); // Quản lý trạng thái mở/đóng sidebar
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024); // Kiểm tra xem có phải desktop hay không
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const { role, user } = useRole();
-  console.log("user", role);
+  // console.log("user", role);
 
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,18 +23,18 @@ export default function SideBar({ headerHeight }) {
     return () => window.removeEventListener("resize", handleResize); // Cleanup
   }, []);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await headerController(setLoading);
-      if (result) {
-        setData(result); // Lưu dữ liệu nếu hợp lệ
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const result = await headerController(setLoading);
+  //     if (result) {
+  //       setData(result); // Lưu dữ liệu nếu hợp lệ
+  //     }
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     if (isDesktop) {
@@ -44,7 +44,7 @@ export default function SideBar({ headerHeight }) {
 
   const [menuItems, setMenuItems] = useState([]);
   useEffect(() => {
-    console.log("role sidebar", role);
+    // console.log("role sidebar", role);
     setMenuItems(
       [
         role?.RolePermissions?.includes("dashboard_view") && {
@@ -102,11 +102,11 @@ export default function SideBar({ headerHeight }) {
     );
   }, [role]);
 
-  console.log("SideBar => ", data);
+  // console.log("SideBar => ", data);
 
-  if (loading) {
-    return "Đang tải...";
-  }
+  // if (loading) {
+  //   return "Đang tải...";
+  // }
   return (
     <>
       {isOpen && !isDesktop && (

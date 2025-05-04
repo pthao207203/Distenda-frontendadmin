@@ -29,7 +29,7 @@ function CourseTable() {
     async function fetchData() {
       // console.log("vaof")
       const result = await categoryController(setLoading);
-      console.log(result);
+      // console.log(result);
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
