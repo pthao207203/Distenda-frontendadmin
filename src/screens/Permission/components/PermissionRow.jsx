@@ -57,13 +57,13 @@ export default function PermissionRow({
 
   return (
     <div
-      className={`flex flex-wrap w-full bg-white h-[50px] max-md: min-w-[600px] ${
+      className={`w-full bg-white h-[50px] max-md: min-w-[600px] ${
         !isFirst ? "mt-1.5" : ""
-      }`}
+      } grid grid-cols-${roles ? roles.length + 1 : 1}`}
     >
       {/* Ô hiển thị thông tin permission */}
-      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-[1.25rem] max-md:text-[1rem] font-medium whitespace-nowrap bg-[#EBF1F9] text-neutral-900">
-        <div className="gap-2.5 self-stretch my-auto ">
+      <div className="flex flex-1 justify-center items-center basis-0 h-[50px] min-w-[120px] text-[1.25rem] max-md:text-[1rem] font-medium bg-[#EBF1F9] text-neutral-900">
+        <div className="flex items-center justify-center px-5 text-center break-words w-full h-full">
           {getPermission(index)}
         </div>
       </div>
