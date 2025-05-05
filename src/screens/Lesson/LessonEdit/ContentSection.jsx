@@ -52,8 +52,15 @@ function EditableDetail({ id, title, value, onChange, editorRef }) {
   );
 }
 
-
-function ContentSection({ exercise, editorRef, handleChange, handleEditorChange, handleCodeChange, handleTestCaseChange, addTestCase }) {
+function ContentSection({
+  exercise,
+  editorRef,
+  handleChange,
+  handleEditorChange,
+  handleCodeChange,
+  handleTestCaseChange,
+  addTestCase,
+}) {
   return (
     <>
       <div className="flex flex-col mt-2 w-full max-md:max-w-full">
@@ -71,6 +78,28 @@ function ContentSection({ exercise, editorRef, handleChange, handleEditorChange,
           onChange={handleChange}
           className="w-full px-3  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 min-h-[3.75rem] max-md:min-h-[2.75rem] focus:ring-blue-500"
         />
+      </div>
+
+      <div className="flex flex-col mt-2 w-full max-md:max-w-full">
+        {/* Tiêu đề */}
+        <div className="md:text-[1.25rem] text-[1rem] mb-2 font-semibold text-neutral-900 text-opacity-50 leading-none max-md:max-w-full">
+          Ngôn ngữ
+        </div>
+
+        {/* Nội dung */}
+        <select
+          required
+          id="ExerciseLanguage"
+          value={exercise?.ExerciseLanguage}
+          onChange={handleChange}
+          className="w-full px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 min-h-[3.75rem] max-md:min-h-[2.75rem] focus:ring-blue-500"
+        >
+          <option value="python3">Python 3</option>
+          <option value="java">Java</option>
+          <option value="cpp">C++</option>
+          <option value="php">PHP</option>
+          <option value="javascript">JavaScript</option>
+        </select>
       </div>
 
       <div className="">
@@ -108,15 +137,15 @@ function ContentSection({ exercise, editorRef, handleChange, handleEditorChange,
             <div class="flex-row flex gap-6 mt-2 justify-center">
               <div className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900 text-opacity-50 leading-none self-center max-md:max-w-full whitespace-nowrap">
                 <p class="justify-center flex whitespace-nowrap">
-                  Test case {index+1}
-                  </p>
+                  Test case {index + 1}
+                </p>
               </div>
               <input
                 required
                 type="text"
                 placeholder="Nhập input"
                 value={testCase.Input}
-                onChange={(e) => handleTestCaseChange(e, index, 'Input')}
+                onChange={(e) => handleTestCaseChange(e, index, "Input")}
                 className="w-full px-3  border border-gray-300 rounded-lg focus:outline-none justify-center focus:ring-2 h-[63px] focus:ring-blue-500"
               />
               <input
@@ -124,12 +153,17 @@ function ContentSection({ exercise, editorRef, handleChange, handleEditorChange,
                 type="text"
                 placeholder="Nhập output"
                 value={testCase.Output}
-                onChange={(e) => handleTestCaseChange(e, index, 'Output')}
+                onChange={(e) => handleTestCaseChange(e, index, "Output")}
                 className="w-full px-3  border border-gray-300 rounded-lg focus:outline-none justify-center focus:ring-2 h-[63px] focus:ring-blue-500"
               />
             </div>
           ))}
-          <button onClick={addTestCase} class="mt-3 flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500">Thêm Test Case</button>
+          <button
+            onClick={addTestCase}
+            class="mt-3 flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500"
+          >
+            Thêm Test Case
+          </button>
         </div>
       </div>
     </>

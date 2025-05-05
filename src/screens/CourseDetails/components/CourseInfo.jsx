@@ -27,31 +27,31 @@ export function CourseInfo({
         Thông tin cơ bản
       </div>
       <div className="flex flex-col justify-center max-md:max-w-full mt-6">
-          <label
-            htmlFor="CourseName"
-            className="text-neutral-900 text-opacity-50 max-md:max-w-full"
-          >
-            Tên khoá học
-          </label>
-          <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
-            <input
-              disabled={
-                !role?.RolePermissions?.includes("course_edit") &&
-                !role?.RolePermissions?.includes("course_only")
-              }
-              type="text"
-              id="CourseName"
-              value={data?.CourseName}
-              onChange={handleInputChange} // Thêm xử lý onChange
-              className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
-            />
-          </div>
+        <label
+          htmlFor="CourseName"
+          className="text-neutral-900 text-opacity-50 max-md:max-w-full"
+        >
+          Tên khoá học
+        </label>
+        <div className="flex relative gap-2.5 items-start px-2.5 py-[1rem] max-md:py-[0.75rem] mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 text-neutral-900 max-md:max-w-full">
+          <input
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
+            type="text"
+            id="CourseName"
+            value={data?.CourseName}
+            onChange={handleInputChange} // Thêm xử lý onChange
+            className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
+          />
         </div>
+      </div>
       <div className="grid grid-cols-2 max-md:grid-cols-1 gap-10 items-start mt-6 w-full max-md:max-w-full">
         {/* {basicInfo.map((info, index) => (
           <BasicInfoItem key={index} label={info.label} value={info.value} />
         ))} */}
-        
+
         <div className="flex flex-col ">
           <label
             htmlFor="CourseCatogory"
@@ -118,68 +118,70 @@ export function CourseInfo({
         </div>
       </div>
       <div className="grid grid-cols-2 max-md:grid-cols-1 gap-10 items-start mt-6 w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none max-md:max-w-full">
-      <div className="flex justify-between gap-5 items-center w-full max-md:max-w-full">
-        <StatItem
-          disabled={
-            !role?.RolePermissions?.includes("course_edit") &&
-            !role?.RolePermissions?.includes("course_only")
-          }
-          id="CoursePrice"
-          label="Giá"
-          value={data?.CoursePrice}
-          type="input"
-          handleInputChange={handleInputChange}
-        />
-        <StatItem
-          disabled={
-            !role?.RolePermissions?.includes("course_edit") &&
-            !role?.RolePermissions?.includes("course_only")
-          }
-          id="CourseDiscount"
-          label="Giảm giá"
-          value={data?.CourseDiscount}
-          type="input"
-          handleInputChange={handleInputChange}
-        />
+        <div className="flex justify-between gap-5 items-center w-full max-md:max-w-full">
+          <StatItem
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
+            id="CoursePrice"
+            label="Giá"
+            value={data?.CoursePrice}
+            type="input"
+            handleInputChange={handleInputChange}
+          />
+          <StatItem
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
+            id="CourseDiscount"
+            label="Giảm giá"
+            value={data?.CourseDiscount}
+            type="input"
+            handleInputChange={handleInputChange}
+          />
         </div>
         <div className="grid grid-cols-2 justify-between gap-5 items-center w-full max-md:max-w-full">
-        <div
-          className={`flex flex-col grow shrink self-center`}
-        >
-          <div className="text-neutral-900 text-opacity-50">Trạng thái</div>
-          {data?.CourseStatus === 1 ? (
-            <button
-              disabled={
-                !role?.RolePermissions?.includes("course_edit") &&
-                !role?.RolePermissions?.includes("course_only")
-              }
-              onClick={handleToggle}
-              className="flex mt-3 gap-3 justify-center items-center px-3 mb-3 bg-[#D1F669]  rounded-[99px]"
-            >
-              <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem] bg-[#D1F669] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">Đang hoạt động</div>
-            </button>
-          ) : (
-            <button
-              disabled={
-                !role?.RolePermissions?.includes("course_edit") &&
-                !role?.RolePermissions?.includes("course_only")
-              }
-              onClick={handleToggle}
-              className="flex mt-6 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]"
-            >
-              <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem]  bg-[#FFD75B] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">Tạm dừng</div>
-            </button>
-          )}
-        </div>
-
-        <div
-          className={`flex flex-col grow shrink`}
-        >
-          <div className="text-neutral-900 text-opacity-50">Đánh giá</div>
-          <div className="flex mt-3 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]">
-            <div className="justify-center items-center text-center w-full px-[0.75rem] py-[0.75rem] bg-[#FFD75B]  rounded-[99px] my-auto">{voteAve}</div>
+          <div className={`flex flex-col grow shrink self-center`}>
+            <div className="text-neutral-900 text-opacity-50">Trạng thái</div>
+            {data?.CourseStatus === 1 ? (
+              <button
+                disabled={
+                  !role?.RolePermissions?.includes("course_edit") &&
+                  !role?.RolePermissions?.includes("course_only")
+                }
+                onClick={handleToggle}
+                className="flex mt-3 gap-3 justify-center items-center px-3 mb-3 bg-[#D1F669]  rounded-[99px]"
+              >
+                <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem] bg-[#D1F669] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">
+                  Đang hoạt động
+                </div>
+              </button>
+            ) : (
+              <button
+                disabled={
+                  !role?.RolePermissions?.includes("course_edit") &&
+                  !role?.RolePermissions?.includes("course_only")
+                }
+                onClick={handleToggle}
+                className="flex mt-6 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]"
+              >
+                <div className="justify-center items-center w-full px-[0.75rem] py-[0.75rem]  bg-[#FFD75B] md:text-[1.125rem] text-[1rem] rounded-[99px] my-auto">
+                  Tạm dừng
+                </div>
+              </button>
+            )}
           </div>
-        </div>
+
+          <div className={`flex flex-col grow shrink`}>
+            <div className="text-neutral-900 text-opacity-50">Đánh giá</div>
+            <div className="flex mt-3 gap-3 justify-center items-center px-3 mb-3  rounded-[99px]">
+              <div className="justify-center items-center text-center w-full px-[0.75rem] py-[0.75rem] bg-[#FFD75B]  rounded-[99px] my-auto">
+                {voteAve}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <button
@@ -262,9 +264,7 @@ function StatItem({ disabled, id, label, value, type, handleInputChange }) {
   };
 
   return (
-    <div
-      className="flex flex-col grow shrink"
-    >
+    <div className="flex flex-col grow shrink">
       <label htmlFor={id} className="text-neutral-900 text-opacity-50">
         {label}
       </label>

@@ -47,7 +47,7 @@ export const headerService = async () => {
 // [GET] /header
 export const roleService = async () => {
   try {
-    console.log(`${process.env.REACT_APP_API_BASE_URL}/admin/dashboard/role`)
+    // console.log(`${process.env.REACT_APP_API_BASE_URL}/admin/dashboard/role`)
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/dashboard/role`, {
       method: 'GET',
       credentials: "include"

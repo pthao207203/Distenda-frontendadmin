@@ -26,7 +26,7 @@ export const categoriesService = async (categorySlug) => {
       method: 'GET',
       credentials: 'include',
     });
-    console.log(`url: ${process.env.REACT_APP_API_BASE_URL}/category`)
+    // console.log(`url: ${process.env.REACT_APP_API_BASE_URL}/category`)
 
     if (!response.ok) {
       throw new Error('Lỗi!!!');
@@ -45,7 +45,7 @@ export const categoryCreatePostService = async (categoryName, categoryParent_id)
   try {
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/category/create`, {
       method: "POST",
-      body: JSON.stringify({ CategoryName: categoryName, categoryParent_id: categoryParent_id }),
+      body: JSON.stringify({ CategoryName: categoryName, CategoryParent_id: categoryParent_id }),
       headers: {
         "Content-Type": "application/json"
       },

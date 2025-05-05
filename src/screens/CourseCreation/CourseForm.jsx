@@ -28,6 +28,8 @@ function CourseForm({ role, user, setLoadingPopup }) {
   const uploadImageInputRef = useRef(null);
   const uploadImagePreviewRef = useRef(null);
 
+  const isMobile = window.innerWidth < 1024;
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -70,7 +72,7 @@ function CourseForm({ role, user, setLoadingPopup }) {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [role]);
 
   const handleSubmit = async () => {
     setLoadingPopup(true);
@@ -128,24 +130,9 @@ function CourseForm({ role, user, setLoadingPopup }) {
   return (
     <>
       <form className="flex flex-col px-16 py-8 w-full bg-white max-md:px-5 max-md:max-w-full">
-        <div className="flex flex-wrap gap-3 justify-between items-start w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none max-w-screen max-md:max-w-full">
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            className="flex gap-2 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299]"
-          >
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ebcf993eb7976cff90cc8a7bea1273b209255d5447ef5613e65401b7cede61ae?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
-              alt=""
-              className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
-            />
-            <span className="gap-2 self-stretch my-auto text-[1.25rem] max-md:text-[1.125rem]">
-              Tạo khóa học
-            </span>
-          </button>
-          <div className="flex flex-col mt-2.5 text-neutral-900 max-md:max-w-full">
-            <label htmlFor="CourseName" className="w-[860px]">
+        <div className="flex flex-wrap gap-3 justify-between items-start w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none max-w-screen max-lg:max-w-full">
+          <div className="flex flex-1 flex-col mt-2.5 text-neutral-900">
+            <label htmlFor="CourseName" className="w-full">
               Tên khóa học{" "}
               <span className="text-red-600" aria-hidden="true">
                 *
@@ -160,6 +147,21 @@ function CourseForm({ role, user, setLoadingPopup }) {
               onChange={handleChange}
             />
           </div>
+          <button
+            onClick={handleSubmit}
+            type="button"
+            className="flex gap-2 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] max-lg:hidden"
+          >
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ebcf993eb7976cff90cc8a7bea1273b209255d5447ef5613e65401b7cede61ae?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
+              alt=""
+              className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
+            />
+            <span className="gap-2 self-stretch my-auto text-[1.25rem] max-md:text-[1.125rem]">
+              Tạo khóa học
+            </span>
+          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-5 mt-7 max-md:grid-cols-1">
@@ -311,6 +313,23 @@ function CourseForm({ role, user, setLoadingPopup }) {
             />
           </div>
         </div>
+        {isMobile && (
+          <button
+            onClick={handleSubmit}
+            type="button"
+            className="flex max-lg:mt-[12px] gap-2 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] lg:hidden"
+          >
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ebcf993eb7976cff90cc8a7bea1273b209255d5447ef5613e65401b7cede61ae?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
+              alt=""
+              className="object-cover shrink-0 self-stretch my-auto w-6 aspect-square"
+            />
+            <span className="gap-2 self-stretch my-auto text-[1.25rem] max-md:text-[1.125rem]">
+              Tạo khóa học
+            </span>
+          </button>
+        )}
       </form>
       {/* Popup thành công */}
       <PopupSuccess
