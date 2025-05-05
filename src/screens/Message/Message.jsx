@@ -351,7 +351,7 @@ const Message = () => {
   return (
     <>
       {users.length > 0 ? (
-        <main className="flex  h-fit overflow-hiden min-h-[calc(100vh-76px)] max-h-[calc(100vh-532px)] max-md:flex-col bg-none max-md:max-w-full">
+        <main className="flex  h-fit overflow-hiden min-h-[calc(100vh-3.0625rem)] max-h-[calc(100vh-532px)] max-md:flex-col bg-none max-md:max-w-full">
           <aside className="bg-white overflow-hidden-scroll flex-row md:order-2 min-w-fit min-h-full px-[1.25rem] py-[2rem] max-md:px-[0.5rem] max-md:py-[0.75rem] max-md:w-full max-xl:ml-0 max-md:pr-0 max-md:min-h-[60px]">
             <div className="flex flex-col  text-[1.5rem] font-medium mb-4  text-black min-w-fit max-md:hidden ">
               <div className="p-[0.625rem] max-w-fit rounded-[0.5rem] ">
@@ -460,8 +460,8 @@ const Message = () => {
             </div>
           </aside>
 
-          <div className="flex flex-col justify-between w-full max-w-full bg-none text-white  min-h-[calc(100vh-150px)]    ">
-            <div className="flex items-center justify-between bg-[#6C8299] px-[20px] py-[12px] text-[12px] lg:text-[1.25rem]  font-semibold h-[50px]">
+          <div className="flex flex-col justify-between w-full max-w-full bg-none text-white  min-h-[calc(100vh-9rem)]    ">
+            <div className="flex items-center justify-between bg-[#6C8299] px-[20px] py-[12px] text-[12px] lg:text-[1.25rem]  font-semibold">
               <div className="flex items-center">
                 <img
                   src={
