@@ -59,7 +59,7 @@ function PopupImage({ onClose, content }) {
                         <img
                             loading="lazy"
                             src="https://cdn.builder.io/api/v1/image/assets/TEMP/8bbfb14016c67d4716e0a6366eed76fac938e5a78f6cba88c3ed041abcc52d72?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
-                            className="absolute top-[20px] right-[40px] w-[20px] h-[20px] object-contain z-50"
+                            className="absolute top-[20px] right-[2rem] w-[1.5rem] h-[1.5rem] object-contain z-50"
                             alt="Close icon"
                             onClick={handleClose} // Gọi hàm handleClose khi click vào icon
                         />
