@@ -59,7 +59,7 @@ function App() {
         method: 'GET',
       });
       const data = await response.json();
-      updateFavicon(data.WebsiteIcon); // Cập nhật favicon từ API
+      updateFavicon(data.WebsiteIconAdmin); // Cập nhật favicon từ API
     };
 
     fetchFavicon();
