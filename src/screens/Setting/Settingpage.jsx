@@ -74,11 +74,13 @@ export default function Settingpage() {
           WebsiteLogoAdmin: result.WebsiteLogoAdmin || "",
           WebsiteLogoUser: result.WebsiteLogoUser || "",
           WebsiteIcon: result.WebsiteIcon || "",
+          WebsiteIconAdmin: result.WebsiteIconAdmin || "",
         });
         setImageUrls({
           WebsiteLogoAdmin: result.WebsiteLogoAdmin || "",
           WebsiteLogoUser: result.WebsiteLogoUser || "",
           WebsiteIcon: result.WebsiteIcon || "",
+          WebsiteIconAdmin: result.WebsiteIconAdmin || "",
         });
       }
       setLoading(false);
@@ -254,7 +256,7 @@ export default function Settingpage() {
                 className="flex gap-[0.25rem] mt-[1rem] border justify-center items-center px-3 py-3 rounded-lg w-[25rem] min-h-[3rem] max-md:min-h-[2rem]"
               />
             </div>
-            <div className="flex flex-wrap gap-3 justify-between items-start mt-[0.5rem] w-full max-md:max-w-full">
+            <div className="flex flex-wrap gap-20 justify-start items-start mt-[0.5rem] w-full max-md:max-w-full">
               <FileUpload
                 label="Logo Admin"
                 id="WebsiteLogoAdmin"
@@ -266,6 +268,39 @@ export default function Settingpage() {
                 imageUrl={imageUrls["WebsiteLogoAdmin"]}
                 onFileSelect={handleImageChange}
               />
+              <div className="flex flex-col min-w-[15rem] max-md:max-w-full">
+                <div className="text-[#171717] text-opacity-50 max-md:max-w-full">
+                  Icon Web Admin
+                </div>
+                <div className="flex flex-wrap gap-4 items-center w-full text-white max-md:max-w-full">
+                  <img
+                    loading="lazy"
+                    src={imageUrls["WebsiteIconAdmin"]}
+                    alt={`"Icon Web" preview`}
+                    className="object-contain self-stretch my-auto w-[67px] h-[67px] rounded-lg bg-[#CFCFCF]"
+                    ref={uploadImagePreviewRef["WebsiteIconAdmin"]}
+                  />
+                  <button className="flex gap-3 justify-center items-center self-stretch px-3 py-3 my-auto rounded-lg bg-[#6C8299] min-h-[46px]">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/b89b8bfd22bc2795389e527250a9a6d8837d50745dd80eb6ef8da7f2fb81f4a1?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
+                      alt=""
+                      className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+                    />
+                    <span className="gap-2.5 self-stretch my-auto"></span>
+                    <label htmlFor="WebsiteIconAdmin">Chọn tệp</label>
+                    <input
+                      type="file"
+                      className="gap-2.5 self-stretch my-auto form-control-file hidden" // Ẩn input file
+                      id="WebsiteIconAdmin"
+                      name="WebsiteIconAdmin"
+                      accept="image/*"
+                      ref={uploadImageInputRef["WebsiteIconAdmin"]}
+                      onChange={handleImageChange}
+                    />
+                  </button>
+                </div>
+              </div>
               <FileUpload
                 label="Logo User"
                 id="WebsiteLogoUser"
@@ -279,7 +314,7 @@ export default function Settingpage() {
                 <div className="text-[#171717] text-opacity-50 max-md:max-w-full">
                   Icon Web
                 </div>
-                <div className="flex flex-wrap gap-4 items-center mt-2 w-full text-white max-md:max-w-full">
+                <div className="flex flex-wrap gap-4 items-center w-full text-white max-md:max-w-full">
                   <img
                     loading="lazy"
                     src={imageUrls["WebsiteIcon"]}
