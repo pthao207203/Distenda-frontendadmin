@@ -42,16 +42,18 @@ import VoucherNew from './screens/Voucher/VoucherNew/VoucherNew';
 
 function App() {
   const updateFavicon = (faviconURL) => {
-    const link = document.querySelector("link[rel='icon']");
-    if (link) {
-      link.href = faviconURL; // Cập nhật link favicon
+    const existingLink = document.querySelector("link[rel~='icon']");
+    if (existingLink) {
+      existingLink.href = faviconURL + '?v=' + Date.now(); // tránh cache
     } else {
       const newLink = document.createElement("link");
       newLink.rel = "icon";
-      newLink.href = faviconURL;
-      document.head.appendChild(newLink); // Tạo mới nếu chưa có
+      newLink.type = "image/png"; // hoặc image/x-icon
+      newLink.href = faviconURL + '?v=' + Date.now();
+      document.head.appendChild(newLink);
     }
   };
+
   useEffect(() => {
     // Giả sử bạn lấy link favicon từ API hoặc database
     const fetchFavicon = async () => {
@@ -59,6 +61,7 @@ function App() {
         method: 'GET',
       });
       const data = await response.json();
+      console.log(data)
       updateFavicon(data.WebsiteIconAdmin); // Cập nhật favicon từ API
     };
 
