@@ -188,11 +188,7 @@ function AdminDetailPage() {
           <div className="flex flex-wrap flex-1 shrink gap-4 items-center basis-0 min-w-[15rem] max-md:max-w-full">
             <img
               loading="lazy"
-              src={
-                data?.AdminAvatar
-                  ? data.AdminAvatar
-                  : "https://cdn.builder.io/api/v1/image/assets/TEMP/9f4c77a7cd8d0d6938085c2329962000d9898f65d43cbc645023d10de84cf689?placeholderIfAbsent=true&apiKey=bb36f631e8e54463aa9d0d8a1339282b"
-              }
+              src={data?.AdminAvatar ? data.AdminAvatar : "/profile.svg"}
               alt="Instructor profile"
               className="object-cover rounded-full shrink-0 self-stretch my-auto aspect-square w-[9rem]"
             />
