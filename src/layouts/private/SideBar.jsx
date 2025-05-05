@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useRole } from "../AppContext";
-import { headerController } from "../../controllers/home.controller";
+// import { headerController } from "../../controllers/home.controller";
 
 export default function SideBar({ headerHeight }) {
   const [isOpen, setIsOpen] = useState(false); // Quản lý trạng thái mở/đóng sidebar
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024); // Kiểm tra xem có phải desktop hay không
   const location = useLocation(); // Lấy đường dẫn hiện tại
-  const { role } = useRole();
-  console.log(role);
+  const { role, user } = useRole();
+  // console.log("user", role);
 
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,18 +23,18 @@ export default function SideBar({ headerHeight }) {
     return () => window.removeEventListener("resize", handleResize); // Cleanup
   }, []);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await headerController(setLoading);
-      if (result) {
-        setData(result); // Lưu dữ liệu nếu hợp lệ
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const result = await headerController(setLoading);
+  //     if (result) {
+  //       setData(result); // Lưu dữ liệu nếu hợp lệ
+  //     }
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     if (isDesktop) {
@@ -42,67 +42,71 @@ export default function SideBar({ headerHeight }) {
     }
   }, [isDesktop]);
 
-  const menuItems = [
-    role?.role?.RolePermissions?.includes("dashboard_view") && {
-      link: "/",
-      icon: "/icons/home.svg",
-      label: "Trang chủ",
-    },
-    role?.role?.RolePermissions?.includes("message_view") && { 
-      link: "/message", 
-      icon: "/icons/category.svg", 
-      label: "Tin nhắn" 
-    },
-    role?.role?.RolePermissions?.includes("course_view") && {
-      link: "/courses",
-      icon: "/icons/document.svg",
-      label: "Khóa học",
-    },
-    role?.role?.RolePermissions?.includes("user_view") && {
-      link: "/user",
-      icon: "/icons/2user.svg",
-      label: "Người dùng",
-    },
-    role?.role?.RolePermissions?.includes("admin_view") && {
-      link: "/admin",
-      icon: "/icons/work.svg",
-      label: "Quản trị viên",
-    },
-    role?.role?.RolePermissions?.includes("payment_view") && {
-      link: "/payment",
-      icon: "/icons/paper.svg",
-      label: "Hóa đơn",
-    },
-    role?.role?.RolePermissions?.includes("voucher_view") && {
-      link: "/voucher",
-      icon: "/icons/discount.svg",
-      label: "Voucher",
-    },
-    role?.role?.RolePermissions?.includes("banner_view") && {
-      link: "/banner",
-      icon: "/icons/banner.svg",
-      label: "Banner",
-    },
-    role?.role?.RolePermissions?.includes("role_view") && {
-      link: "/authorities",
-      icon: "/icons/setting.svg",
-      label: "Phân quyền",
-    },
-    // role?.role?.RolePermissions?.includes("noti_view") && {
-    //   link: "/notification",
-    //   icon: "/icons/notification.svg",
-    //   label: "Thông báo",
-    // },
-    role?.role?.RolePermissions?.includes("setting_view") && {
-      link: "/setting",
-      icon: "/icons/category.svg",
-      label: "Thông tin web",
-    },
-  ].filter((item) => item);
+  const [menuItems, setMenuItems] = useState([]);
+  useEffect(() => {
+    // console.log("role sidebar", role);
+    setMenuItems(
+      [
+        role?.RolePermissions?.includes("dashboard_view") && {
+          link: "/",
+          icon: "/icons/home.svg",
+          label: "Trang chủ",
+        },
+        role?.RolePermissions?.includes("message_view") && {
+          link: "/message",
+          icon: "/icons/category.svg",
+          label: "Tin nhắn",
+        },
+        (role?.RolePermissions?.includes("course_view") ||
+          role?.RolePermissions?.includes("course_only")) && {
+          link: "/courses",
+          icon: "/icons/document.svg",
+          label: "Khóa học",
+        },
+        role?.RolePermissions?.includes("user_view") && {
+          link: "/user",
+          icon: "/icons/2user.svg",
+          label: "Người dùng",
+        },
+        role?.RolePermissions?.includes("admin_view") && {
+          link: "/admin",
+          icon: "/icons/work.svg",
+          label: "Quản trị viên",
+        },
+        role?.RolePermissions?.includes("payment_view") && {
+          link: "/payment",
+          icon: "/icons/paper.svg",
+          label: "Hóa đơn",
+        },
+        role?.RolePermissions?.includes("voucher_view") && {
+          link: "/voucher",
+          icon: "/icons/discount.svg",
+          label: "Voucher",
+        },
+        role?.RolePermissions?.includes("banner_view") && {
+          link: "/banner",
+          icon: "/icons/banner.svg",
+          label: "Banner",
+        },
+        role?.RolePermissions?.includes("role_view") && {
+          link: "/authorities",
+          icon: "/icons/setting.svg",
+          label: "Phân quyền",
+        },
+        role?.RolePermissions?.includes("setting_view") && {
+          link: "/setting",
+          icon: "/icons/category.svg",
+          label: "Thông tin web",
+        },
+      ].filter((item) => item)
+    );
+  }, [role]);
 
-  const adminAvatar = data?.setting?.user?.AdminAvatar || "/profile.svg";
+  // console.log("SideBar => ", data);
 
-  console.log("SideBar => ", data);
+  // if (loading) {
+  //   return "Đang tải...";
+  // }
   return (
     <>
       {isOpen && !isDesktop && (
@@ -121,42 +125,35 @@ export default function SideBar({ headerHeight }) {
         }}
         onClick={(e) => e.stopPropagation()} // Ngăn sự kiện lan đến overlay
       >
-        <div className="flex gap-2 justify-evenly items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
+        <div className="flex gap-4 justify-start items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
           <img
             loading="lazy"
-            src={
-              data?.setting?.user?.AdminAvatar
-                ? data.setting.user.AdminAvatar
-                : "/profile.svg"
-            }
+            src={user?.AdminFullName ? user.AdminAvatar : "/profile.svg"}
             alt="Profile"
             className="rounded-full object-cover  w-[3rem] h-[3rem] max-md:w-[2.5rem] max-md:h-[2.5rem]"
-            
           />
           <div>
             <h4
               className="mb-1 font-semibold shrink"
-              style={{ fontSize: "1.25rem", color: "black" }}
+              style={{ fontSize: "1.5rem", color: "black" }}
             >
-              {data?.setting?.user?.AdminFullName?.split(" ")
-                .slice(-2)
-                .join(" ")}
+              {user?.AdminFullName?.split(" ").slice(-2).join(" ")}
             </h4>
-            <h4 className="font-medium text-[1.125rem] text-black">
-              {data?.role?.RoleName || "Không có vai trò"}
+            <h4 className="font-medium md:text-[1.125rem] text-[1rem] text-black">
+              {role?.RoleName || "Không có vai trò"}
             </h4>
           </div>
         </div>
 
-        <div className="flex flex-col overflow-auto px-3">
+        <div className="flex flex-col overflow-auto px-[0.75rem]">
           {menuItems.map((item, index) => (
-            <Link to={item.link} key={index}>
+            <Link to={item.link} key={index} onClick={() => setIsOpen(false)}>
               <div
-                className={`flex items-center text-xl gap-4 px-2 py-3 text-[1.125rem] ${
+                className={`flex items-center gap-4 px-2 py-3 text-[1.25rem] ${
                   (location.pathname.includes(item.link) &&
                     item.link !== "/") ||
                   (item.link === "/" && location.pathname === "/")
-                    ? "bg-[#EBF1F9] font-medium p-2 rounded-xl"
+                    ? "bg-[#EBF1F9] font-medium px-[0.75rem] py-[1rem] rounded-xl"
                     : ""
                 }`}
                 style={{ color: "black" }}
@@ -177,7 +174,7 @@ export default function SideBar({ headerHeight }) {
       {!isDesktop && !isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed top-[0.75rem] left-[1.125rem] z-50 p-2 text-white rounded-md max-md:top-[0.275rem] max-md:left-[0.25rem]"
+          className="fixed top-[0.675rem] left-[1.125rem] z-50 p-2 text-white rounded-md max-md:top-[0.475rem] max-md:left-[0.25rem]"
         >
           {/* Biểu tượng SVG */}
           <svg

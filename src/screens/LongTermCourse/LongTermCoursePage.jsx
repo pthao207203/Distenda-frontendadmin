@@ -20,7 +20,7 @@ function CourseForm() {
   ];
 
   return (
-    <main className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+    <main className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
       <NavigationBar />
       <section className="flex flex-col px-16 py-8 mt-1.5 bg-white max-md:px-5 max-md:max-w-full w-full">
         <div className="max-md:max-w-full w-full">

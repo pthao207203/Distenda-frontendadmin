@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { headerController } from "../../controllers/home.controller";
+import { useRole } from "../AppContext";
 
 export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
   const [openDetails, setOpenDetails] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { user } = useRole();
   const toggleTaskBar = () => {
     setOpenDetails(!openDetails); // Đảo trạng thái openDetails
     handleTaskBarToggle();
@@ -12,7 +13,7 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
   const [data, setData] = useState();
   useEffect(() => {
     async function fetchData() {
-      const result = await headerController(setLoading);
+      const result = await headerController();
       if (result) {
         setData(result); // Lưu dữ liệu nếu hợp lệ
       }
@@ -24,32 +25,15 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
   const headerRef = useRef(null);
   useEffect(() => {
     async function fetchData() {
-      const result = await headerController(setLoading);
-      console.log("Header result:", result);
+      await headerController();
+      // console.log("Header result:", result);
       if (headerRef.current) {
         setHeaderHeight(headerRef.current.offsetHeight);
       }
     }
 
     fetchData();
-  }, [setLoading, setHeaderHeight]);
-
-
-  if (loading) {
-    return <div>Đang tải...</div>;
-  }
-  // useEffect(() => {
-  //   const updateHeight = () => {
-  //     if (headerRef.current) {
-  //       setHeaderHeight(headerRef.current.offsetHeight);
-  //     }
-  //   };
-
-  //   updateHeight(); // Cập nhật ngay khi mount
-  //   const timeout = setTimeout(updateHeight, 0); // Trì hoãn để DOM ổn định
-
-  //   return () => clearTimeout(timeout); // Xóa timeout nếu component unmount
-  // }, [headerRef, setHeaderHeight]);
+  }, [setHeaderHeight]);
 
   return (
     <header
@@ -58,9 +42,15 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
     >
       <div className="flex items-center justify-between px-[3.75rem] max-md:px-[2rem] max-md:pr-[20px]">
         <div className="flex items-center p-2">
-        <img
-            src={data?.setting?.WebsiteLogoAdmin ? data.setting.WebsiteLogoAdmin : "/logo1.svg"}
-            alt={data?.setting?.WebsiteName ? data.setting.WebsiteName : "DISTENDA"}
+          <img
+            src={
+              data?.setting?.WebsiteLogoAdmin
+                ? data.setting.WebsiteLogoAdmin
+                : "/logo1.svg"
+            }
+            alt={
+              data?.setting?.WebsiteName ? data.setting.WebsiteName : "DISTENDA"
+            }
             className="w-[8.375rem] max-md:w-[75px] h-auto object-contain "
           />
         </div>
@@ -68,7 +58,10 @@ export default function Header({ setHeaderHeight, handleTaskBarToggle }) {
           className="flex flex-row items-center gap-[0.5rem]"
           onClick={toggleTaskBar}
         >
-          <img loading="lazy" src={data?.setting?.user?.AdminAvatar ? data?.setting?.user?.AdminAvatar: "/profile.svg"} alt="Profile"
+          <img
+            loading="lazy"
+            src={user?.AdminAvatar ? user?.AdminAvatar : "/profile.svg"}
+            alt="Profile"
             className="object-cover rounded-full w-[2.345rem] h-[2.345rem] max-md:w-[1.75rem] max-md:h-[1.75rem]"
           />
           <img

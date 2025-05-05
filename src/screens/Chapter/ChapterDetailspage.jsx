@@ -3,14 +3,13 @@ import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import LessonRow from "./components/LessonRow";
 import TableHeader from "./components/TableHeader";
-import StatusBadge from "./components/StatusBadge";
 import EditButton from "./components/EditButton";
-import DeleteButton from "./components/DeleteButton";
-import uploadImage from "../../components/UploadImage";
 import { lessonDetailController } from "../../controllers/lesson.controller";
 
 import Loading from "../../components/Loading";
 import ChapterDetailHistory from "./components/ChapterDetailHistory";
+import { useRole } from "../../layouts/AppContext";
+import { Helmet } from "react-helmet";
 
 // const lessons = [
 //   { id: 1, name: "HTML cơ bản", lastUpdated: "29/11/2024 23:13" },
@@ -25,6 +24,8 @@ function CourseLesson() {
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const { LessonID } = useParams();
   const navigate = useNavigate();
+
+  const { role } = useRole();
 
   const onClickExercise = () => {
     navigate(`/courses/lesson/exercise/create/${data._id}`);
@@ -55,24 +56,6 @@ function CourseLesson() {
   }
   console.log("coursedetail => ", data);
 
-  // Hàm cập nhật dữ liệu khi người dùng nhập vào
-  const handleChange = (e) => {
-    // Kiểm tra nếu e.target tồn tại (dành cho input và select)
-    if (e?.target) {
-      const { id, value } = e.target;
-      setData((prevData) => ({
-        ...prevData,
-        [id]: value, // Cập nhật theo id của input
-      }));
-    } else if (e) {
-      // Nếu không có e.target (TinyMCE)
-      setData((prevData) => ({
-        ...prevData,
-        [e.id]: e.getContent(), // Lấy nội dung từ TinyMCE và cập nhật theo id
-      }));
-    }
-  };
-
   const lessonChange = (videoID, event) => {
     const newLessonName = event.target.value; // Lấy giá trị từ input
     setData((prevData) => {
@@ -95,15 +78,18 @@ function CourseLesson() {
 
   return (
     <>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+      <Helmet>
+        <title>{data?.LessonName ? data.LessonName : "Chi tiết chương"}</title>
+      </Helmet>
+      <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem] min-h-screen font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
         {/* <DeleteButton data={data} /> */}
         <div className="flex z-0 flex-col w-full max-md:max-w-full">
-          <div className="text-xl font-semibold text-neutral-900 max-md:max-w-full">
+          <div className="md:text-[1.25rem] text-[1rem]  font-semibold text-neutral-900 max-md:max-w-full">
             Thông tin cơ bản
           </div>
-          <div className="flex flex-wrap gap-10 items-start mt-6 w-full max-md:max-w-full">
-            <div className="flex flex-wrap gap-10 font-semibold min-w-[240px] w-full">
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+          <div className="flex flex-wrap gap-2 items-start mt-6 w-full max-md:max-w-full">
+            <div className="grid grid-cols-2 gap-4 font-semibold w-full">
+              <div className="flex flex-col justify-center max-md:max-w-full ">
                 <label
                   htmlFor="LessonName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"
@@ -113,19 +99,10 @@ function CourseLesson() {
                 <span className="p-2.5 mt-2 rounded-lg text-neutral-900">
                   {data.LessonName}
                 </span>
-                {/* <div className="flex relative gap-2.5 items-start px-2.5 py-3 mt-2 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] text-neutral-900 max-md:max-w-full">
-                  <input
-                    type="text"
-                    id="LessonName"
-                    value={data.LessonName}
-                    onChange={handleChange} // Thêm xử lý onChange
-                    className="z-0 flex-1 shrink my-auto basis-0 max-md:max-w-full bg-transparent border-none outline-none"
-                  />
-                </div> */}
               </div>
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+              <div className="flex flex-col justify-center max-md:max-w-full ">
                 <div className="flex gap-3 items-center">
-                  <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+                  <div className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                     Lần cuối cập nhật
                   </div>
                   <button
@@ -151,21 +128,21 @@ function CourseLesson() {
             {/* <StatusBadge /> */}
           </div>
         </div>
-        <div className="flex z-0 flex-wrap gap-6 items-center mt-10 w-full text-xl max-md:max-w-full">
+        <div className="flex z-0 flex-wrap gap-3 items-center mt-4 w-full md:text-[1.25rem] text-[1rem] max-md:max-w-full">
           <div className="self-stretch my-auto font-semibold text-neutral-900">
             Bài tập
           </div>
-          <EditButton onClick={onClickExercise} />
+          <EditButton onClick={onClickExercise} role={role} />
         </div>
-        <div className="flex z-0 flex-col mt-10 w-full text-xl text-neutral-900 max-md:max-w-full">
+        <div className="flex z-0 flex-col mt-8 w-full md:text-[1.25rem] text-[1rem]  text-neutral-900 max-md:max-w-full">
           <div className="flex flex-wrap gap-6 items-start w-full max-md:max-w-full">
             <div className="font-semibold">Danh sách bài học</div>
             <div className="flex-1 shrink font-medium leading-none text-right basis-0 max-md:max-w-full">
-              Tong so bai hoc: {data?.video?.length}
+              Tổng số bài học: {data?.video?.length}
             </div>
           </div>
           <div className="flex flex-col pb-16 mt-6 w-full font-medium leading-none max-md:max-w-full">
-            <TableHeader onClickVideo={onClickVideo} />
+            <TableHeader onClickVideo={onClickVideo} role={role} />
             {data?.video?.length > 0 &&
               data.video.map((video, index) => (
                 <LessonRow
@@ -173,6 +150,7 @@ function CourseLesson() {
                   key={index}
                   video={video}
                   lessonChange={lessonChange}
+                  role={role}
                 />
               ))}
           </div>

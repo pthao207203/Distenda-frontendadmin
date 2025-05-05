@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { rolesDeleteController, rolesCreateController, rolesUpdateController } from "../../../controllers/role.controller";
+import {
+  rolesDeleteController,
+  rolesCreateController,
+  rolesUpdateController,
+} from "../../../controllers/role.controller";
 
-export default function ActionButtons({ selectedRoles, permissions }) {
+export default function ActionButtons({
+  selectedRoles,
+  permissions,
+  role,
+  setLoadingPopup,
+}) {
   const [popupContent, setPopupContent] = useState(null); // Trạng thái quản lý nội dung popup
   const [isPopupVisible, setPopupVisible] = useState(false); // Trạng thái hiển thị popup xác nhận
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [isAddRolePopupVisible, setAddRolePopupVisible] = useState(false); // Trạng thái hiển thị popup thêm chức vụ
   const [name, setName] = useState(""); // Lưu trữ tên chức vụ
   const [action, setActionType] = useState(null);
-  console.log(permissions)
+  console.log(permissions);
 
   const handlePopup = (action) => {
     setActionType(action);
@@ -32,12 +41,13 @@ export default function ActionButtons({ selectedRoles, permissions }) {
     try {
       let response;
       if (action === "delete") {
-        // Gọi API xóa
-        // console.log("selectedRoles", selectedRoles)
+        setLoadingPopup(true);
         response = await rolesDeleteController(selectedRoles);
+        setLoadingPopup(false);
       } else if (action === "update") {
-        // Gọi API cập nhật
+        setLoadingPopup(true);
         response = await rolesUpdateController(permissions);
+        setLoadingPopup(false);
       }
 
       if (!response.ok) {
@@ -66,18 +76,23 @@ export default function ActionButtons({ selectedRoles, permissions }) {
 
   const handleConfirmAddRole = async () => {
     console.log(`Thêm chức vụ: ${name}`);
-    const response = await rolesCreateController(name);
+    await rolesCreateController(name);
     setAddRolePopupVisible(false);
     setName(""); // Reset tên chức vụ
     window.location.reload();
   };
 
   return (
-    <div className="flex flex-col items-start md:ml-[5px]">
+    <div className="flex flex-col items-start md:ml-[0.5rem]">
       {/* Các nút hành động */}
-      <div className="flex gap-2.5 items-start self-end text-xl font-semibold leading-none text-white max-md:max-w-full">
+      <div className="flex gap-[0.5rem] items-start self-end text-[1.25rem] max-md:text-[1rem] font-semibold leading-none text-white max-md:max-w-full">
         <button
-          className="flex gap-3 justify-center items-center px-3 py-3 whitespace-nowrap bg-[#DF322B] rounded-lg min-h-[46px]"
+          disabled={!role?.RolePermissions?.includes("role_delete")}
+          className={`flex gap-3 justify-center items-center px-3 py-3 whitespace-nowrap rounded-lg min-h-[46px] ${
+            role?.RolePermissions?.includes("role_delete")
+              ? "bg-[#DF322B] hover:bg-[#902723]"
+              : "bg-[#ffd1d1] cursor-not-allowed"
+          }`}
           onClick={() => handlePopup("delete")}
         >
           <img
@@ -86,10 +101,16 @@ export default function ActionButtons({ selectedRoles, permissions }) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[85px]">Xóa</span>
+          <span className="gap-[0.25rem] self-stretch my-auto ">Xóa</span>
         </button>
         <button
-          className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px]"
+          disabled={!role?.RolePermissions?.includes("role_create")}
+          className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg min-h-[46px]
+            ${
+              role?.RolePermissions?.includes("role_create")
+                ? "bg-[#6C8299] hover:bg-[#55657a]"
+                : "bg-[#CDD5DF] cursor-not-allowed"
+            }`}
           onClick={handleAddRolePopup}
         >
           <img
@@ -98,10 +119,17 @@ export default function ActionButtons({ selectedRoles, permissions }) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[204px]">Thêm chức vụ</span>
+          <span className="gap-2.5 self-stretch my-auto">
+            Thêm chức vụ
+          </span>
         </button>
         <button
-          className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px]"
+          disabled={!role?.RolePermissions?.includes("role_edit")}
+          className={`flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299] min-h-[46px] ${
+            role?.RolePermissions?.includes("role_edit")
+              ? "bg-[#6C8299] hover:bg-[#55657a]"
+              : "bg-[#CDD5DF] cursor-not-allowed"
+          }`}
           onClick={() => handlePopup("update")}
         >
           <img
@@ -110,7 +138,9 @@ export default function ActionButtons({ selectedRoles, permissions }) {
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto min-w-[96px]">Cập nhật</span>
+          <span className="gap-2.5 self-stretch my-auto">
+            Cập nhật
+          </span>
         </button>
       </div>
 
@@ -124,16 +154,18 @@ export default function ActionButtons({ selectedRoles, permissions }) {
                 className="object-contain shrink-0 my-auto w-14 aspect-square"
                 alt="Icon"
               />
-              <p className="mt-6 text-xl text-neutral-900 font-semibold text-center">{popupContent}</p>
+              <p className="mt-6 text-[1.25rem] max-md:text-[1rem] text-neutral-900 font-semibold text-center">
+                {popupContent}
+              </p>
               <div className="mt-4 flex gap-3 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
                 <button
-                  className="w-[150px] h-[60px] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
+                  className="w-[9.375rem] h-[60px] bg-[#6C8299] text-white rounded-lg flex justify-center items-center hover:bg-slate-700"
                   onClick={confirmAction}
                 >
                   Có
                 </button>
                 <button
-                  className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
+                  className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center hover:bg-gray-400"
                   onClick={closePopup}
                 >
                   Không
@@ -149,25 +181,25 @@ export default function ActionButtons({ selectedRoles, permissions }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
           <div className="flex flex-col justify-center px-10 py-16 bg-white rounded-3xl w-[600px] font-medium">
             <div className="flex flex-col items-center w-full text-center">
-              <p className="text-xl font-semibold text-neutral-900 mb-4">
+              <p className="text-[1.25rem] max-md:text-[1rem] font-semibold text-neutral-900 mb-4">
                 Nhập chức vụ
               </p>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#6C8299]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-[1.125rem] max-md:text-[1rem] focus:outline-none focus:ring-2 focus:ring-[#6C8299]"
                 placeholder="Nhập chức vụ"
               />
               <div className="mt-6 flex gap-4 justify-center items-center max-h-[70px] py-4 rounded-lg text-2xl">
                 <button
-                  className="w-[150px] h-[60px] bg-[#6C8299] text-white rounded-lg hover:bg-slate-600"
+                  className="w-[9.375rem] h-[60px] bg-[#6C8299] text-white rounded-lg hover:bg-slate-600"
                   onClick={handleConfirmAddRole}
                 >
                   Thêm
                 </button>
                 <button
-                  className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg hover:bg-gray-400"
+                  className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg hover:bg-gray-400"
                   onClick={handleCloseAddRolePopup}
                 >
                   Hủy
@@ -188,9 +220,11 @@ export default function ActionButtons({ selectedRoles, permissions }) {
                 className="object-contain shrink-0 my-auto w-14 aspect-square"
                 alt="Success icon"
               />
-              <p className="mt-6 text-xl text-neutral-900 font-semibold text-center">Cập nhật thành công!</p>
+              <p className="mt-6 text-[1.25rem] max-md:text-[1rem] text-neutral-900 font-semibold text-center">
+                Cập nhật thành công!
+              </p>
               <button
-                className="w-[150px] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center font-semibold text-2xl hover:bg-gray-400 mt-4"
+                className="w-[9.375rem] h-[60px] bg-[#CDD5DF] text-[#14375F] rounded-lg flex justify-center items-center font-semibold text-2xl hover:bg-gray-400 mt-4"
                 onClick={closeSuccessPopup}
               >
                 Thoát

@@ -6,7 +6,13 @@ import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../../components/PopupSuccess";
 import { PopupError } from "../../../../components/PopupError";
 
-export const ActionButton = ({ icon, label, variant, personalInfo }) => {
+export const ActionButton = ({
+  icon,
+  label,
+  variant,
+  personalInfo,
+  setLoadingPopup,
+}) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false); // Trạng thái hiển thị popup
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
@@ -14,16 +20,17 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   const handleClick = async () => {
     if (label === "Lưu") {
+      setLoadingPopup(true);
       console.log("User profile data:", personalInfo); // In ra dữ liệu người dùng
       // Gọi hàm fetch data khi submit
       const result = await adminCreatePostController(personalInfo);
       // Hiển thị popup thành công/thất bại
       if (result.code === 200) {
-        setSuccessPopupVisible(true)
+        setSuccessPopupVisible(true);
       } else {
-        setErrorPopupVisible(false)
+        setErrorPopupVisible(false);
       }
-      // navigate("/admin"); // Điều hướng đến trang AdminPage
+      setLoadingPopup(false);
     } else if (label === "Hủy") {
       setIsPopupVisible(true); // Hiển thị popup nếu là nút Hủy
     }
@@ -31,7 +38,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false); // Ẩn popup thành công
-    window.location.reload();
+    window.location.href("/admin");
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
@@ -47,7 +54,7 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
   };
 
   const baseClasses =
-    "flex gap-3 justify-center items-center px-8 py-3 rounded-lg min-h-[46px] max-md:px-5";
+    "flex gap-3 justify-center items-center px-8 rounded-lg min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:px-[1.25rem]";
   const variantClasses =
     variant === "primary"
       ? "text-white bg-[#6C8299] hover:bg-slate-600"
@@ -55,7 +62,10 @@ export const ActionButton = ({ icon, label, variant, personalInfo }) => {
 
   return (
     <>
-      <button className={`${baseClasses} ${variantClasses}`} onClick={handleClick}>
+      <button
+        className={`${baseClasses} ${variantClasses}`}
+        onClick={handleClick}
+      >
         {icon && (
           <img
             loading="lazy"

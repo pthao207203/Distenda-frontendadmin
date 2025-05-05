@@ -28,6 +28,7 @@ export async function categoryController(setLoading) {
 
 export async function categoryCreatePostController(categoryName, categoryParent_id) {
   try {
+    console.log(typeof categoryParent_id);
     const result = await categoryCreatePostService(categoryName, categoryParent_id); // Gọi API
     // console.log("result admin ", result);
     return result;

@@ -7,6 +7,7 @@ import { bannersController } from "../../controllers/banner.controller";
 import Loading from "../../components/Loading";
 import HistoryButton from "../../components/HistoryButton";
 import BannerHistory from "./components/BannerHistory";
+import { useRole } from "../../layouts/AppContext";
 
 function BannerList() {
   const [allBanners, setAllBanners] = useState([]);
@@ -14,6 +15,7 @@ function BannerList() {
 
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+  const { role } = useRole();
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
@@ -25,7 +27,9 @@ function BannerList() {
 
   useEffect(() => {
     async function fetchData() {
+
       const result = await bannersController(setLoading);
+
       if (result) {
         setAllBanners(result);
         setFilteredBanners(result);
@@ -38,19 +42,15 @@ function BannerList() {
   const handleSearch = (value) => {
     const keyword = value.toLowerCase();
 
-    const filtered = allBanners.filter(banner => {
+    const filtered = allBanners.filter((banner) => {
       const bannerName = banner.BannerName?.toLowerCase() || "";
       const courseName = banner.course?.CourseName?.toLowerCase() || "";
 
-      return (
-        bannerName.includes(keyword) ||
-        courseName.includes(keyword)
-      );
+      return bannerName.includes(keyword) || courseName.includes(keyword);
     });
 
     setFilteredBanners(filtered);
   };
-
 
   if (loading) {
     return <Loading />;
@@ -60,7 +60,7 @@ function BannerList() {
         <Helmet>
           <title>Quản lý banner</title>
         </Helmet>
-        <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] min-h-screen max-md:px-5 max-md:max-w-full">
+        <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem] font-medium bg-white basis-0 min-h-screen max-md:px-5 max-md:max-w-full">
           <SearchBar onSearch={handleSearch} />
           <div className="flex flex-col pb-16 mt-6 w-full text-neutral-900 max-md:max-w-full">
             <div className="flex justify-between items-center mb-3">
@@ -69,7 +69,7 @@ function BannerList() {
                 Tổng số banner: {filteredBanners.length}
               </div>
             </div>
-            <TableHeader />
+            <TableHeader role={role} />
             {filteredBanners.length > 0 ? (
               filteredBanners.map((banner, index) => (
                 <BannerRow
@@ -78,12 +78,12 @@ function BannerList() {
                   index={index + 1}
                   name={banner.BannerName}
                   linkedCourse={banner.course.CourseName}
+                  role={role}
                 />
               ))
             ) : (
               <p className="mt-4 text-center">Không tìm thấy banner nào.</p>
             )}
-
           </div>
         </div>
         {isHistoryVisible && (

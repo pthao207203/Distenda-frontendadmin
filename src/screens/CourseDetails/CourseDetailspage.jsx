@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CourseHeader } from "./components/CourseHeader";
 import { CourseImage } from "./components/CourseImage";
 import { CourseInfo } from "./components/CourseInfo";
@@ -10,6 +9,9 @@ import { courseDetailController } from "../../controllers/course.controller";
 import CourseDetailHistory from "./components/CourseDetailHistory";
 
 import Loading from "../../components/Loading";
+import { useRole } from "../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../components/PopupLoading";
 
 function CourseDetails() {
   const [data, setData] = useState({});
@@ -17,8 +19,10 @@ function CourseDetails() {
   const [category, setCategory] = useState();
   const [intructor, setIntructor] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingPopup, setLoadingPopup] = useState(false);
 
   const editorRef = useRef(null);
+  const { role } = useRole();
 
   const [imageUrl, setImageUrl] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
@@ -40,6 +44,7 @@ function CourseDetails() {
   };
 
   const { CourseID } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -49,26 +54,33 @@ function CourseDetails() {
       setLoading(false);
       // console.log(result)
       if (result) {
+        if (
+          !role?.RolePermissions?.includes("course_view") &&
+          result.course.CourseIntructor !== result.user
+        ) {
+          console.log("Không có quyền, chuyển về trang chủ");
+          navigate("/courses");
+        }
         setCategory((prevRoles) => [
           { _id: "", CategoryName: "Chọn danh mục", disabled: true },
-          ...result.categories,
+          ...result.course.categories,
         ]);
         setIntructor((prevRoles) => [
           { _id: "", AdminFullName: "Chọn giảng viên", disabled: true },
-          ...result.intructors,
+          ...result.course.intructors,
         ]);
-        setSelectedFileName(result.CoursePicture);
-        setImageUrl(result.CoursePicture);
-        setData(result);
+        setSelectedFileName(result.course.CoursePicture);
+        setImageUrl(result.course.CoursePicture);
+        setData(result.course);
       }
     }
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [role]);
+  console.log(data);
   const handleSubmit = async () => {
-    let uploadedImageUrl = data.BannerPicture;
+    let uploadedImageUrl = data.CoursePicture;
     // Upload ảnh nếu người dùng đã chọn
     if (selectedFileName) {
       uploadedImageUrl = await uploadImage(selectedFileName);
@@ -135,8 +147,19 @@ function CourseDetails() {
   };
   return (
     <>
-      <div className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
-        <CourseHeader data={data} handleSubmit={handleSubmit} />
+      <Helmet>
+        <title>
+          {data?.CourseName ? data.CourseName : "Chi tiết khoá học"}
+        </title>
+      </Helmet>
+      {loadingPopup && <PopupLoading />}
+      <div className="flex flex-col flex-1 shrink p-[4rem] md:text-[1.25rem] text-[1rem]  font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full">
+        <CourseHeader
+          data={data}
+          handleSubmit={handleSubmit}
+          role={role}
+          setLoadingPopup={setLoadingPopup}
+        />
         <CourseImage
           data={data}
           uploadImageInputRef={uploadImageInputRef}
@@ -144,6 +167,7 @@ function CourseDetails() {
           handleImageChange={handleImageChange}
           imageUrl={imageUrl}
           handleHistoryRequest={handleHistoryRequest}
+          role={role}
         />
         <CourseInfo
           data={data}
@@ -153,8 +177,9 @@ function CourseDetails() {
           handleEditorChange={handleEditorChange}
           handleToggle={handleToggle}
           editorRef={editorRef}
+          role={role}
         />
-        <ChapterList data={data} lessonChange={lessonChange} />
+        <ChapterList data={data} lessonChange={lessonChange} role={role} />
       </div>
       {isHistoryVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 max-md:px-10 overflow-hidden">

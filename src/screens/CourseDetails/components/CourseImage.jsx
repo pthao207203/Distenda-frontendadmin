@@ -8,10 +8,13 @@ export function CourseImage({
   uploadImagePreviewRef,
   handleImageChange,
   handleHistoryRequest,
+  role,
 }) {
   // console.log("data", data)
   return (
     <div className="flex flex-wrap gap-4 mt-10 w-full max-md:max-w-full">
+      <div className="flex flex-col gap-2.5">
+
       <img
         ref={uploadImagePreviewRef}
         loading="lazy"
@@ -19,39 +22,21 @@ export function CourseImage({
         alt={data.CourseName}
         className="object-contain shrink-0 self-end aspect-[1.61] min-w-[240px] w-[316px]"
       />
-      <div className="flex flex-col flex-1 shrink basis-0 min-w-[240px] max-md:max-w-full">
-        <div className="flex flex-wrap flex-1 gap-8 items-center size-full max-md:max-w-full">
-          <DateInfo
-            label="Ngày đăng"
-            date={moment(data?.createdAt).format("DD/MM/YYYY")}
-          />
-          <div className="flex flex-col self-stretch my-auto min-w-[240px] w-[270px]">
-            <div className="flex gap-3 items-center">
-              <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
-                Lần cuối cập nhật
-              </div>
-              <button className="flex gap-3 justify-center items-center" onClick ={handleHistoryRequest}>
-                <img
-                  loading="lazy"
-                  src="/icons/Show.svg"
-                  className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square filter-[#6c8299] sepia-60 saturate-200 hue-rotate-190 "
-                  alt="Icon"
-                />
-              </button>
-            </div>
-            <div className="mt-4 text-xl font-medium text-neutral-900">
-              {moment(
-                data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
-                  data?.createdAt
-              ).format("DD/MM/YYYY")}
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col mt-4 max-w-full text-xl font-medium leading-none w-[569px]">
-          <button>
+      <div className="flex flex-col mt-4 max-w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none">
+          <button
+            disabled={
+              !role?.RolePermissions?.includes("course_edit") &&
+              !role?.RolePermissions?.includes("course_only")
+            }
+          >
             <label
               htmlFor="CoursePicture"
-              className="flex gap-3 justify-center items-center self-start px-3 py-3 text-white rounded-lg bg-[#6C8299] min-h-[46px] w-[166px]"
+              className={`flex gap-2 justify-center items-center self-start md:p-3 max-md:p-2 text-white rounded-lg w-fit ${
+                role?.RolePermissions?.includes("course_edit") ||
+                role?.RolePermissions?.includes("course_only")
+                  ? "bg-[#6C8299] hover:bg-[#55657a]"
+                  : "bg-[#CDD5DF] cursor-not-allowed"
+              }`}
             >
               <img
                 loading="lazy"
@@ -75,6 +60,39 @@ export function CourseImage({
             htmljpeg.com.sdhgsg.ie104
           </div> */}
         </div>
+</div>
+      <div className="flex flex-col shrink basis-0 min-w-[240px] self-start gap-5 max-md:max-w-full">
+        <div className="flex flex-wrap flex-1 gap-8 items-center size-full max-md:max-w-full">
+          <DateInfo
+            label="Ngày đăng"
+            date={moment(data?.createdAt).format("DD/MM/YYYY")}
+          />
+          <div className="flex flex-col self-stretch my-auto ">
+            <div className="flex gap-3 items-center">
+              <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
+                Lần cuối cập nhật
+              </div>
+              <button
+                className="flex gap-3 justify-center items-center"
+                onClick={handleHistoryRequest}
+              >
+                <img
+                  loading="lazy"
+                  src="/icons/Show.svg"
+                  className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square filter-[#6c8299] sepia-60 saturate-200 hue-rotate-190 "
+                  alt="Icon"
+                />
+              </button>
+            </div>
+            <div className="mt-4 md:text-[1.25rem] text-[1rem]  font-medium text-neutral-900">
+              {moment(
+                data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
+                  data?.createdAt
+              ).format("DD/MM/YYYY")}
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   );
@@ -82,11 +100,11 @@ export function CourseImage({
 
 function DateInfo({ label, date }) {
   return (
-    <div className="flex flex-col self-stretch my-auto min-w-[240px] w-[270px]">
-      <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+    <div className="flex flex-col self-stretch my-auto ">
+      <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
         {label}
       </div>
-      <div className="mt-4 text-xl font-medium text-neutral-900">{date}</div>
+      <div className="mt-4 md:text-[1.25rem] text-[1rem]  font-medium text-neutral-900">{date}</div>
     </div>
   );
 }

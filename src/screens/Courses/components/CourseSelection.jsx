@@ -20,7 +20,7 @@ function CourseSelection({ onClose }) {
     <main className="flex relative flex-col justify-center px-5 py-24 font-medium leading-none bg-white rounded-3xl max-w-[748px] max-md:py-24">
       {/* Nút đóng (X) */}
       <button
-        className="absolute top-2 right-2 text-xl font-bold text-black"
+        className="absolute top-2 right-2 md:text-[1.25rem] text-[1rem]  font-bold text-black"
         onClick={onClose}
       >✖
       </button>

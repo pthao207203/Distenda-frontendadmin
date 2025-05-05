@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CourseHeader } from "./CourseHeader";
-import { NavigationBreadcrumb } from "./NavigationBreadcrumb";
 import { VideoSection } from "./VideoSection";
 import { videoDetailController } from "../../controllers/lesson.controller";
 import moment from "moment";
 import Loading from "../../components/Loading";
 import VideoDetailHistory from "./VideoDetailHistory";
+import { useRole } from "../../layouts/AppContext";
+import { Helmet } from "react-helmet";
 
 export default function CourseContent() {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const navigate = useNavigate();
+  const { role } = useRole();
 
   const { VideoID } = useParams();
   const handleHistoryRequest = () => {
@@ -37,21 +38,35 @@ export default function CourseContent() {
     }
 
     fetchData();
-  }, []);
+  }, [VideoID]);
 
   if (loading) {
     return <Loading />;
   } else
     return (
       <>
-        <section className="flex flex-col flex-1 shrink p-16 text-xl font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full overflow-hidden">
+        <Helmet>
+          <title>{data?.VideoName ? data.VideoName : "Chi tiết bài học"}</title>
+        </Helmet>
+        <section className="flex flex-col flex-1 shrink p-16 text-[1.25rem] max-md:text-[1rem] font-medium bg-white basis-0 min-w-[240px] max-md:px-5 max-md:max-w-full overflow-hidden">
           <div className="flex flex-col pb-16 w-full max-md:max-w-full h-full gap-2.5">
             <form className="flex flex-wrap gap-10 justify-end items-end w-full font-medium leading-none max-md:max-w-full">
-              <div className="flex gap-2.5 items-start text-xl text-white min-w-[240px]">
+              <div className="flex gap-2.5 items-start md:text-[1.25rem] text-[1rem]  text-white">
                 <button
+                  disabled={
+                    !(
+                      role?.RolePermissions?.includes("course_edit") ||
+                      role?.RolePermissions?.includes("course_only")
+                    )
+                  }
                   onClick={onClick}
                   type="submit"
-                  className="flex gap-3 justify-center items-center px-3 py-3 rounded-lg bg-[#6C8299]"
+                  className={`flex gap-3 justify-center items-center md:p-3 max-md:p-2 rounded-lg ${
+                    role?.RolePermissions?.includes("course_edit") ||
+                    role?.RolePermissions?.includes("course_only")
+                      ? "bg-[#6C8299] hover:bg-[#55657a]"
+                      : "bg-[#CDD5DF] cursor-not-allowed"
+                  }`}
                 >
                   <img
                     loading="lazy"
@@ -64,8 +79,19 @@ export default function CourseContent() {
                   </span>
                 </button>
                 <button
+                  disabled={
+                    !(
+                      role?.RolePermissions?.includes("course_delete") ||
+                      role?.RolePermissions?.includes("course_only")
+                    )
+                  }
                   type="button"
-                  className="flex gap-3 justify-center items-center px-3 py-3 bg-[#DF322B] rounded-lg"
+                  className={`flex gap-3 justify-center items-center md:p-3 max-md:p-2 rounded-lg ${
+                    role?.RolePermissions?.includes("course_delete") ||
+                    role?.RolePermissions?.includes("course_only")
+                      ? "bg-[#DF322B] hover:bg-[#902723]"
+                      : "bg-[#ffd1d1] cursor-not-allowed"
+                  }`}
                 >
                   <img
                     loading="lazy"
@@ -78,20 +104,20 @@ export default function CourseContent() {
               </div>
             </form>
             <div className="flex gap-3 flex-col  items-start">
-              <div className="flex flex-col flex-1 shrink justify-start text-xl basis-0 max-md:max-w-full">
+              <div className="flex flex-col flex-1 shrink justify-start md:text-[1.25rem] text-[1rem]  basis-0 max-md:max-w-full">
                 <label
                   htmlFor="lessonName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"
                 >
                   Tên bài <span className="text-red-600">*</span>
                 </label>
-                <div className="flex relative gap-2.5 items-start py-3 mt-2 w-fit min-h-[63px] text-neutral-900 max-md:max-w-full">
+                <div className="flex relative gap-2.5 items-start py-3 mt-2 w-fit text-neutral-900 max-md:max-w-full">
                   {data?.VideoName}
                 </div>
               </div>
-              <div className="flex flex-col justify-center max-md:max-w-full min-w-[240px] w-[400px]">
+              <div className="flex flex-col justify-center max-md:max-w-full">
                 <div className="flex gap-3 items-center">
-                  <div className="text-lg font-semibold text-neutral-900 text-opacity-50">
+                  <div className="text-[1.125rem] max-md:text-[1rem] font-semibold text-neutral-900 text-opacity-50">
                     Lần cuối cập nhật
                   </div>
                   <button
@@ -107,7 +133,7 @@ export default function CourseContent() {
                     />
                   </button>
                 </div>
-                <span className="mt-3 text-xl font-medium text-neutral-900">
+                <span className="mt-3 md:text-[1.25rem] text-[1rem]  font-medium text-neutral-900">
                   {moment(
                     data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
                       data?.createdAt
@@ -116,7 +142,7 @@ export default function CourseContent() {
               </div>
             </div>
             {data?.VideoDescription && (
-              <div className="flex flex-col mt-3 flex-1 shrink justify-center text-xl basis-0 min-w-[240px] max-md:max-w-full">
+              <div className="flex flex-col mt-3 flex-1 shrink justify-center md:text-[1.25rem] text-[1rem]  basis-0 min-w-[240px] max-md:max-w-full">
                 <label
                   htmlFor="lessonName"
                   className="text-neutral-900 text-opacity-50 max-md:max-w-full"

@@ -20,7 +20,7 @@ function ErrorPage() {
           imageSrc="/404page.png"
           imageAlt="404 error illustration"
         />
-        <h1 id="error-heading" className="mt-2.5 text-xl text-black">
+        <h1 id="error-heading" className="mt-2.5 text-[1.25rem] max-md:text-[1rem] text-black">
           Không tìm thấy trang.
         </h1>
       </div>

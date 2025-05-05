@@ -4,11 +4,11 @@ import { Editor } from "@tinymce/tinymce-react";
 function FormSection({ id, value, label, required, textArea, minHeight, editorRef, onChange }) {
 
   return (
-    <div className="flex flex-col w-full text-xl font-medium leading-none text-neutral-900">
+    <div className="flex flex-col w-full md:text-[1.25rem] text-[1rem]  font-medium leading-none text-neutral-900">
       <label htmlFor={id} className="max-md:max-w-full">
         {label} {required && <span className="text-red-600" aria-hidden="true">*</span>}
       </label>
-      <div className="flex gap-2.5 mt-2 w-full" style={{ minHeight: minHeight || '63px' }}>
+      <div className="flex gap-2.5 mt-2 w-full" style={{ minHeight: minHeight || '2.75rem' }}>
         {textArea ? (
           <Editor
             id={id}
@@ -53,7 +53,7 @@ function FormSection({ id, value, label, required, textArea, minHeight, editorRe
             id={id}
             type="text"
             required
-            className="flex gap-2.5 mt-2 pl-5 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[63px] max-md:max-w-full"
+            className="flex gap-2.5 mt-2 pl-5 w-full rounded-lg border border-solid border-slate-500 border-opacity-80 min-h-[3.75rem] max-md:min-h-[2.75rem] max-md:max-w-full"
             aria-required="true"
             onChange={onChange}
           />

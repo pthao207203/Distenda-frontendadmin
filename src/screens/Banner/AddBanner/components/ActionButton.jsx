@@ -6,10 +6,13 @@ import { PopupConfirmCancel } from "../../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../../components/PopupSuccess";
 import { PopupError } from "../../../../components/PopupError";
 
-import Loading from "../../../../components/Loading";
-
-export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
-  const [loading, setLoading] = useState(false)
+export const ActionButton = ({
+  icon,
+  label,
+  variant,
+  handleSubmit,
+  setLoadingPopup,
+}) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false); // Trạng thái hiển thị popup
   const [successPopupVisible, setSuccessPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
@@ -18,17 +21,16 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
   const handleClick = async (e) => {
     e.preventDefault();
     if (label === "Lưu") {
-      setLoading(true)
-      const data = await handleSubmit()
+      setLoadingPopup(true);
+      const data = await handleSubmit();
       console.log("User profile data:", data);
-      const result = await bannerCreatePostController(data)
-      setLoading(false)
+      const result = await bannerCreatePostController(data);
+      setLoadingPopup(false);
       if (result.code === 200) {
-        setSuccessPopupVisible(true)
+        setSuccessPopupVisible(true);
       } else {
-        setErrorPopupVisible(false)
+        setErrorPopupVisible(false);
       }
-      navigate("/banner"); // Điều hướng đến trang AdminPage
     } else if (label === "Hủy") {
       setIsPopupVisible(true); // Hiển thị popup nếu là nút Hủy
     }
@@ -40,11 +42,11 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false); // Ẩn popup thành công
-    window.location.reload();
+    navigate("/banner");
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
-    // window.location.reload();
+    navigate("/banner");
   };
 
   const handlePopupConfirm = () => {
@@ -54,20 +56,19 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
     }, 200); // Thêm độ trễ nhỏ để đảm bảo người dùng thấy popup đóng trước khi điều hướng
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const baseClasses =
-    "flex gap-3 justify-center items-center px-8 py-3 rounded-lg min-h-[46px] max-md:px-5";
+    "flex gap-2 justify-center items-center px-[1.5rem] py-[0.75rem] rounded-lg min-h-[3rem] max-md:max-h-[1.875rem]";
   const variantClasses =
     variant === "primary"
       ? "text-white bg-[#6C8299] hover:bg-slate-600"
-      : "bg-[#CDD5DF] text-[#14375F] hover:bg-slate-400";
+      : "bg-[#CDD5DF] text-[#14375F] hover:bg-slate-400 px-[1rem]";
 
   return (
     <>
-      <button className={`${baseClasses} ${variantClasses}`} onClick={handleClick}>
+      <button
+        className={`${baseClasses} ${variantClasses}`}
+        onClick={handleClick}
+      >
         {icon && (
           <img
             loading="lazy"
@@ -83,7 +84,7 @@ export const ActionButton = ({ icon, label, variant, handleSubmit }) => {
       <PopupConfirmCancel
         isVisible={isPopupVisible}
         content="Bạn có chắc chắn muốn hủy những thay đổi không?"
-        confirm="Huỷ"
+        confirm="Có"
         onConfirm={handlePopupConfirm}
         onCancel={handlePopupClose}
       />

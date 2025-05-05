@@ -1,17 +1,22 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function AddAccountButton() {
+function AddAccountButton({ role }) {
   const navigate = useNavigate();
 
   const handleAddAccount = () => {
-    navigate('/admin/create');
+    navigate("/admin/create");
   };
 
   return (
     <div className="flex justify-end items-center w-full">
       <button
-        className="flex gap-3 justify-center items-center px-3 py-3 text-xl font-medium text-white rounded-lg bg-[#6C8299] min-w-[240px] hover:bg-slate-600"
+        disabled={!role?.RolePermissions?.includes("admin_create")}
+        className={`flex gap-3 justify-center items-center px-3 py-3 text-[1.25rem] max-md:text-[1rem] font-medium text-white rounded-lg min-w-[15rem] ${
+          role?.RolePermissions?.includes("admin_create")
+            ? "bg-[#6C8299] hover:bg-[#55657a]"
+            : "bg-[#CDD5DF] cursor-not-allowed"
+        }`}
         onClick={handleAddAccount}
       >
         <img

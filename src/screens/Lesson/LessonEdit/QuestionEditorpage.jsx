@@ -1,37 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom"
-import { exerciseDetailController, exerciseUpdatePostController } from "../../../controllers/lesson.controller"
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  exerciseDetailController,
+  exerciseUpdatePostController,
+} from "../../../controllers/lesson.controller";
 import ContentSection from "./ContentSection";
 
 import Loading from "../../../components/Loading";
 import { PopupConfirmCancel } from "../../../components/PopupConfirmCancel";
 import { PopupSuccess } from "../../../components/PopupSuccess";
 import { PopupError } from "../../../components/PopupError";
+import { useRole } from "../../../layouts/AppContext";
+import { Helmet } from "react-helmet";
+import { PopupLoading } from "../../../components/PopupLoading";
 
 function QuestionEditor() {
-  // const sections = [
-  //   {
-  //     title: "Đề bài",
-  //     content: `Given an integer, n, perform the following conditional actions:
-  //               If n is odd, print Weird
-  //               If n is even and in the inclusive range of 2 to 5, print Not Weird
-  //               If n is even and in the inclusive range of 6 to 20, print Weird
-  //               If n is even and greater than 20, print Not Weird`,
-  //   },
-  //   {
-  //     title: "Template",
-  //     content: "",
-  //   },
-  //   {
-  //     title: "Đáp án",
-  //     content: "",
-  //   },
-  // ];
+  const { role } = useRole();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (
+      role &&
+      !role?.RolePermissions?.includes("course_edit") &&
+      !role?.RolePermissions?.includes("course_only")
+    ) {
+      console.log("Không có quyền, chuyển về trang chủ");
+      navigate("/courses");
+    }
+  }, [navigate, role]);
+
   const { LessonID } = useParams();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
-  const editorRef = useRef()
+  const [loadingPopup, setLoadingPopup] = useState(false);
+  const editorRef = useRef();
 
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [popupContent, setPopupContent] = useState("");
@@ -39,15 +40,13 @@ function QuestionEditor() {
   const [errorPopupVisible, setErrorPopupVisible] = useState(false); // Trạng thái hiển thị popup thành công
 
   useEffect(() => {
-    console.log("vao")
     async function fetchData() {
-      console.log("vaof")
-      setLoading(true)
+      setLoading(true);
       const result = await exerciseDetailController(setLoading, LessonID);
-      setLoading(false)
+      setLoading(false);
       // console.log(result)
       if (result) {
-        setData(result)
+        setData(result);
       }
     }
 
@@ -57,12 +56,13 @@ function QuestionEditor() {
 
   const handlePopup = async (actionType) => {
     if (actionType === "update") {
-      console.log("khong vao")
-      const result = await exerciseUpdatePostController(setLoading, LessonID, data)
+      setLoadingPopup(true);
+      const result = await exerciseUpdatePostController(LessonID, data);
+      setLoadingPopup(false);
       if (result.code === 200) {
-        setSuccessPopupVisible(true)
+        setSuccessPopupVisible(true);
       } else {
-        setErrorPopupVisible(true)
+        setErrorPopupVisible(true);
       }
     } else if (actionType === "cancel") {
       setPopupContent(
@@ -85,7 +85,7 @@ function QuestionEditor() {
 
   const closeSuccessPopup = () => {
     setSuccessPopupVisible(false);
-    navigate(`/courses/lesson/detail/${LessonID}`)
+    navigate(`/courses/lesson/detail/${LessonID}`);
   };
   const closeErrorPopup = () => {
     setErrorPopupVisible(false); // Ẩn popup thành công
@@ -110,7 +110,7 @@ function QuestionEditor() {
         ...prevData.exercise,
         ExerciseTestcase: [
           ...prevData.exercise.ExerciseTestcase,
-          { Input: '', Output: '' }, // Thêm một test case mới với input và output rỗng
+          { Input: "", Output: "" }, // Thêm một test case mới với input và output rỗng
         ],
       },
     }));
@@ -149,18 +149,22 @@ function QuestionEditor() {
       },
     }));
   };
-  console.log(data)
+  console.log(data);
   if (loading) {
     return <Loading />;
   } else
     return (
       <>
-        <div className="flex flex-col px-16 pt-16 pb-40 bg-white text-xl font-medium max-md:px-5 max-md:pb-24">
+        <Helmet>
+          <title>Thêm bài tập</title>
+        </Helmet>
+        {loadingPopup && <PopupLoading />}
+        <div className="flex flex-col px-16 pt-16 pb-40 bg-white md:text-[1.25rem] text-[1rem]  font-medium max-md:px-5 max-md:pb-24">
           {/* Header: Buttons */}
-          <div className="flex gap-4 items-center mb-6">
+          <div className="flex gap-3 max-md:gap-2 items-center mb-6">
             <button
               onClick={() => handlePopup("update")}
-              className="flex gap-2.5 justify-center items-center px-8 py-3 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500"
+              className="flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 text-white rounded-lg bg-[#6C8299] hover:bg-slate-500"
             >
               <img
                 loading="lazy"
@@ -172,7 +176,7 @@ function QuestionEditor() {
             </button>
             <button
               onClick={() => handlePopup("delete")}
-              className="flex gap-2.5 justify-center items-center px-8 py-3 bg-[#CDD5DF] rounded-lg hover:bg-gray-400"
+              className="flex gap-2.5 justify-center items-center md:p-3 max-md:p-2 bg-[#CDD5DF] rounded-lg hover:bg-gray-400"
             >
               <span className="font-medium">Hủy</span>
             </button>
