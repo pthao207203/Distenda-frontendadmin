@@ -373,7 +373,7 @@ const Message = () => {
                       <img
                         src={
                           user.UserAvatar ||
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5ebxW2tkf1OlwOYEF2K55p7OwwX9bhwsN6Q&s"
+                          "https://cdn.builder.io/api/v1/image/assets/TEMP/bbae0514e8058efa2ff3c88f32951fbd7beba3099187677c6ba1c2f96547ea3f?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
                         }
                         alt="avatar"
                         className="h-[40px] max-w-[40px] min-w-[40px] mr-[10px] max-md:aspect-[1.25] rounded-full object-cover"
@@ -466,7 +466,7 @@ const Message = () => {
                 <img
                   src={
                     selectedUser?.UserAvatar ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5ebxW2tkf1OlwOYEF2K55p7OwwX9bhwsN6Q&s"
+                    "https://cdn.builder.io/api/v1/image/assets/TEMP/bbae0514e8058efa2ff3c88f32951fbd7beba3099187677c6ba1c2f96547ea3f?placeholderIfAbsent=true&apiKey=e677dfd035d54dfb9bce1976069f6b0e"
                   }
                   alt="avatar"
                   className="h-[40px] w-[40px] rounded-full object-cover"
