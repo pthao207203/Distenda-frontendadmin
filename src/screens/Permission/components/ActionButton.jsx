@@ -119,9 +119,7 @@ export default function ActionButtons({
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto">
-            Thêm chức vụ
-          </span>
+          <span className="gap-2.5 self-stretch my-auto">Thêm chức vụ</span>
         </button>
         <button
           disabled={!role?.RolePermissions?.includes("role_edit")}
@@ -138,9 +136,7 @@ export default function ActionButtons({
             alt=""
             className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
           />
-          <span className="gap-2.5 self-stretch my-auto">
-            Cập nhật
-          </span>
+          <span className="gap-2.5 self-stretch my-auto">Cập nhật</span>
         </button>
       </div>
 
