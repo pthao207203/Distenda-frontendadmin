@@ -128,7 +128,7 @@ export default function SideBar({ headerHeight }) {
         <div className="flex gap-4 justify-start items-center px-3 w-full pt-[1.25rem] pb-[1.65rem]">
           <img
             loading="lazy"
-            src={user?.AdminFullName ? user.AdminAvatar : "/profile.svg"}
+            src={user?.AdminAvatar != null ? user.AdminAvatar : "/profile.svg"}
             alt="Profile"
             className="rounded-full object-cover  w-[3rem] h-[3rem] max-md:w-[2.5rem] max-md:h-[2.5rem]"
           />
