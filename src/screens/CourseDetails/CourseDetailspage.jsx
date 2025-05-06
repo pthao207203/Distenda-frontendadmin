@@ -56,7 +56,7 @@ function CourseDetails() {
       if (result) {
         if (
           !role?.RolePermissions?.includes("course_view") &&
-          result.course.CourseIntructor !== result.user
+          result.course.CourseIntructor._id !== result.user
         ) {
           console.log("Không có quyền, chuyển về trang chủ");
           navigate("/courses");
