@@ -179,7 +179,9 @@ function AdminDetailPage() {
   return (
     <>
       <Helmet>
-        <title>Thêm banner</title>
+        <title>
+          {data?.AdminFullName ? data.AdminFullName : "Chi tiết người dùng"}
+        </title>
       </Helmet>
       {loadingPopup && <PopupLoading />}
       <div className="flex overflow-hidden flex-col p-[4rem] bg-white min-h-screen max-md:px-[1.25rem]">

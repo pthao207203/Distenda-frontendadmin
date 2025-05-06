@@ -78,7 +78,7 @@ const PersonalInfo = ({
             </label>
             <select
               id="AdminRole_id"
-              value={data?.AdminRole_id}
+              value={data?.role._id}
               onChange={(e) => handleChange(e)} // Kích hoạt hàm onChange khi chọn
               className="p-[0.625rem] mt-2 rounded-lg border border-solid border-slate-500 text-[#171717]"
             >
@@ -89,7 +89,6 @@ const PersonalInfo = ({
                     key={index}
                     value={option._id}
                     disabled={option.disabled}
-                    selected={option._id === data.AdminRole_id}
                   >
                     {option.RoleName}
                   </option>
@@ -162,7 +161,7 @@ const PersonalInfo = ({
               </button>
             </div>
             <span className="p-[0.625rem] mt-2 rounded-lg text-[#171717]">
-            {moment(
+              {moment(
                 data?.editedBy?.[data.editedBy?.length - 1]?.editedAt ||
                   data?.createdAt
               ).format("DD/MM/YYYY")}
