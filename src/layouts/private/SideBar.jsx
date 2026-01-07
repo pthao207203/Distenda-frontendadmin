@@ -98,6 +98,11 @@ export default function SideBar({ headerHeight }) {
           icon: "/icons/category.svg",
           label: "Thông tin web",
         },
+        role?.RolePermissions?.includes("setting_view") && {
+          link: "/livestream",
+          icon: "/icons/livestream.svg",
+          label: "Livestream",
+        },
       ].filter((item) => item)
     );
   }, [role]);
