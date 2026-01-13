@@ -38,7 +38,8 @@ import VoucherDetail from './screens/Voucher/VoucherDetail/VoucherDetail';
 import Message from './screens/Message/Message';
 
 import VoucherNew from './screens/Voucher/VoucherNew/VoucherNew';
-
+import Forum from './screens/Forum/Forum';
+import PostDetail from './screens/PostDetail/PostDetail';
 
 function App() {
   const updateFavicon = (faviconURL) => {
@@ -91,6 +92,8 @@ function App() {
               <Route path="/courses/lesson/video/create/:LessonID" element={<CourseBuilder />} />
               <Route path="/courses/lesson/exercise/create/:LessonID" element={<QuestionEditorpage />} />
               <Route path="/message" element={<Message />} />
+              <Route path="/forum" element={<Forum />} />
+              <Route path="/forum/post/detail/:PostID" element={<PostDetail />} />
 
               {/* <Route path="/long-term-course" element={<LongTermCoursePage />} /> */}
               <Route path='/user' element={<UserTable />} />

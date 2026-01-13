@@ -83,6 +83,11 @@ export default function SideBar({ headerHeight }) {
           icon: "/icons/discount.svg",
           label: "Voucher",
         },
+        role?.RolePermissions?.includes("forum_view") && {
+          link: "/forum",
+          icon: "/icons/forum.svg",
+          label: "Forum",
+        },
         role?.RolePermissions?.includes("banner_view") && {
           link: "/banner",
           icon: "/icons/banner.svg",
