@@ -1,19 +1,16 @@
 import * as React from "react";
 
-function TableRow({
-  id,
-  teacher,
-  content,
-  liveTime,
-  approveTime,
-  status,
-}) {
+function TableRow({ id, teacher, title, liveTime, status, onClick }) {
   const getStatusStyles = (status) => {
     switch (status) {
       case "live":
-        return "bg-[#FFD84D] text-black";
+        return "bg-[#CFF500] text-black w-[180px] text-center";
+      case "not_started":
+        return "bg-[#FFD75B] text-black w-[180px] text-center";
+      case "ended":
+        return "bg-[#DF322B] text-white w-[180px] text-center";
       default:
-        return "bg-[#DF322B] text-white";
+        return "bg-gray-400 text-white w-[180px] text-center";
     }
   };
 
@@ -21,52 +18,51 @@ function TableRow({
     switch (status) {
       case "live":
         return "Đang live";
-      default:
+      case "not_started":
+        return "Chuẩn bị";
+      case "ended":
         return "Đã xong";
+      default:
+        return "Không xác định";
     }
   };
 
   return (
-    <div className="flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#131313] min-h-[3.75rem]">
-      
+    <div
+      className="flex overflow-hidden flex-wrap mt-3 w-full bg-white text-[#131313] min-h-[3.75rem] 
+                 cursor-pointer hover:bg-slate-50"
+      onClick={onClick}
+    >
       {/* Mã live */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
+      <td
+        className="flex basis-1/5 justify-center items-center bg-[#EBF1F9]"
+      >
+        <div className="max-w-[180px] truncate cursor-pointer">
           {id}
-        </span>
+        </div>
+      </td>
+
+      {/* Giảng viên */}
+      <div className="flex basis-1/5 justify-center items-center">
+        {teacher}
       </div>
 
-      {/* Tên giảng viên */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center">
-        <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
-          {teacher}
-        </span>
+      {/* Nội dung */}
+      <div className="flex basis-1/5 justify-center items-center bg-[#EBF1F9]">
+         <div className="max-w-[180px] truncate cursor-pointer">
+          {title}
+        </div>
       </div>
 
-      {/* Nội dung live */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center bg-[#EBF1F9]">
-        <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
-          {content}
-        </span>
-      </div>
-
-      {/* Thời gian live */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center">
-        <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
-          {liveTime}
-        </span>
+      {/* Thời gian */}
+      <div className="flex basis-1/5 justify-center items-center">
+        {liveTime}
       </div>
 
       {/* Trạng thái */}
-      <div className="flex basis-1/5 min-w-0 justify-center items-center">
-        <div
-          className={`self-center shrink w-[90%] px-3 py-2 flex justify-center items-center min-h-[2.5rem] rounded-[6.25rem] ${getStatusStyles(
-            status
-          )}`}
-        >
-          <span className="text-center text-[1.25rem] max-md:text-[1rem] font-medium truncate">
-            {getStatusText(status)}
-          </span>
+      <div className="flex basis-1/5 justify-center items-center">
+        <div className={`px-3 py-2 rounded-full ${getStatusStyles(status)}`}>
+          {getStatusText(status)}
         </div>
       </div>
     </div>

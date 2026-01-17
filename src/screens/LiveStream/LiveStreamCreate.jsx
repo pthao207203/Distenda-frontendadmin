@@ -1,136 +1,196 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { PopupSuccess } from "../../components/PopupSuccess";
 import { PopupError } from "../../components/PopupError";
 import ActionButton from "./components/ActionButton";
-import { Link } from "react-router-dom";
 
-function LiveStreamCreate({ setLoadingPopup }) {
+import {
+  livestreamCreateController,
+  livestreamDetailController,
+  livestreamEditController,
+  livestreamDeleteController,
+} from "../../controllers/livestream.controller";
+
+function LiveStreamCreate({ }) {
   const navigate = useNavigate();
+  const { LivestreamID } = useParams();
+  const isEditMode = !!LivestreamID;
+  const [loading, setLoading] = useState(false);
+
 
   const [data, setData] = useState({
-    InstructorName: "",
-    LiveTitle: "",
-    LiveDescription: "",
+    LivestreamTitle: "",
+    LivestreamDescription: "",
+    LivestreamStartedAt: "",
   });
 
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
   const [errorPopupVisible, setErrorPopupVisible] = useState(false);
+  const [deleteSuccessVisible, setDeleteSuccessVisible] = useState(false);
+
+  // 🔹 Load data khi EDIT
+  useEffect(() => {
+    if (!isEditMode) return;
+
+    const fetchDetail = async () => {
+      const res = await livestreamDetailController(LivestreamID);
+      if (res?.code === 200) {
+        setData({
+          LivestreamTitle: res.data.LivestreamTitle || "",
+          LivestreamDescription: res.data.LivestreamDescription || "",
+          LivestreamStartedAt: res.data.LivestreamStartedAt
+            ? new Date(res.data.LivestreamStartedAt).toISOString().slice(0, 16)
+            : "",
+
+        });
+      }
+    };
+
+    fetchDetail();
+  }, [LivestreamID, isEditMode]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
+    setData((prev) => ({ ...prev, [id]: value }));
   };
 
+  // 🔹 CREATE / UPDATE
   const handleSubmit = async () => {
     try {
-      setLoadingPopup(true);
 
-      console.log("LiveStream data:", data);
+      const result = isEditMode
+        ? await livestreamEditController(
+          setLoading,
+          LivestreamID,
+          {
+            LivestreamTitle: data.LivestreamTitle,
+            LivestreamDescription: data.LivestreamDescription,
+          }
+        )
+        : await livestreamCreateController(setLoading, {
+          LivestreamTitle: data.LivestreamTitle,
+          LivestreamDescription: data.LivestreamDescription,
+          LivestreamStartedAt: data.LivestreamStartedAt,
+        });
 
-      // Gọi API tạo livestream
-      // const result = await livestreamCreateController(data);
-
-      // giả lập success
-      const result = { code: 200 };
-
-      if (result.code === 200) {
+      if (result?.code === 200) {
         setSuccessPopupVisible(true);
       } else {
         setErrorPopupVisible(true);
       }
-    } catch (err) {
+    } catch {
       setErrorPopupVisible(true);
     } finally {
-      setLoadingPopup(false);
+
     }
   };
 
-  const closeSuccessPopup = () => {
-    setSuccessPopupVisible(false);
-    navigate("/livestream");
+  // 🔹 DELETE
+  const handleDelete = async () => {
+    if (!window.confirm("Bạn có chắc muốn xoá livestream này?")) return;
+
+    try {
+      const result = await livestreamDeleteController(
+        setLoading,
+        LivestreamID
+      );
+
+      if (result?.code === 200) {
+        setDeleteSuccessVisible(true);   // 👈 HIỆN POPUP
+      } else {
+        setErrorPopupVisible(true);
+      }
+    } catch (error) {
+      setErrorPopupVisible(true);
+    }
   };
 
-  const closeErrorPopup = () => {
-    setErrorPopupVisible(false);
-  };
 
   return (
     <>
-      <form className="flex flex-col px-16 py-8 w-full bg-white max-md:px-5">
-        <Link to="/livestream/streaming">
-            <ActionButton />
-          </Link>
+      <form className="flex flex-col px-16 py-8 w-full bg-white">
+        {/* ACTION BUTTON */}
+        <div className="flex gap-2 justify-end mb-6">
+          {!isEditMode && (
+            <ActionButton
+              label="Tạo Livestream"
+              bgColor="bg-[#6C8299] hover:bg-[#55657a]"
+              icon="https://cdn.builder.io/api/v1/image/assets/TEMP/b78a7b0bea08f365ad78bb218941e4d8e9e9ff8cd391ee696af50d042524edd2?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
+              onClick={handleSubmit}
+            />
+          )}
 
-        {/* Tên giảng viên */}
-        <div className="flex flex-col mb-5">
-          <label htmlFor="InstructorName" className="font-medium">
-            Tên giảng viên <span className="text-red-600">*</span>
-          </label>
-          <input
-            id="InstructorName"
-            type="text"
-            required
-            className="mt-2 px-4 h-[3rem] rounded-lg border border-slate-400"
-            onChange={handleChange}
-          />
+          {isEditMode && (
+            <>
+              <ActionButton
+                label="Cập nhật"
+                bgColor="bg-[#6C8299]"
+                icon="https://cdn.builder.io/api/v1/image/assets/TEMP/84fdfd4c4d34c64c558acb40d245b2d594b0b0f000c7b4c1dd0353682f135f9d"
+                onClick={handleSubmit}
+              />
+              <ActionButton
+                label="Xóa"
+                bgColor="bg-[#DF322B]"
+                icon="https://cdn.builder.io/api/v1/image/assets/TEMP/39a71fd8008a53a09d7a877aea83770214d261a5f742c728f7c5a0a06accb635"
+                onClick={handleDelete}
+              />
+            </>
+          )}
         </div>
 
+        {/* FORM */}
         {/* Tiêu đề */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="LiveTitle" className="font-medium">
-            Tiêu đề livestream <span className="text-red-600">*</span>
-          </label>
+          <label>Tiêu đề livestream *</label>
           <input
-            id="LiveTitle"
-            type="text"
-            required
-            className="mt-2 px-4 h-[3rem] rounded-lg border border-slate-400"
+            id="LivestreamTitle"
+            value={data.LivestreamTitle}
             onChange={handleChange}
+            className="mt-2 px-4 h-[3rem] border rounded-lg"
           />
         </div>
+
+        {/* Thời gian live */}
         <div className="flex flex-col mb-5">
-          <label htmlFor="LiveTitle" className="font-medium">
-            Thời gian LiveStream <span className="text-red-600">*</span>
-          </label>
+          <label>Thời gian livestream *</label>
           <input
-            id="LiveTime"
-            type="text"
-            required
-            className="mt-2 px-4 h-[3rem] rounded-lg border border-slate-400"
+            id="LivestreamStartedAt"
+            type="datetime-local"
+            value={data.LivestreamStartedAt}
             onChange={handleChange}
+            className="mt-2 px-4 h-[3rem] border rounded-lg"
           />
         </div>
 
         {/* Mô tả */}
         <div className="flex flex-col mb-8">
-          <label htmlFor="LiveDescription" className="font-medium">
-            Mô tả
-          </label>
+          <label>Mô tả</label>
           <textarea
-            id="LiveDescription"
-            rows={5}
-            className="mt-2 px-4 py-3 rounded-lg border border-slate-400 resize-none"
+            id="LivestreamDescription"
+            value={data.LivestreamDescription}
             onChange={handleChange}
+            rows={5}
+            className="mt-2 px-4 py-3 border rounded-lg"
           />
         </div>
-        
       </form>
 
-      {/* Popup */}
       <PopupSuccess
         isVisible={successPopupVisible}
-        message="Tạo livestream thành công!"
-        onClose={closeSuccessPopup}
+        message={isEditMode ? "Cập nhật thành công!" : "Tạo livestream thành công!"}
+        onClose={() => navigate("/livestream")}
       />
 
       <PopupError
         isVisible={errorPopupVisible}
-        message="Tạo livestream thất bại. Vui lòng thử lại!"
-        onClose={closeErrorPopup}
+        message="Thao tác thất bại. Vui lòng thử lại!"
+        onClose={() => navigate("/livestream")}
+      />
+      
+      <PopupSuccess
+        isVisible={deleteSuccessVisible}
+        message="Xoá livestream thành công!"
+        onClose={() => navigate("/livestream")}
       />
     </>
   );

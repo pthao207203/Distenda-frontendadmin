@@ -1,25 +1,20 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-
-function ActionButton() {
-
-
+const ActionButton = ({ label, bgColor, icon, onClick, type = "button" }) => {
   return (
-    <div className="flex justify-end items-center w-full">
-      <button
-        className="flex gap-3 justify-center items-center px-3 py-3 text-[1.25rem] max-md:text-[1rem] font-medium text-white rounded-lg min-w-[15rem] bg-[#6C8299] hover:bg-[#55657a]"
-
-      >
+    <button
+      type={type}
+      onClick={onClick}
+      className={`flex gap-3 justify-center items-center px-3 py-3 text-[1.25rem] max-md:text-[1rem] font-medium text-white rounded-lg ${bgColor} min-w-[15rem]`}
+    >
+      {icon && (
         <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/b78a7b0bea08f365ad78bb218941e4d8e9e9ff8cd391ee696af50d042524edd2?placeholderIfAbsent=true&apiKey=66913a0089c7476296e0d5e235a1975e"
-          alt="Add Account Icon"
-          className="object-contain shrink-0 self-stretch my-auto w-6 aspect-square"
+          src={icon}
+          alt=""
+          className="object-contain w-6 aspect-square"
         />
-        <span className="gap-2.5 self-stretch my-auto">Tạo livestream</span>
-      </button>
-    </div>
+      )}
+      <span>{label}</span>
+    </button>
   );
-}
+};
 
 export default ActionButton;

@@ -20,6 +20,7 @@
     "cloudinary-video-player": "^2.4.1",
     "codemirror": "^5.65.19",
     "dotenv": "^16.4.7",
+    "hls.js": "^1.6.15",
     "https-browserify": "^1.0.0",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
