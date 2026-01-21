@@ -36,6 +36,9 @@ import Errorpage from './screens/Error/Errorpage';
 import VoucherList from './screens/Voucher/Voucherpage';
 import VoucherDetail from './screens/Voucher/VoucherDetail/VoucherDetail';
 import Message from './screens/Message/Message';
+import LiveStreamList from './screens/LiveStream/LiveStreamList';
+import LiveStreamCreate from './screens/LiveStream/LiveStreamCreate';
+import LiveStreaming from './screens/LiveStream/LiveStreaming';
 
 import VoucherNew from './screens/Voucher/VoucherNew/VoucherNew';
 import Forum from './screens/Forum/Forum';
@@ -108,6 +111,11 @@ function App() {
               <Route path="/voucher" element={<VoucherList />} />
               <Route path="/voucher/detail/:VoucherID" element={<VoucherDetail />} />
               <Route path="/voucher/create" element={<VoucherNew />} />
+              <Route path="/livestream" element={<LiveStreamList />} />
+              <Route path="/livestream/create" element={<LiveStreamCreate />} />
+              <Route path="/livestream/edit/:LivestreamID" element={<LiveStreamCreate />} />
+              <Route path="/livestream/:LivestreamID" element={<LiveStreaming />} />
+
 
             </Route>
           </Route>
