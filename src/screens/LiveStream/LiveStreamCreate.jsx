@@ -11,17 +11,17 @@ import {
   livestreamDeleteController,
 } from "../../controllers/livestream.controller";
 
-function LiveStreamCreate({ }) {
+function LiveStreamCreate() {
   const navigate = useNavigate();
   const { LivestreamID } = useParams();
   const isEditMode = !!LivestreamID;
-  const [loading, setLoading] = useState(false);
-
+  const [, setLoading] = useState(false);
 
   const [data, setData] = useState({
     LivestreamTitle: "",
     LivestreamDescription: "",
-    LivestreamStartedAt: "",
+    LivestreamScheduledAt: "",
+    LivestreamStreamKey: "",
   });
 
   const [successPopupVisible, setSuccessPopupVisible] = useState(false);
@@ -32,16 +32,28 @@ function LiveStreamCreate({ }) {
   useEffect(() => {
     if (!isEditMode) return;
 
+    const toInputDateTimeValue = (dateString) => {
+      if (!dateString) return "";
+      const d = new Date(dateString);
+      const pad = (n) => n.toString().padStart(2, "0");
+      const yyyy = d.getFullYear();
+      const mm = pad(d.getMonth() + 1);
+      const dd = pad(d.getDate());
+      const hh = pad(d.getHours());
+      const min = pad(d.getMinutes());
+      return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+    };
+
     const fetchDetail = async () => {
       const res = await livestreamDetailController(LivestreamID);
       if (res?.code === 200) {
         setData({
           LivestreamTitle: res.data.LivestreamTitle || "",
           LivestreamDescription: res.data.LivestreamDescription || "",
-          LivestreamStartedAt: res.data.LivestreamStartedAt
-            ? new Date(res.data.LivestreamStartedAt).toISOString().slice(0, 16)
-            : "",
-
+          LivestreamScheduledAt: toInputDateTimeValue(
+            res.data.LivestreamScheduledAt
+          ),
+          LivestreamStreamKey: res.data.LivestreamStreamKey || "",
         });
       }
     };
@@ -57,21 +69,17 @@ function LiveStreamCreate({ }) {
   // 🔹 CREATE / UPDATE
   const handleSubmit = async () => {
     try {
-
       const result = isEditMode
-        ? await livestreamEditController(
-          setLoading,
-          LivestreamID,
-          {
+        ? await livestreamEditController(setLoading, LivestreamID, {
             LivestreamTitle: data.LivestreamTitle,
             LivestreamDescription: data.LivestreamDescription,
-          }
-        )
+            LivestreamScheduledAt: data.LivestreamScheduledAt,
+          })
         : await livestreamCreateController(setLoading, {
-          LivestreamTitle: data.LivestreamTitle,
-          LivestreamDescription: data.LivestreamDescription,
-          LivestreamStartedAt: data.LivestreamStartedAt,
-        });
+            LivestreamTitle: data.LivestreamTitle,
+            LivestreamDescription: data.LivestreamDescription,
+            LivestreamScheduledAt: data.LivestreamScheduledAt,
+          });
 
       if (result?.code === 200) {
         setSuccessPopupVisible(true);
@@ -81,7 +89,6 @@ function LiveStreamCreate({ }) {
     } catch {
       setErrorPopupVisible(true);
     } finally {
-
     }
   };
 
@@ -90,13 +97,10 @@ function LiveStreamCreate({ }) {
     if (!window.confirm("Bạn có chắc muốn xoá livestream này?")) return;
 
     try {
-      const result = await livestreamDeleteController(
-        setLoading,
-        LivestreamID
-      );
+      const result = await livestreamDeleteController(setLoading, LivestreamID);
 
       if (result?.code === 200) {
-        setDeleteSuccessVisible(true);   // 👈 HIỆN POPUP
+        setDeleteSuccessVisible(true); // 👈 HIỆN POPUP
       } else {
         setErrorPopupVisible(true);
       }
@@ -104,7 +108,6 @@ function LiveStreamCreate({ }) {
       setErrorPopupVisible(true);
     }
   };
-
 
   return (
     <>
@@ -150,17 +153,42 @@ function LiveStreamCreate({ }) {
           />
         </div>
 
-        {/* Thời gian live */}
+        {/* Thời gian dự kiến live */}
         <div className="flex flex-col mb-5">
-          <label>Thời gian livestream *</label>
+          <label>Thời gian dự kiến live *</label>
           <input
-            id="LivestreamStartedAt"
+            id="LivestreamScheduledAt"
             type="datetime-local"
-            value={data.LivestreamStartedAt}
+            value={data.LivestreamScheduledAt}
             onChange={handleChange}
             className="mt-2 px-4 h-[3rem] border rounded-lg"
           />
         </div>
+
+        {/* Stream Key (chỉ hiển thị khi EDIT) */}
+        {isEditMode && (
+          <div className="flex flex-col mb-5">
+            <label>Stream Key</label>
+            <div className="flex gap-2">
+              <input
+                id="LivestreamStreamKey"
+                value={data.LivestreamStreamKey}
+                disabled
+                className="mt-2 px-4 h-[3rem] border rounded-lg flex-1 bg-gray-100 text-gray-500 cursor-not-allowed"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.clipboard.writeText(data.LivestreamStreamKey);
+                  alert("Đã copy Stream Key!");
+                }}
+                className="mt-2 px-4 h-[3rem] bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-semibold"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Mô tả */}
         <div className="flex flex-col mb-8">
@@ -177,7 +205,9 @@ function LiveStreamCreate({ }) {
 
       <PopupSuccess
         isVisible={successPopupVisible}
-        message={isEditMode ? "Cập nhật thành công!" : "Tạo livestream thành công!"}
+        message={
+          isEditMode ? "Cập nhật thành công!" : "Tạo livestream thành công!"
+        }
         onClose={() => navigate("/livestream")}
       />
 
@@ -186,7 +216,7 @@ function LiveStreamCreate({ }) {
         message="Thao tác thất bại. Vui lòng thử lại!"
         onClose={() => navigate("/livestream")}
       />
-      
+
       <PopupSuccess
         isVisible={deleteSuccessVisible}
         message="Xoá livestream thành công!"
