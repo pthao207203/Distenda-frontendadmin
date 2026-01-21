@@ -43,7 +43,9 @@ export async function livestreamCreateController(setLoading, data) {
     const payload = {
       LivestreamTitle: data.LivestreamTitle,
       LivestreamDescription: data.LivestreamDescription,
-      LivestreamStartedAt: data.LivestreamStartedAt,
+      LivestreamScheduledAt: data.LivestreamScheduledAt
+        ? new Date(data.LivestreamScheduledAt).toISOString()
+        : undefined,
     };
 
     const result = await livestreamCreateService(payload);
@@ -69,7 +71,9 @@ export async function livestreamEditController(
     const payload = {
       LivestreamTitle: data.LivestreamTitle,
       LivestreamDescription: data.LivestreamDescription,
-      LivestreamStartedAt: data.LivestreamStartedAt,
+      LivestreamScheduledAt: data.LivestreamScheduledAt
+        ? new Date(data.LivestreamScheduledAt).toISOString()
+        : undefined,
     };
 
     const result = await livestreamEditService(LivestreamID, payload);
