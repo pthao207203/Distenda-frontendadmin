@@ -8,113 +8,73 @@ import { useRole } from "../../layouts/AppContext";
 import Loading from "../../components/Loading";
 import HistoryButton from "../../components/HistoryButton";
 import ForumHistory from "./components/ForumHistory";
+import { forumAdminController } from "../../controllers/forum.admin.controller";
 import moment from "moment";
 
 function Forum() {
-  const mockPosts = [
-  {
-    _id: "post_001",
-    postId: "P001",
-    userFullName: "Nguyễn Văn A",
-    postTitle: "Hỏi về React useEffect",
-    PostStatus: 1,
-    createdBy: {
-      createdAt: "2025-01-10T08:30:45.000Z",
-    },
-    reviewedBy: {
-      reviewedAt: "2025-01-10T09:15:12.000Z",
-    },
-  },
-  {
-    _id: "post_002",
-    postId: "P002",
-    userFullName: "Trần Thị B",
-    postTitle: "Cách tối ưu performance React",
-    PostStatus: 2,
-    createdBy: {
-      createdAt: "2025-01-11T10:20:00.000Z",
-    },
-    reviewedBy: {
-      reviewedAt: "2025-01-11T11:00:30.000Z",
-    },
-  },
-  {
-    _id: "post_003",
-    postId: "P003",
-    userFullName: "Lê Văn C",
-    postTitle: "So sánh Redux và Zustand",
-    PostStatus: 0,
-    createdBy: {
-      createdAt: "2025-01-12T14:45:10.000Z",
-    },
-    reviewedBy: {
-      reviewedAt: "2025-01-12T15:30:00.000Z",
-    },
-  },
-];
-  const [allPosts, setAllPosts] = useState(mockPosts); // Dữ liệu gốc từ API
-  // const [filteredPosts, setFilteredPosts] = useState([]); // Dữ liệu sau khi lọc
+  const [allPosts, setAllPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const { role } = useRole();
-
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
 
-  // // Gọi API 1 lần duy nhất khi load trang
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const result = await coursesController(setLoading);
-  //     if (result) {
-  //       setAllPosts(result);
-  //       setFilteredPosts(result); // Ban đầu hiển thị toàn bộ
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
-  const [filteredPosts, setFilteredPosts] = useState(mockPosts);
+  // Load forum posts from BE
+  useEffect(() => {
+    async function fetchData() {
+      const result = await forumAdminController.getAllPosts(setLoading);
+      if (result) {
+        setAllPosts(result);
+        setFilteredPosts(result);
+      }
+    }
+    fetchData();
+  }, []);
 
   // Hàm xử lý tìm kiếm realtime
   const handleSearch = (value) => {
-  const keyword = value.trim().toLowerCase();
+    const keyword = value.trim().toLowerCase();
 
-  // Reset khi input rỗng
-  if (!keyword) {
-    setFilteredPosts(allPosts);
-    return;
-  }
+    // Reset khi input rỗng
+    if (!keyword) {
+      setFilteredPosts(allPosts);
+      return;
+    }
 
-  const filtered = allPosts.filter((post) => {
-    const postId = post.postId?.toLowerCase() || "";
-    const user = post.userFullName?.toLowerCase() || "";
-    const postTitle = post.postTitle?.toLowerCase() || "";
+    const filtered = allPosts.filter((post) => {
+      const postId = post.postId?.toLowerCase() || "";
+      const user = post.userFullName?.toLowerCase() || "";
+      const postTitle = post.postTitle?.toLowerCase() || "";
 
-    const postTime = post.createdBy?.createdAt
-      ? moment(post.createdBy.createdAt).format("DD/MM/YYYY HH:mm:ss").toLowerCase()
-      : "";
+      const postTime = post.createdBy?.createdAt
+        ? moment(post.createdBy.createdAt)
+            .format("DD/MM/YYYY HH:mm:ss")
+            .toLowerCase()
+        : "";
 
-    const reviewTime = post.reviewedBy?.reviewedAt
-      ? moment(post.reviewedBy.reviewedAt).format("DD/MM/YYYY HH:mm:ss").toLowerCase()
-      : "";
+      const reviewTime = post.reviewedBy?.reviewedAt
+        ? moment(post.reviewedBy.reviewedAt)
+            .format("DD/MM/YYYY HH:mm:ss")
+            .toLowerCase()
+        : "";
 
-    const statusText =
-      post.PostStatus === 1
-        ? "đã duyệt"
-        : post.PostStatus === 0
-        ? "đã hủy"
-        : "chờ duyệt";
+      const statusText =
+        post.PostStatus === 1
+          ? "đã duyệt"
+          : post.PostStatus === 0
+            ? "đã hủy"
+            : "chờ duyệt";
 
-    return (
-      postId.includes(keyword) ||
-      user.includes(keyword) ||
-      postTitle.includes(keyword) ||
-      postTime.includes(keyword) ||
-      reviewTime.includes(keyword) ||
-      statusText.includes(keyword)
-    );
-  });
+      return (
+        postId.includes(keyword) ||
+        user.includes(keyword) ||
+        postTitle.includes(keyword) ||
+        postTime.includes(keyword) ||
+        reviewTime.includes(keyword) ||
+        statusText.includes(keyword)
+      );
+    });
 
-  setFilteredPosts(filtered);
-};
+    setFilteredPosts(filtered);
+  };
 
   const handleHistoryRequest = () => {
     setIsHistoryVisible(true);
