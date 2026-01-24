@@ -22,7 +22,7 @@ function ForumTableRow(post) {
       {/* Mã bài đăng */}
       <div className="flex basis-1/6 min-w-0 justify-center items-center bg-[#EBF1F9]">
         <span className="text-[#131313] text-center md:text-[1.25rem] text-[1rem] font-medium px-3 truncate">
-          {post?.postId}
+          {post?.postId.toUpperCase()}
         </span>
       </div>
 

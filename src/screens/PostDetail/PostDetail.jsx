@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 import { forumAdminController } from "../../controllers/forum.admin.controller";
+import { Download } from "lucide-react";
 
 /* ===== Helpers ===== */
 const formatDateUTC = (date) => {
@@ -64,8 +65,8 @@ const PostDetail = () => {
   if (!post) return <div>Post not found</div>;
 
   /* ===== CÁCH 2: LOGIC NÚT ===== */
-  const canApprove = post.status === 2;   // chỉ duyệt khi chờ duyệt
-  const canReject = post.status !== 0;    // huỷ được cả bài đã duyệt
+  const canApprove = post.status === 2; // chỉ duyệt khi chờ duyệt
+  const canReject = post.status !== 0; // huỷ được cả bài đã duyệt
 
   const handleApprove = async () => {
     if (!canApprove) return;
@@ -177,6 +178,34 @@ const PostDetail = () => {
           ))}
         </div>
       </div>
+
+      {/* FILES */}
+      {Array.isArray(post.files) && post.files.length > 0 && (
+        <div className="flex flex-col mt-6">
+          <p className="text-gray-500 mb-2 font-medium">Tệp đính kèm</p>
+
+          <div className="flex flex-col gap-3">
+            {post.files.map((file, index) => (
+              <a
+                key={index}
+                href={file.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 border border-[#6C8299]/60 rounded-lg hover:bg-gray-50 transition"
+              >
+                <span className="text-gray-800 font-medium truncate">
+                  {file.name || file.url.split("/").pop()}
+                </span>
+
+                <Download
+                  size={20}
+                  className="text-gray-400 hover:text-[#6C8299] transition-colors"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
